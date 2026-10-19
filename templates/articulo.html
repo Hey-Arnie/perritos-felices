@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{TITLE}} | Perritos Felices</title>
+  <meta name="description" content="{{EXCERPT}}" />
+  <link rel="canonical" href="https://www.perritosfelices.com/articulos/{{SLUG}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{{TITLE}} | Perritos Felices" />
+  <meta property="og:description" content="{{EXCERPT}}" />
+  <meta property="og:url" content="https://www.perritosfelices.com/articulos/{{SLUG}}" />
+  <meta property="og:site_name" content="Perritos Felices — Ladridos que inspiran" />
+  <link rel="icon" type="image/png" href="../assets/logo/icononly_transparent_nobuffer.png" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- Barra de progreso de lectura -->
+  <div class="reading-progress-container" aria-hidden="true">
+    <div id="reading-progress-bar" class="reading-progress-bar"></div>
+  </div>
+
+  <div class="topbar">
+    <div class="container">
+      {{TOPBAR_TAG}} — <strong>www.perritosfelices.com</strong>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="../index.html" class="brand-logo" aria-label="Perritos Felices Inicio">
+        <span class="brand-logo-icon">
+          <img src="../assets/logo/icononly_transparent_nobuffer.png" alt="Logo Perritos Felices" width="36" height="36" decoding="async" />
+        </span>
+        <span class="brand-logo-text">
+          <span class="brand-logo-title">Perritos Felices</span>
+          <span class="brand-logo-slogan">Ladridos que inspiran</span>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="../blog.html" class="nav-link active">Blog Educativo</a>
+        <a href="../directorio.html" class="nav-link">Directorio Canino</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="../blog.html" class="btn btn-outline btn-sm">← Volver al Blog</a>
+        <a href="../directorio.html" class="btn btn-primary btn-sm">DIRECTORIO ↗</a>
+        <button type="button" class="mobile-menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Migas de pan">
+          <a href="../index.html">Inicio</a> <span>›</span>
+          <a href="../blog.html">Blog Educativo</a> <span>›</span>
+          <span>{{CATEGORY}}</span>
+        </nav>
+        <span class="section-tag">{{SECTION_TAG}}</span>
+        <h1 class="article-hero-title">{{TITLE}}</h1>
+        <p class="section-subtitle" style="max-width: 760px;">
+          {{SUBTITLE}}
+        </p>
+        <div class="article-byline">
+          <div class="author-chip">
+            <span class="author-avatar" aria-hidden="true">{{AUTHOR_INITIALS}}</span>
+            <div>
+              <div>{{AUTHOR}}</div>
+              <div style="font-size: 0.8rem; color: var(--brand-brown-muted); font-weight: 400;">{{AUTHOR_ROLE}}</div>
+            </div>
+          </div>
+          <span>FECHA: {{DATE}}</span>
+          <span>LECTURA: {{READ_TIME}}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article-page-layout">
+      <!-- Sidebar con Tabla de Contenido y Botones para Compartir -->
+      <aside class="toc-sidebar">
+        <nav class="toc-card" aria-label="Tabla de contenido">
+          <h2 class="toc-title">ÍNDICE DEL DOCUMENTO</h2>
+          <ul class="toc-list">
+{{TOC_ITEMS}}
+          </ul>
+        </nav>
+
+        <div class="share-card">
+          <h3 style="font-size: 1rem;">COMPARTIR EXPEDIENTE</h3>
+          <div class="share-buttons">
+            <button type="button" class="share-btn js-share-btn" data-share="whatsapp">WHATSAPP ↗</button>
+            <button type="button" class="share-btn js-share-btn" data-share="twitter">X / POST ↗</button>
+            <button type="button" class="share-btn js-share-btn" data-share="facebook">FACEBOOK ↗</button>
+            <button type="button" class="share-btn js-share-btn" data-share="copy">COPIAR URL</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Cuerpo del Artículo -->
+      <article class="article-content">
+{{ARTICLE_BODY}}
+      </article>
+    </div>
+
+    <!-- Artículos Relacionados -->
+    <section class="articles-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">LECTURAS COMPLEMENTARIAS</span>
+          <h2 class="section-title">Artículos relacionados que te encantarán</h2>
+        </div>
+        <div id="related-articles-grid" class="articles-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="padding-top:0;">
+        <span>© 2026 Perritos Felices (www.perritosfelices.com). Ladridos que inspiran • Hecho con 💙 para todos los lomitos.</span>
+        <a href="../blog.html" style="color: var(--brand-yellow);">← Volver a todas las guías</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

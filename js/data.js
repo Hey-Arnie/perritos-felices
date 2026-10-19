@@ -1,11 +1,25 @@
 /**
  * PERRITOS FELICES — Base de datos central de Artículos y Directorio Canino
  * Generado automáticamente por 01_Infraestructura_Web/scripts/publicar.py
- * Línea Gráfica: Azul Cobalto (#2241C8) & Amarillo Dorado (#FFBE58) — "Ladridos que inspiran"
+ * Línea Gráfica: Azul Cobalto (#2241C8) & Amarillo Dorado (#FFBE58) — 'Ladridos que inspiran'
  */
 
 window.PERRITOS_DATA = {
   "articles": [
+    {
+      "id": "art-11",
+      "slug": "como-elegir-arnes-en-y-perros.html",
+      "title": "Cómo elegir el mejor arnés en Y para tu perro y por qué evitar los collares de ahogo",
+      "excerpt": "Aprende a proteger la tráquea, tiroides y articulaciones de tu perro eligiendo un arnés ergonómico en Y, y conoce qué modelos evitar para paseos sin tirones.",
+      "category": "Educación y Entrenamiento",
+      "readTime": "7 min de lectura",
+      "date": "19 Oct 2026",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
+      "emoji": "🐾",
+      "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFF0CE 100%)",
+      "featured": true
+    },
     {
       "id": "art-01",
       "slug": "guia-alimentacion-natural-perros.html",
@@ -14,8 +28,8 @@ window.PERRITOS_DATA = {
       "category": "Nutrición",
       "readTime": "8 min de lectura",
       "date": "15 Oct 2026",
-      "author": "Dra. Valeria Méndez",
-      "authorRole": "Nutricionista Veterinaria",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🥣",
       "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFE2AD 100%)",
       "featured": true
@@ -28,8 +42,8 @@ window.PERRITOS_DATA = {
       "category": "Comportamiento",
       "readTime": "7 min de lectura",
       "date": "12 Oct 2026",
-      "author": "Mateo Solís",
-      "authorRole": "Etólogo Clínico",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🐕",
       "bgGradient": "linear-gradient(135deg, #DDE6FF 0%, #FFF1D6 100%)",
       "featured": false
@@ -42,8 +56,8 @@ window.PERRITOS_DATA = {
       "category": "Salud y Prevención",
       "readTime": "9 min de lectura",
       "date": "10 Oct 2026",
-      "author": "Dr. Alejandro Ruiz",
-      "authorRole": "Médico Veterinario",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🩺",
       "bgGradient": "linear-gradient(135deg, #FFE4B5 0%, #E8EFFF 100%)",
       "featured": false
@@ -56,8 +70,8 @@ window.PERRITOS_DATA = {
       "category": "Comportamiento",
       "readTime": "10 min de lectura",
       "date": "07 Oct 2026",
-      "author": "Mateo Solís",
-      "authorRole": "Etólogo Clínico",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "💙",
       "bgGradient": "linear-gradient(135deg, #E2EAFF 0%, #FFDF9E 100%)",
       "featured": false
@@ -70,8 +84,8 @@ window.PERRITOS_DATA = {
       "category": "Bienestar y Juegos",
       "readTime": "6 min de lectura",
       "date": "04 Oct 2026",
-      "author": "Sofía Herrera",
-      "authorRole": "Educadora Canina en Positivo",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🌿",
       "bgGradient": "linear-gradient(135deg, #FFECB8 0%, #E3F4ED 100%)",
       "featured": false
@@ -84,8 +98,8 @@ window.PERRITOS_DATA = {
       "category": "Salud y Prevención",
       "readTime": "8 min de lectura",
       "date": "01 Oct 2026",
-      "author": "Dr. Alejandro Ruiz",
-      "authorRole": "Médico Veterinario",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "⛑️",
       "bgGradient": "linear-gradient(135deg, #FFE0A3 0%, #EAEFFF 100%)",
       "featured": false
@@ -98,8 +112,8 @@ window.PERRITOS_DATA = {
       "category": "Higiene y Cuidado",
       "readTime": "6 min de lectura",
       "date": "28 Sep 2026",
-      "author": "Dra. Valeria Méndez",
-      "authorRole": "Nutricionista Veterinaria",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🪥",
       "bgGradient": "linear-gradient(135deg, #DCE6FF 0%, #FFF4DB 100%)",
       "featured": false
@@ -112,8 +126,8 @@ window.PERRITOS_DATA = {
       "category": "Educación y Entrenamiento",
       "readTime": "9 min de lectura",
       "date": "24 Sep 2026",
-      "author": "Sofía Herrera",
-      "authorRole": "Educadora Canina en Positivo",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🐾",
       "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFF0CE 100%)",
       "featured": false
@@ -126,8 +140,8 @@ window.PERRITOS_DATA = {
       "category": "Salud y Prevención",
       "readTime": "8 min de lectura",
       "date": "20 Sep 2026",
-      "author": "Dr. Alejandro Ruiz",
-      "authorRole": "Médico Veterinario",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🛋️",
       "bgGradient": "linear-gradient(135deg, #E8EEFF 0%, #FFE6B3 100%)",
       "featured": false
@@ -140,8 +154,8 @@ window.PERRITOS_DATA = {
       "category": "Estilo de Vida",
       "readTime": "7 min de lectura",
       "date": "16 Sep 2026",
-      "author": "Sofía Herrera",
-      "authorRole": "Educadora Canina en Positivo",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
       "emoji": "🎒",
       "bgGradient": "linear-gradient(135deg, #FFE5B0 0%, #DCE6FF 100%)",
       "featured": false
