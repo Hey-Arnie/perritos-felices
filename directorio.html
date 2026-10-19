@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Directorio Canino Verificado | Perritos Felices — Ladridos que Inspiran</title>
+  <meta name="description" content="Encuentra clínicas veterinarias Fear Free, guarderías sin jaulas, estéticas relajantes, educadores en positivo y tiendas naturales en el Directorio de www.perritosfelices.com." />
+  <link rel="icon" type="image/png" href="assets/logo/icononly_transparent_nobuffer.png" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div style="display:flex; align-items:center; gap:0.6rem;">
+        <span class="led-dot led-green"></span>
+        <span><strong>DIRECTORIO OFICIAL PERRITOS FELICES</strong> // LADRIDOS QUE INSPIRAN</span>
+      </div>
+      <div>AUDITORÍA DE BIENESTAR: 0% JAULAS DE CASTIGO • 100% MANEJO EMPÁTICO</div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo" aria-label="Perritos Felices Inicio">
+        <span class="brand-logo-icon">
+          <img src=\"assets/logo/icononly_transparent_nobuffer.png\" alt=\"Logo Perritos Felices\" width=\"36\" height=\"36\" decoding=\"async\" />
+        </span>
+        <span class="brand-logo-text">
+          <span class="brand-logo-title">Perritos Felices</span>
+          <span class="brand-logo-slogan">Ladridos que inspiran</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="blog.html" class="nav-link">Editorial / Blog</a>
+        <a href="directorio.html" class="nav-link active">Directorio</a>
+        <a href="index.html#pilares" class="nav-link">Arquitectura</a>
+        <a href="#registrar" class="nav-link">Postular Centro</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn btn-secondary btn-sm js-open-register-modal">
+          + REGISTRAR NEGOCIO
+        </button>
+        <a href="blog.html" class="btn btn-primary btn-sm">
+          LEER GUÍAS <span class="arrow-diag">↗</span>
+        </a>
+        <button type="button" class="mobile-menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+          MENÚ
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <!-- Hero del Directorio -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="section-index">BASE DE DATOS VERIFICADA // LATAM</div>
+        <h1 class="section-title" style="max-width: 820px;">
+          Especialistas y espacios con protocolo <span class="serif-italic">libre de maltrato.</span>
+        </h1>
+        <p class="section-subtitle" style="max-width: 680px;">
+          Filtra por ciudad, especialidad clínica o calificación auditada. Todos los centros listados cumplen nuestro estándar de bienestar emocional canino.
+        </p>
+      </div>
+    </section>
+
+    <!-- Buscador y Filtros del Directorio -->
+    <section style="padding: 2.75rem 0 4.5rem;">
+      <div class="container">
+        <div class="directory-controls" role="search" aria-label="Filtros del directorio canino">
+          <div class="filter-group">
+            <label for="dir-search">01 // BÚSQUEDA POR TÉRMINO O ESPECIALIDAD</label>
+            <input
+              type="search"
+              id="dir-search"
+              class="form-input"
+              placeholder="Ej. Fear Free, hidroterapia, sin jaulas..."
+            />
+          </div>
+
+          <div class="filter-group">
+            <label for="dir-city">02 // CIUDAD</label>
+            <select id="dir-city" class="form-select">
+              <option value="Todas">Todas las ciudades</option>
+              <option value="Ciudad de Guatemala">Ciudad de Guatemala</option>
+              <option value="Antigua Guatemala">Antigua Guatemala</option>
+              <option value="Ciudad de México">Ciudad de México</option>
+              <option value="Guadalajara">Guadalajara</option>
+              <option value="Monterrey">Monterrey</option>
+              <option value="Bogotá">Bogotá</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="dir-category">03 // CATEGORÍA DE SERVICIO</label>
+            <select id="dir-category" class="form-select">
+              <option value="Todas">Todos los servicios</option>
+              <option value="Veterinaria y Salud">Veterinaria y Salud</option>
+              <option value="Guardería y Hotel">Guardería y Hotel</option>
+              <option value="Estética y Spa">Estética y Spa</option>
+              <option value="Entrenamiento y Etología">Entrenamiento y Etología</option>
+              <option value="Nutrición y Tienda">Nutrición y Tienda</option>
+              <option value="Cafés y Parques">Cafés y Parques</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="dir-rating">04 // CALIFICACIÓN MÍNIMA</label>
+            <select id="dir-rating" class="form-select">
+              <option value="0">Todas las calificaciones</option>
+              <option value="4.8">4.8 / 5.0 o superior</option>
+              <option value="4.9">4.9 / 5.0 o superior</option>
+              <option value="5.0">Exclusivamente 5.0 / 5.0</option>
+            </select>
+          </div>
+
+          <div>
+            <button type="button" id="dir-clear-btn" class="btn btn-outline btn-sm" style="height: 44px;">
+              REINICIAR
+            </button>
+          </div>
+        </div>
+
+        <div class="results-summary">
+          <span id="dir-results-count">REGISTROS ACTIVOS: 9 ESPACIOS VERIFICADOS</span>
+          <span style="display:flex; align-items:center; gap:0.5rem; color: var(--brand-sage); font-weight: 700;">
+            <span class="led-dot led-green"></span> AUDITORÍA ÉTICA VIGENTE
+          </span>
+        </div>
+
+        <!-- Cuadrícula de Fichas de Negocios -->
+        <div id="directory-full-grid" class="directory-grid">
+          <!-- Renderizado dinámico por js/main.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA para Registrar un Negocio -->
+    <section id="registrar" class="cta-banner-section">
+      <div class="container">
+        <div class="cta-banner">
+          <div>
+            <div class="mono-label" style="color: var(--logo-yellow); margin-bottom: 0.75rem;">
+              CONVOCATORIA PROFESIONAL // DIRECTORIO PF
+            </div>
+            <h2>¿Tu espacio trabaja bajo estándares de respeto y bienestar canino?</h2>
+            <p>
+              Integra tu clínica, hotel campestre, estética o escuela al directorio oficial de <strong>www.perritosfelices.com</strong> y conecta con tutores que priorizan el trato ético.
+            </p>
+            <div class="cta-actions">
+              <button type="button" class="btn btn-secondary js-open-register-modal">
+                + POSTULAR MI NEGOCIO AHORA
+              </button>
+              <a href="blog.html" class="btn btn-outline">
+                REVISAR PROTOCOLOS <span class="arrow-diag">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div style="background: var(--surface-dark); border-radius: var(--radius-md); padding: 2rem; border: 1.5px solid var(--logo-yellow);">
+            <div class="mono-label" style="color: var(--logo-yellow); margin-bottom: 0.75rem;">CRITERIOS DE ADMISIÓN</div>
+            <ul style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.92rem; color: rgba(255,255,255,0.9);">
+              <li>[01] Prohibición absoluta de collares de ahogo, púas o impulsos.</li>
+              <li>[02] Manejo clínico y estético libre de sujeción violenta.</li>
+              <li>[03] Áreas de descanso ventiladas, seguras y libres de hacinamiento.</li>
+              <li>[04] Comunicación transparente y reportes hacia las familias.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Interactivo para Registrar un Negocio -->
+  <div id="register-business-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-register-title">
+    <div class="modal-card">
+      <button type="button" id="close-register-modal" class="modal-close" aria-label="Cerrar ventana">✕</button>
+      <div class="mono-label" style="color: var(--logo-blue); margin-bottom: 0.4rem;">ALTA DE EXPEDIENTE</div>
+      <h2 id="modal-register-title" style="font-size: 1.65rem; margin-bottom: 0.5rem;">
+        Registrar nuevo espacio en el Directorio
+      </h2>
+      <p style="color: var(--ink-secondary); font-size: 0.94rem; margin-bottom: 1.5rem;">
+        Completa la ficha técnica de tu servicio canino. Se publicará de inmediato en tu vista activa.
+      </p>
+
+      <form id="register-business-form" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label for="bizName" class="mono-label" style="display:block; margin-bottom:0.35rem;">Nombre oficial del centro *</label>
+          <input type="text" id="bizName" name="bizName" required class="form-input" placeholder="Ej. Clínica Veterinaria Patitas Felices" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div>
+            <label for="bizCategory" class="mono-label" style="display:block; margin-bottom:0.35rem;">Especialidad *</label>
+            <select id="bizCategory" name="bizCategory" class="form-select">
+              <option value="Veterinaria y Salud">Veterinaria y Salud</option>
+              <option value="Guardería y Hotel">Guardería y Hotel</option>
+              <option value="Estética y Spa">Estética y Spa</option>
+              <option value="Entrenamiento y Etología">Entrenamiento y Etología</option>
+              <option value="Nutrición y Tienda">Nutrición y Tienda</option>
+              <option value="Cafés y Parques">Cafés y Parques</option>
+            </select>
+          </div>
+          <div>
+            <label for="bizCity" class="mono-label" style="display:block; margin-bottom:0.35rem;">Ciudad *</label>
+            <select id="bizCity" name="bizCity" class="form-select">
+              <option value="Ciudad de Guatemala">Ciudad de Guatemala</option>
+              <option value="Antigua Guatemala">Antigua Guatemala</option>
+              <option value="Ciudad de México">Ciudad de México</option>
+              <option value="Guadalajara">Guadalajara</option>
+              <option value="Monterrey">Monterrey</option>
+              <option value="Bogotá">Bogotá</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="bizDesc" class="mono-label" style="display:block; margin-bottom:0.35rem;">Descripción técnica y enfoque de bienestar *</label>
+          <textarea id="bizDesc" name="bizDesc" rows="3" required class="form-textarea" placeholder="Describe tus instalaciones, certificaciones y protocolo de trato amable..."></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div>
+            <label for="bizPhone" class="mono-label" style="display:block; margin-bottom:0.35rem;">Teléfono / WhatsApp *</label>
+            <input type="text" id="bizPhone" name="bizPhone" required class="form-input" placeholder="+502 5555-5555" />
+          </div>
+          <div>
+            <label for="bizHours" class="mono-label" style="display:block; margin-bottom:0.35rem;">Horario de atención *</label>
+            <input type="text" id="bizHours" name="bizHours" required class="form-input" placeholder="Lun - Sáb: 8:00 AM a 6:00 PM" />
+          </div>
+        </div>
+
+        <div>
+          <label for="bizAddress" class="mono-label" style="display:block; margin-bottom:0.35rem;">Dirección física *</label>
+          <input type="text" id="bizAddress" name="bizAddress" required class="form-input" placeholder="Zona / Colonia, Calle y Número" />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
+          PUBLICAR FICHA EN EL DIRECTORIO <span class="arrow-diag">↗</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="brand-logo" style="color: #FFF; margin-bottom: 1rem;">
+            <span class="brand-logo-icon">
+              <img src=\"assets/logo/icononly_transparent_nobuffer.png\" alt=\"Logo Perritos Felices\" width=\"36\" height=\"36\" decoding=\"async\" />
+            </span>
+            <span class="brand-logo-text">
+              <span class="brand-logo-title" style="color: #FFFFFF;">Perritos Felices</span>
+              <span class="brand-logo-slogan" style="color: var(--logo-yellow);">Ladridos que inspiran</span>
+            </span>
+          </a>
+          <p style="color: rgba(246, 244, 238, 0.8); font-size: 0.94rem; margin-bottom: 1rem;">
+            Plataforma editorial y directorio verificado dedicado a elevar el estándar de vida de los perros mediante ciencia, empatía y respeto.
+          </p>
+          <p class="mono-label" style="color: var(--logo-yellow);">WWW.PERRITOSFELICES.COM</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Mapa del Sitio</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Inicio / Portada</a></li>
+            <li><a href="blog.html">Archivo Editorial (10 Guías)</a></li>
+            <li><a href="directorio.html">Directorio Canino Verificado</a></li>
+            <li><a href="#registrar">Postular un Negocio</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Volúmenes I — V</h4>
+          <ul class="footer-links">
+            <li><a href="articulos/guia-alimentacion-natural-perros.html">01. Alimentación Natural</a></li>
+            <li><a href="articulos/lenguaje-corporal-canino-senales.html">02. Lenguaje Corporal Canino</a></li>
+            <li><a href="articulos/calendario-vacunacion-desparasitacion.html">03. Calendario de Vacunación</a></li>
+            <li><a href="articulos/ansiedad-por-separacion-como-ayudarlo.html">04. Ansiedad por Separación</a></li>
+            <li><a href="articulos/paseos-olfativos-enriquecimiento-ambiental.html">05. Paseos Olfativos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Volúmenes VI — X</h4>
+          <ul class="footer-links">
+            <li><a href="articulos/primeros-auxilios-caninos-botiquin.html">06. Primeros Auxilios Caninos</a></li>
+            <li><a href="articulos/cuidado-dental-perros-guia-practica.html">07. Higiene Dental en Casa</a></li>
+            <li><a href="articulos/socializacion-cachorros-primeros-meses.html">08. Socialización de Cachorros</a></li>
+            <li><a href="articulos/cuidados-perro-senior-calidad-vida.html">09. Cuidados del Perro Senior</a></li>
+            <li><a href="articulos/viajar-con-tu-perro-consejos-seguridad.html">10. Viajar Seguro con tu Perro</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PERRITOS FELICES — LADRIDOS QUE INSPIRAN. TODOS LOS DERECHOS RESERVADOS.</span>
+        <span>DIRECCIÓN EDITORIAL • ETOLOGÍA • NUTRICIÓN • BIENESTAR</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
