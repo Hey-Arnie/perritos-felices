@@ -124,9 +124,37 @@ function initHeaderAndMobileNav() {
   }
 
   if (mobileBtn && navLinks) {
-    mobileBtn.addEventListener("click", () => {
+    const closeMenu = () => {
+      navLinks.classList.remove("open");
+      mobileBtn.setAttribute("aria-expanded", "false");
+    };
+
+    mobileBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const isOpen = navLinks.classList.toggle("open");
       mobileBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // Cerrar al hacer clic en cualquier enlace de navegación
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        closeMenu();
+      });
+    });
+
+    // Cerrar al hacer clic fuera del menú o del header
+    document.addEventListener("click", (e) => {
+      if (navLinks.classList.contains("open") && !navLinks.contains(e.target) && !mobileBtn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Cerrar al presionar la tecla Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) {
+        closeMenu();
+        mobileBtn.focus();
+      }
     });
   }
 }

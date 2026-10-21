@@ -30,8 +30,10 @@ CANINE_DIR = ROOT_DIR / "04_Gestion_Canina"
 ARTICLES_JSON = STRATEGY_DIR / "cms_articulos.json"
 ARTICLES_MD_DIR = STRATEGY_DIR / "articulos"
 CALENDAR_JSON = STRATEGY_DIR / "calendario_editorial.json"
+MARKETING_JSON = STRATEGY_DIR / "cms_marketing.json"
 DIRECTORY_JSON = CANINE_DIR / "cms_directorio.json"
 
+INDEX_HTML = WEB_DIR / "index.html"
 TEMPLATE_HTML = WEB_DIR / "templates" / "articulo.html"
 DATA_JS_PATH = WEB_DIR / "js" / "data.js"
 ARTICLES_DIR = WEB_DIR / "articulos"
@@ -720,10 +722,51 @@ def cmd_build() -> int:
         encoding="utf-8",
     )
 
+    # Cargar y sincronizar textos de portada y marketing (cms_marketing.json -> index.html)
+    marketing_data = {}
+    if MARKETING_JSON.exists():
+        raw_mkt = json.loads(MARKETING_JSON.read_text(encoding="utf-8"))
+        for k, v in raw_mkt.items():
+            if isinstance(v, list):
+                marketing_data[k] = [strip_dangerous_unicode(str(item)).strip()[:80] for item in v if str(item).strip()][:8]
+            else:
+                marketing_data[k] = strip_dangerous_unicode(str(v)).strip()[:500]
+        MARKETING_JSON.write_text(
+            json.dumps(marketing_data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        if INDEX_HTML.exists():
+            idx_html = INDEX_HTML.read_text(encoding="utf-8")
+            for field_key, field_val in marketing_data.items():
+                if field_key == "tickerItems" and isinstance(field_val, list) and field_val:
+                    spans = []
+                    for i, item_txt in enumerate(field_val):
+                        spans.append(f"        <span>{html.escape(item_txt, quote=True)}</span>")
+                        if i < len(field_val) - 1:
+                            spans.append('        <span class="ticker-sep">✦</span>')
+                    inner_ticker = "\n" + "\n".join(spans) + "\n      "
+                    idx_html = re.sub(
+                        r'(<div[^>]*\bdata-cms="tickerTrack"[^>]*>)(.*?)(</div>)',
+                        lambda m: m.group(1) + inner_ticker + m.group(3),
+                        idx_html,
+                        flags=re.DOTALL,
+                    )
+                elif isinstance(field_val, str):
+                    safe_txt = html.escape(field_val, quote=True)
+                    pattern = rf'(<(?P<tag>[a-zA-Z0-9]+)\b[^>]*\bdata-cms="{re.escape(field_key)}"[^>]*>)(.*?)(</(?P=tag)>)'
+                    idx_html = re.sub(
+                        pattern,
+                        lambda m, st=safe_txt: m.group(1) + st + m.group(4),
+                        idx_html,
+                        flags=re.DOTALL,
+                    )
+            INDEX_HTML.write_text(idx_html, encoding="utf-8")
+
     # Escribir 01_Infraestructura_Web/js/data.js previniendo inyección de cierre </script>
     payload = {
         "articles": clean_articles_for_js,
         "directory": clean_directory,
+        "marketing": marketing_data,
     }
     safe_json_payload = (
         json.dumps(payload, ensure_ascii=False, indent=2)
@@ -733,7 +776,7 @@ def cmd_build() -> int:
     )
     js_content = (
         "/**\n"
-        " * PERRITOS FELICES — Base de datos central de Artículos y Directorio Canino\n"
+        " * PERRITOS FELICES — Base de datos central de Artículos, Directorio Canino y Marketing\n"
         " * Generado automáticamente por 01_Infraestructura_Web/scripts/publicar.py\n"
         " * Línea Gráfica: Azul Cobalto (#2241C8) & Amarillo Dorado (#FFBE58) — 'Ladridos que inspiran'\n"
         " */\n\n"
@@ -791,7 +834,7 @@ def cmd_audit() -> int:
     issues = 0
 
     # 1. Verificar caracteres Trojan Source / Prompt Injection en JSON y Markdown
-    data_files = [ARTICLES_JSON, DIRECTORY_JSON, CALENDAR_JSON] + list(ARTICLES_MD_DIR.glob("*.md"))
+    data_files = [ARTICLES_JSON, DIRECTORY_JSON, CALENDAR_JSON, MARKETING_JSON] + list(ARTICLES_MD_DIR.glob("*.md"))
     for df in data_files:
         if df.exists():
             raw_txt = df.read_text(encoding="utf-8")
