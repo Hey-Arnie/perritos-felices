@@ -8,9 +8,7 @@ Permite al usuario controlar visualmente todo el sitio sin saber programación:
   • Directorio Canino Verificado (Altas, bajas y ediciones en vivo)
   • Botón de Compilación, Auditoría de Ciberseguridad y Simulador en Vivo
 
-Uso:
-  python3 01_Infraestructura_Web/scripts/studio_server.py
-  o doble clic en "Abrir_Perritos_Felices_Studio.command"
+Funciona tanto abriendo http://127.0.0.1:8765 como abriendo studio/index.html directamente.
 """
 
 import argparse
@@ -29,7 +27,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 import publicar as pub  # noqa: E402
 
-STUDIO_DIR = pub.WEB_DIR / "studio"
+STUDIO_DIR = pub.ROOT_DIR / "05_Studio_Privado"
 
 
 def capture_cmd(func, *args, **kwargs):
@@ -41,12 +39,22 @@ def capture_cmd(func, *args, **kwargs):
 
 class StudioRequestHandler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
-        # Silenciar logs ruidosos por cada asset estático
         pass
+
+    def _add_cors_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self._add_cors_headers()
+        self.end_headers()
 
     def _send_json(self, payload: dict, status: int = 200):
         raw = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
+        self._add_cors_headers()
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
         self.send_header("Cache-Control", "no-store")
@@ -67,6 +75,7 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
 
         data = target.read_bytes()
         self.send_response(200)
+        self._add_cors_headers()
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(data)))
         self.send_header("Cache-Control", "no-cache")
@@ -109,8 +118,13 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             )
             return
 
-        if path == "/" or path == "/index.html":
+        if path in ("/", "/index.html", "/studio", "/studio/", "/studio/index.html"):
             self._serve_file(STUDIO_DIR, "index.html")
+            return
+
+        if path.startswith("/studio/"):
+            rel = path[len("/studio/") :]
+            self._serve_file(STUDIO_DIR, rel)
             return
 
         if path.startswith("/site/"):
@@ -118,8 +132,19 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             self._serve_file(pub.WEB_DIR, rel)
             return
 
-        # Servir archivos propios de /studio/ (studio.css, studio.js)
-        self._serve_file(STUDIO_DIR, path)
+        if path.startswith("/01_Infraestructura_Web/"):
+            rel = path[len("/01_Infraestructura_Web/") :]
+            self._serve_file(pub.WEB_DIR, rel)
+            return
+
+        # Si el archivo existe en STUDIO_DIR (ej. studio.css, studio.js), servirlo primero
+        candidate_studio = (STUDIO_DIR / path.lstrip("/")).resolve()
+        if candidate_studio.is_relative_to(STUDIO_DIR.resolve()) and candidate_studio.is_file():
+            self._serve_file(STUDIO_DIR, path)
+            return
+
+        # De lo contrario servir desde WEB_DIR (assets/logo/..., css/styles.css, index.html, etc.)
+        self._serve_file(pub.WEB_DIR, path)
 
     def do_POST(self):
         parsed = urllib.parse.urlparse(self.path)
@@ -142,6 +167,12 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             if path == "/api/audit":
                 code, out = capture_cmd(pub.cmd_audit)
                 self._send_json({"ok": code == 0, "output": out}, status=200 if code == 0 else 400)
+                return
+
+            if path == "/api/deploy":
+                ns = argparse.Namespace(msg=body.get("msg"))
+                code, out = capture_cmd(pub.cmd_deploy, ns)
+                self._send_json({"ok": code == 0, "output": out}, status=200)
                 return
 
             if path == "/api/marketing":
@@ -199,7 +230,6 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
                     "bodyHtml": body_html,
                 }
 
-                # Si se marca como destacada, desmarcar las demás para mantener 1 destacada clara
                 if art_obj["featured"]:
                     for a in articles:
                         a["featured"] = False
@@ -312,9 +342,19 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
                 self._send_json({"ok": code == 0, "output": out})
                 return
 
+            if path == "/api/shutdown":
+                self._send_json({"ok": True})
+                import threading
+                threading.Thread(target=self.server.shutdown, daemon=True).start()
+                return
+
             self._send_json({"error": "Ruta API no reconocida"}, status=404)
         except Exception as exc:
             self._send_json({"error": str(exc)}, status=500)
+
+
+class ReuseAddrHTTPServer(HTTPServer):
+    allow_reuse_address = True
 
 
 def main():
@@ -323,8 +363,23 @@ def main():
     parser.add_argument("--no-browser", action="store_true", help="No abrir el navegador automáticamente")
     args = parser.parse_args()
 
-    server = HTTPServer(("127.0.0.1", args.port), StudioRequestHandler)
-    url = f"http://127.0.0.1:{args.port}"
+    port = args.port
+    server = None
+    for candidate in (port, 8766, 8767):
+        try:
+            server = ReuseAddrHTTPServer(("127.0.0.1", candidate), StudioRequestHandler)
+            port = candidate
+            break
+        except OSError:
+            continue
+
+    if server is None:
+        print(f"✔ Perritos Felices Studio ya está activo en http://127.0.0.1:{args.port}")
+        if not args.no_browser:
+            webbrowser.open(f"http://127.0.0.1:{args.port}")
+        return
+
+    url = f"http://127.0.0.1:{port}"
     print("=================================================================")
     print(" 🐾 PERRITOS FELICES STUDIO — MINI-APP VISUAL ACTIVA")
     print("=================================================================")
