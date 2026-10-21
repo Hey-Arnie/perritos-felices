@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'report-sample'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; require-trusted-types-for 'script'; trusted-types pf-policy; upgrade-insecure-requests;" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Directorio Canino Verificado | Perritos Felices — Ladridos que Inspiran</title>
   <meta name="description" content="Encuentra clínicas veterinarias Fear Free, guarderías sin jaulas, estéticas relajantes, educadores en positivo y tiendas naturales en el Directorio de www.perritosfelices.com." />
   <link rel="icon" type="image/png" href="assets/logo/icononly_transparent_nobuffer.png" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
@@ -181,8 +181,8 @@
     </section>
   </main>
 
-  <!-- Modal Interactivo para Registrar un Negocio -->
-  <div id="register-business-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-register-title">
+  <!-- Modal Interactivo Nativo (<dialog closedby="any">) para Registrar un Negocio -->
+  <dialog id="register-business-modal" class="modal-dialog" closedby="any" aria-labelledby="modal-register-title">
     <div class="modal-card">
       <button type="button" id="close-register-modal" class="modal-close" aria-label="Cerrar ventana">✕</button>
       <div class="mono-label" style="color: var(--logo-blue); margin-bottom: 0.4rem;">ALTA DE EXPEDIENTE</div>
@@ -190,7 +190,7 @@
         Registrar nuevo espacio en el Directorio
       </h2>
       <p style="color: var(--ink-secondary); font-size: 0.94rem; margin-bottom: 1.5rem;">
-        Completa la ficha técnica de tu servicio canino. Se publicará de inmediato en tu vista activa.
+        Completa la ficha técnica de tu servicio canino. Se guardará como postulación en revisión.
       </p>
 
       <form id="register-business-form" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -232,7 +232,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div>
             <label for="bizPhone" class="mono-label" style="display:block; margin-bottom:0.35rem;">Teléfono / WhatsApp *</label>
-            <input type="text" id="bizPhone" name="bizPhone" required class="form-input" placeholder="+502 5555-5555" />
+            <input type="tel" id="bizPhone" name="bizPhone" required pattern="[0-9+\-\s()]{6,24}" class="form-input" placeholder="+502 5555-5555" />
           </div>
           <div>
             <label for="bizHours" class="mono-label" style="display:block; margin-bottom:0.35rem;">Horario de atención *</label>
@@ -250,7 +250,7 @@
         </button>
       </form>
     </div>
-  </div>
+  </dialog>
 
   <footer class="site-footer">
     <div class="container">

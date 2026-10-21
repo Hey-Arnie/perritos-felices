@@ -7,6 +7,20 @@
 window.PERRITOS_DATA = {
   "articles": [
     {
+      "id": "art-12",
+      "slug": "miedo-pirotecnia-ruidos-fuertes-perros.html",
+      "title": "Miedo a la pirotecnia y ruidos fuertes en perros: guía preventiva para proteger su calma sin sedantes peligrosos",
+      "excerpt": "Guía integral y preventiva para proteger a tu perro de la pirotecnia y tormentas: cómo construir su zona segura, enriquecimiento olfativo y por qué evitar la acepromacina.",
+      "category": "Comportamiento",
+      "readTime": "8 min de lectura",
+      "date": "21 Oct 2026",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
+      "emoji": "🐕",
+      "bgGradient": "linear-gradient(135deg, #DDE6FF 0%, #FFF1D6 100%)",
+      "featured": true
+    },
+    {
       "id": "art-11",
       "slug": "como-elegir-arnes-en-y-perros.html",
       "title": "Cómo elegir el mejor arnés en Y para tu perro y por qué evitar los collares de ahogo",
@@ -858,7 +872,7 @@ window.PERRITOS_DATA = {
       "description": "Clínica veterinaria con certificación Fear Free en Roma Norte. Especialistas en medicina preventiva, cirugía de mínima invasión y consultas sin estrés para caninos y felinos.",
       "address": "Calle Frontera 175, Col. Roma Norte, Alcaldía Cuauhtémoc, 06700 Ciudad de México",
       "phone": "+52 55 4633 3521",
-      "hours": "Lun - Vie: 10:00 AM a 7:00 PM | Sáb: 10:00 AM a 5:00 PM | Dom: 10:00 AM a 3:00 PM",
+      "hours": "Lun - Vie: 10:00 AM a 7:00 PM | Sáb: 10:00 AM a 5:00 PM | Dom: 10:00 AM a 3:00 P",
       "highlights": [
         "Certificación Fear Free",
         "Cirugía y medicina preventiva",

@@ -1380,6 +1380,22 @@ h1, h2, h3, h4, .font-display {
   box-shadow: 3px 3px 0 var(--logo-yellow);
 }
 
+/* Validación diferida tras interacción (validate-input-after-interaction) */
+.form-input:user-invalid,
+.form-textarea:user-invalid,
+.form-input.user-invalid-fallback,
+.form-textarea.user-invalid-fallback {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+.form-input:user-valid,
+.form-textarea:user-valid,
+.form-input.user-valid-fallback,
+.form-textarea.user-valid-fallback {
+  border-color: #188038;
+}
+
 /* ==========================================================================
    Página Directorio (directorio.html)
    ========================================================================== */
@@ -1682,8 +1698,22 @@ h1, h2, h3, h4, .font-display {
 }
 
 /* ==========================================================================
-   Modal y Toast
+   Modal (<dialog closedby="any">) y Toast
    ========================================================================== */
+.modal-dialog {
+  border: none;
+  background: transparent;
+  padding: 1.5rem;
+  max-width: 640px;
+  width: 100%;
+  margin: auto;
+}
+
+.modal-dialog::backdrop {
+  background-color: rgba(16, 21, 43, 0.7);
+  backdrop-filter: blur(4px);
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;

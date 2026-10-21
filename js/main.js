@@ -1,8 +1,38 @@
 /**
  * PERRITOS FELICES — Interactividad Endurecida (Zero-Trust DOM, CWV INP Optimization & WCAG 2.2)
- * Cumple OWASP ASVS: Cero uso de innerHTML/eval, creación segura de nodos con textContent/createElement,
- * validación estricta de esquemas en formularios y Passive Event Listeners.
+ * Cumple OWASP ASVS & Modern Web Guidance: Cero uso de innerHTML/eval, Trusted Types ('pf-policy'),
+ * creación segura de nodos con textContent/createElement, <dialog closedby="any"> y :user-invalid + aria-invalid.
  */
+
+// Trusted Types Tinyfill & Policy ('pf-policy') para navegadores con y sin soporte nativo
+if (!window.trustedTypes) {
+  window.trustedTypes = {
+    createPolicy: (name, rules) => ({
+      createHTML: (s) => (rules.createHTML ? rules.createHTML(s) : s),
+      createScriptURL: (s) => (rules.createScriptURL ? rules.createScriptURL(s) : s),
+      createScript: (s) => (rules.createScript ? rules.createScript(s) : s)
+    })
+  };
+}
+
+if (window.trustedTypes && window.trustedTypes.createPolicy) {
+  try {
+    window.pfTrustedPolicy = window.trustedTypes.createPolicy("pf-policy", {
+      createHTML: () => {
+        throw new TypeError("[CSP Trusted Types] Asignación directa de HTML bloqueada por pf-policy. Usa createEl/textContent.");
+      },
+      createScriptURL: (url) => {
+        const parsed = new URL(url, window.location.origin);
+        if (parsed.origin === window.location.origin) {
+          return parsed.href;
+        }
+        throw new TypeError(`[CSP Trusted Types] Script URL no autorizada: ${url}`);
+      }
+    });
+  } catch (_) {
+    // Política ya registrada
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   initHeaderAndMobileNav();
@@ -52,9 +82,27 @@ function createSvgEl(tag, attrs = {}, children = []) {
   return el;
 }
 
+const SAFE_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*\.html$/i;
+const SAFE_GRADIENT_PATTERN =
+  /^linear-gradient\(\s*\d{1,3}deg\s*,\s*#[0-9a-fA-F]{3,8}\s+\d{1,3}%\s*,\s*#[0-9a-fA-F]{3,8}\s+\d{1,3}%\s*\)$/;
+const FALLBACK_BG_GRADIENT = "linear-gradient(135deg, #FFBE58 0%, #FFE2AD 100%)";
+
 function sanitizeString(input, maxLen = 120) {
   if (typeof input !== "string") return "";
-  return input.replace(/[\u0000-\u001F\u007F]/g, "").trim().slice(0, maxLen);
+  return input
+    .replace(/[\u0000-\u001F\u007F\u202A-\u202E\u2066-\u2069]/g, "")
+    .trim()
+    .slice(0, maxLen);
+}
+
+function sanitizeArticleSlug(rawSlug) {
+  const clean = sanitizeString(String(rawSlug || ""), 120);
+  return SAFE_SLUG_PATTERN.test(clean) ? clean : "guia-alimentacion-natural-perros.html";
+}
+
+function sanitizeBgGradient(rawGradient) {
+  const clean = sanitizeString(String(rawGradient || ""), 120);
+  return SAFE_GRADIENT_PATTERN.test(clean) ? clean : FALLBACK_BG_GRADIENT;
 }
 
 /* ==========================================================================
@@ -110,9 +158,43 @@ window.showToast = function (message) {
 };
 
 /* ==========================================================================
-   3. Formularios de Newsletter con Validación de Formato
+   3. Formularios de Newsletter y Sincronización Accesible (:user-invalid + aria-invalid)
    ========================================================================== */
+function syncFormControlsAria(root = document) {
+  const supportsUserInvalid =
+    typeof CSS !== "undefined" && CSS.supports && CSS.supports("selector(:user-invalid)");
+  const controls = root.querySelectorAll("input, textarea, select");
+
+  controls.forEach((input) => {
+    const syncAria = () => {
+      if (!supportsUserInvalid) {
+        input.classList.add("is-dirty");
+      }
+      const isInvalid = !input.validity.valid;
+      input.setAttribute("aria-invalid", isInvalid ? "true" : "false");
+    };
+
+    input.addEventListener("blur", syncAria);
+    input.addEventListener("input", () => {
+      if (input.getAttribute("aria-invalid") === "true") {
+        syncAria();
+      }
+    });
+  });
+
+  root.querySelectorAll("form").forEach((form) => {
+    form.addEventListener("reset", () => {
+      form.querySelectorAll("input, textarea, select").forEach((el) => {
+        el.classList.remove("is-dirty");
+        el.removeAttribute("aria-invalid");
+      });
+    });
+  });
+}
+
 function initNewsletterForms() {
+  syncFormControlsAria(document);
+
   const forms = document.querySelectorAll(".js-newsletter-form");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -125,6 +207,7 @@ function initNewsletterForms() {
         window.showToast(`[OK] Suscripción confirmada para ${email} — Guía enviada.`);
         form.reset();
       } else {
+        if (emailInput) emailInput.setAttribute("aria-invalid", "true");
         window.showToast("[AVISO] Por favor ingresa un correo electrónico válido.");
       }
     });
@@ -199,15 +282,17 @@ function createCategorySvgNode(category) {
 }
 
 function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
-  const docNum = article.id ? article.id.replace("art-", "Guía #") : `Guía #0${idx + 1}`;
-  const safeHref = `${basePath}${encodeURIComponent(article.slug).replace(/%2F/g, "/")}`;
+  const docNum = article.id ? sanitizeString(article.id, 24).replace("art-", "Guía #") : `Guía #0${idx + 1}`;
+  const safeSlug = sanitizeArticleSlug(article.slug);
+  const safeHref = `${basePath}${encodeURIComponent(safeSlug)}`;
+  const safeGradient = sanitizeBgGradient(article.bgGradient);
 
   const thumbLink = createEl(
     "a",
     {
       className: "article-thumb",
       attrs: { href: safeHref },
-      style: `background: ${article.bgGradient};`
+      style: `background: ${safeGradient};`
     },
     [
       createEl("div", { className: "article-thumb-top" }, [
@@ -246,14 +331,24 @@ function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
 }
 
 function createBusinessCardNode(biz, idx = 0) {
-  const code = biz.id ? biz.id.replace("dir-", "Verificado #") : `Verificado #0${idx + 1}`;
+  const isOfficial = Boolean(biz.verified);
+  const code = isOfficial
+    ? (biz.id ? sanitizeString(biz.id, 24).replace("dir-", "Verificado #") : `Verificado #0${idx + 1}`)
+    : "Postulación Local";
   const badgesWrap = createEl("div", { className: "business-badges" });
 
-  if (biz.verified) {
+  if (isOfficial) {
     badgesWrap.appendChild(
       createEl("span", { className: "badge badge-verified" }, [
         createEl("span", { className: "led-dot led-green" }),
         " Trato Amable"
+      ])
+    );
+  } else {
+    badgesWrap.appendChild(
+      createEl("span", { className: "badge badge-city" }, [
+        createEl("span", { className: "led-dot led-gold" }),
+        " En Revisión"
       ])
     );
   }
@@ -460,22 +555,25 @@ function loadValidatedCustomBusinesses() {
   try {
     const raw = JSON.parse(localStorage.getItem("pf_custom_businesses") || "[]");
     if (!Array.isArray(raw)) return [];
-    return raw.slice(0, 30).map((item, idx) => ({
-      id: sanitizeString(item.id || `dir-c${idx}`, 20),
-      name: sanitizeString(item.name || "Centro Canino", 80),
-      category: ALLOWED_CATEGORIES.includes(item.category) ? item.category : "Veterinaria y Salud",
-      city: ALLOWED_CITIES.includes(item.city) ? item.city : "Ciudad de Guatemala",
-      rating: Math.min(Math.max(Number(item.rating) || 5.0, 1.0), 5.0),
-      reviews: Math.max(parseInt(item.reviews, 10) || 1, 1),
-      verified: Boolean(item.verified),
-      description: sanitizeString(item.description || "", 320),
-      address: sanitizeString(item.address || "", 140),
-      phone: sanitizeString(item.phone || "", 24),
-      hours: sanitizeString(item.hours || "", 60),
-      highlights: Array.isArray(item.highlights)
-        ? item.highlights.slice(0, 4).map((h) => sanitizeString(h, 40))
-        : ["Protocolo Amable"]
-    }));
+    return raw
+      .filter((item) => Object.prototype.toString.call(item) === "[object Object]")
+      .slice(0, 30)
+      .map((item, idx) => ({
+        id: sanitizeString(item.id || `dir-c${idx}`, 20),
+        name: sanitizeString(item.name || "Centro Canino", 80),
+        category: ALLOWED_CATEGORIES.includes(item.category) ? item.category : "Veterinaria y Salud",
+        city: ALLOWED_CITIES.includes(item.city) ? item.city : "Ciudad de Guatemala",
+        rating: Math.min(Math.max(Number(item.rating) || 5.0, 1.0), 5.0),
+        reviews: Math.max(parseInt(item.reviews, 10) || 1, 1),
+        verified: false, // Las postulaciones locales nunca falsifican el sello oficial verificado
+        description: sanitizeString(item.description || "", 320),
+        address: sanitizeString(item.address || "", 140),
+        phone: sanitizeString(item.phone || "", 24),
+        hours: sanitizeString(item.hours || "", 60),
+        highlights: Array.isArray(item.highlights)
+          ? item.highlights.slice(0, 4).map((h) => sanitizeString(h, 40))
+          : ["Postulación en Revisión"]
+      }));
   } catch {
     return [];
   }
@@ -567,23 +665,53 @@ function initDirectoryPage() {
     });
   }
 
-  // Modal de Registro de Negocio
+  // Modal de Registro de Negocio (<dialog closedby="any"> + fallback para navegadores sin closedBy)
   const openModalBtns = document.querySelectorAll(".js-open-register-modal");
   const modal = document.getElementById("register-business-modal");
   const closeModalBtn = document.getElementById("close-register-modal");
   const registerForm = document.getElementById("register-business-form");
 
+  const openRegisterDialog = () => {
+    if (!modal) return;
+    if (typeof modal.showModal === "function") {
+      if (!modal.open) modal.showModal();
+    } else {
+      modal.classList.add("open");
+    }
+  };
+
+  const closeRegisterDialog = () => {
+    if (!modal) return;
+    if (typeof modal.close === "function" && modal.open) {
+      modal.close();
+    } else {
+      modal.classList.remove("open");
+    }
+  };
+
   openModalBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (modal) modal.classList.add("open");
-    });
+    btn.addEventListener("click", openRegisterDialog);
   });
 
   if (closeModalBtn && modal) {
-    closeModalBtn.addEventListener("click", () => modal.classList.remove("open"));
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) modal.classList.remove("open");
-    });
+    closeModalBtn.addEventListener("click", closeRegisterDialog);
+
+    // Fallback obligatorio para navegadores que aún no soportan 'closedby="any"' en HTMLDialogElement
+    if (typeof HTMLDialogElement === "undefined" || !("closedBy" in HTMLDialogElement.prototype)) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          const rect = modal.getBoundingClientRect();
+          const isInDialog =
+            rect.top <= e.clientY &&
+            e.clientY <= rect.top + rect.height &&
+            rect.left <= e.clientX &&
+            e.clientX <= rect.left + rect.width;
+          if (!isInDialog) {
+            closeRegisterDialog();
+          }
+        }
+      });
+    }
   }
 
   if (registerForm) {
@@ -611,12 +739,12 @@ function initDirectoryPage() {
         city: ALLOWED_CITIES.includes(rawCity) ? rawCity : "Ciudad de Guatemala",
         rating: 5.0,
         reviews: 1,
-        verified: true,
+        verified: false,
         description: rawDesc,
         address: rawAddress,
         phone: rawPhone,
         hours: rawHours || "Lun - Sáb: 9:00 AM a 6:00 PM",
-        highlights: ["Recién registrado", "Protocolo Amable"]
+        highlights: ["Postulación en Revisión", "Pendiente Auditoría"]
       };
 
       const existing = loadValidatedCustomBusinesses();
@@ -626,8 +754,8 @@ function initDirectoryPage() {
       allBusinesses = [newBiz, ...allBusinesses];
       filterAndRenderDirectory();
       registerForm.reset();
-      if (modal) modal.classList.remove("open");
-      window.showToast(`[REGISTRO EXITOSO] ${newBiz.name} publicado en el directorio.`);
+      closeRegisterDialog();
+      window.showToast(`[POSTULACIÓN RECIBIDA] ${newBiz.name} guardado en vista previa (En Revisión).`);
     });
   }
 
@@ -682,22 +810,25 @@ function initArticlePage() {
   shareBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       const network = btn.dataset.share;
-      const url = window.location.href;
-      const title = document.title;
+      const url = window.location.protocol.startsWith("http")
+        ? window.location.href
+        : "https://www.perritosfelices.com/";
+      const title = sanitizeString(document.title, 140);
+
+      function openSafePopup(targetUrl) {
+        const win = window.open(targetUrl, "_blank", "noopener,noreferrer");
+        if (win) win.opener = null;
+      }
 
       if (network === "whatsapp") {
-        window.open(`https://wa.me/?text=${encodeURIComponent(title + " " + url)}`, "_blank", "noopener,noreferrer");
+        openSafePopup(`https://wa.me/?text=${encodeURIComponent(title + " " + url)}`);
       } else if (network === "twitter") {
-        window.open(
-          `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
-          "_blank",
-          "noopener,noreferrer"
+        openSafePopup(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`
         );
       } else if (network === "facebook") {
-        window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-          "_blank",
-          "noopener,noreferrer"
+        openSafePopup(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
         );
       } else if (network === "copy") {
         if (navigator.clipboard) {

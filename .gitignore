@@ -4,5 +4,11 @@ Thumbs.db
 node_modules/
 .env
 .env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*secret*
+*credentials*
 .netlify/
 .vercel/
