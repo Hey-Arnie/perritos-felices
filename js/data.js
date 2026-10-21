@@ -1,5 +1,5 @@
 /**
- * PERRITOS FELICES — Base de datos central de Artículos y Directorio Canino
+ * PERRITOS FELICES — Base de datos central de Artículos, Directorio Canino y Marketing
  * Generado automáticamente por 01_Infraestructura_Web/scripts/publicar.py
  * Línea Gráfica: Azul Cobalto (#2241C8) & Amarillo Dorado (#FFBE58) — 'Ladridos que inspiran'
  */
@@ -1886,5 +1886,33 @@ window.PERRITOS_DATA = {
         "Punto de descanso tras paseos"
       ]
     }
-  ]
+  ],
+  "marketing": {
+    "topbarRight": "EDICIÓN ABIERTA — DIRECTORIO ÉTICO & BIBLIOTECA CANINA [WWW.PERRITOSFELICES.COM]",
+    "heroTag": "COMUNIDAD DE BIENESTAR CANINO",
+    "heroCoords": "GUÍAS PRÁCTICAS // SALUD, NUTRICIÓN & AMOR",
+    "heroTitleMain": "Ciencia amable y vida digna para un",
+    "heroTitleHighlight": "perrito feliz.",
+    "heroDescription": "Acompañamos a familias y tutores de todas las edades con guías claras, fáciles de aplicar en casa y escritas por especialistas. Descubre alimentación natural segura, educación sin castigos y nuestro directorio de veterinarias y guarderías verificadas.",
+    "heroBtnPrimary": "EXPLORAR LAS 10 GUÍAS PRÁCTICAS",
+    "heroBtnSecondary": "BUSCAR EN EL DIRECTORIO",
+    "stat1Number": "10 Guías",
+    "stat1Label": "Nutrición casera, lenguaje canino, vacunas y primeros auxilios",
+    "stat2Number": "0% Castigos",
+    "stat2Label": "Espacios revisados libres de jaulas y collares de ahogo",
+    "stat3Number": "12,500+",
+    "stat3Label": "Familias cuidando mejor la salud física y emocional de su perro",
+    "tickerItems": [
+      "EDUCACIÓN AMABLE EN POSITIVO",
+      "NUTRICIÓN NATURAL Y SEGURA",
+      "DIRECTORIO LIBRE DE JAULAS",
+      "SALUD PREVENTIVA PASO A PASO"
+    ],
+    "newsletterTitle": "Ladridos que inspiran, directo en tu bandeja cada martes.",
+    "newsletterDescription": "Enviamos una sola lectura semanal: recetas de snacks naturales seguros, análisis de comportamiento canino y nuevos centros verificados en el directorio. Cero spam.",
+    "newsletterBtn": "SUSCRIBIRME AL BOLETÍN",
+    "ctaBoxTag": "CONVOCATORIA ABIERTA",
+    "ctaBoxTitle": "¿Diriges un proyecto canino ético?",
+    "ctaBoxDesc": "Si eres veterinario Fear Free, etólogo en positivo, estética sin amarres o guardería campestre, postula tu espacio sin costo."
+  }
 };

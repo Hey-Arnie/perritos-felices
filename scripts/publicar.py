@@ -1028,6 +1028,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("build", help="Compila artículos, directorio, data.js y sitemap.xml")
     sub.add_parser("status", help="Muestra estadísticas del sitio y calendario editorial")
     sub.add_parser("audit", help="Ejecuta auditoría Zero-Trust de seguridad web y datos")
+    sub.add_parser("studio", help="Abre la Mini-App visual Perritos Felices Studio en tu navegador")
 
     dep_p = sub.add_parser("deploy", help="Compila, audita y sube cambios seguros a GitHub / Vercel")
     dep_p.add_argument("--msg", default=None, help="Mensaje personalizado para el commit de Git")
@@ -1057,6 +1058,9 @@ def main() -> int:
         return cmd_status()
     if cmd == "audit":
         return cmd_audit()
+    if cmd == "studio":
+        studio_script = Path(__file__).resolve().parent / "studio_server.py"
+        return subprocess.call([sys.executable, str(studio_script)])
     if cmd == "deploy":
         return cmd_deploy(args)
     if cmd == "nuevo-negocio":
