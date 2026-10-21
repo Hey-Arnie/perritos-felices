@@ -486,11 +486,38 @@ def render_article_from_template(article: dict, template_str: str) -> str:
     def esc(val: object) -> str:
         return html.escape(strip_dangerous_unicode(str(val)), quote=True)
 
+    safe_slug_val = sanitize_slug(article["slug"], article["title"])
+    json_ld_data = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": strip_dangerous_unicode(str(article["title"])),
+        "description": strip_dangerous_unicode(str(article["excerpt"])),
+        "url": f"https://www.perritosfelices.com/articulos/{safe_slug_val}",
+        "datePublished": strip_dangerous_unicode(str(article["date"])),
+        "author": {
+            "@type": "Organization",
+            "name": strip_dangerous_unicode(str(article["author"])),
+            "url": "https://www.perritosfelices.com/"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Perritos Felices",
+            "alternateName": "Perros Felices",
+            "url": "https://www.perritosfelices.com/",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png"
+            }
+        }
+    }
+    json_ld_raw = json.dumps(json_ld_data, ensure_ascii=False, indent=4).replace("</", "<\\/")
+    indented_json_ld = "\n".join(f"  {line}" for line in json_ld_raw.splitlines())
+
     replacements = {
         "{{TITLE}}": esc(article["title"]),
         "{{SUBTITLE}}": esc(article.get("subtitle") or article["excerpt"]),
         "{{EXCERPT}}": esc(article["excerpt"]),
-        "{{SLUG}}": esc(sanitize_slug(article["slug"], article["title"])),
+        "{{SLUG}}": esc(safe_slug_val),
         "{{CATEGORY}}": esc(cat),
         "{{TOPBAR_TAG}}": esc(article.get("topbarTag") or defaults["topbarTag"]),
         "{{SECTION_TAG}}": esc(article.get("sectionTag") or defaults["sectionTag"]),
@@ -501,6 +528,7 @@ def render_article_from_template(article: dict, template_str: str) -> str:
         "{{READ_TIME}}": esc(article["readTime"]),
         "{{TOC_ITEMS}}": toc_html,
         "{{ARTICLE_BODY}}": indented_body,
+        "{{JSON_LD}}": indented_json_ld,
     }
 
     rendered = template_str

@@ -8,6 +8,20 @@ window.PERRITOS_DATA = {
   "articles": [
     {
       "id": "art-12",
+      "slug": "como-saber-si-tu-perro-es-feliz.html",
+      "title": "¿Cómo saber si tu perro es feliz? Señales de bienestar canino y etología",
+      "excerpt": "Aprende a interpretar el lenguaje corporal, las rutinas de descanso y la capacidad de elección que demuestran la auténtica felicidad y equilibrio en tu perro.",
+      "category": "Comportamiento",
+      "readTime": "10 min de lectura",
+      "date": "21 Oct 2026",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
+      "emoji": "🐕",
+      "bgGradient": "linear-gradient(135deg, #DDE6FF 0%, #FFF1D6 100%)",
+      "featured": true
+    },
+    {
+      "id": "art-12",
       "slug": "miedo-pirotecnia-ruidos-fuertes-perros.html",
       "title": "Miedo a la pirotecnia y ruidos fuertes en perros: guía preventiva para proteger su calma sin sedantes peligrosos",
       "excerpt": "Guía integral y preventiva para proteger a tu perro de la pirotecnia y tormentas: cómo construir su zona segura, enriquecimiento olfativo y por qué evitar la acepromacina.",
