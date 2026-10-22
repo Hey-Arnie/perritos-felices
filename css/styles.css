@@ -1947,6 +1947,11 @@ h1, h2, h3, h4, .font-display {
 }
 
 @media (max-width: 768px) {
+  /* Desactivar textura fractal en móviles para liberar GPU y evitar recomposiciones en scroll */
+  body::before {
+    display: none;
+  }
+
   .container {
     padding: 0 1.25rem;
   }
