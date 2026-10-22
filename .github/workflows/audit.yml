@@ -1,0 +1,25 @@
+name: Auditoria Zero-Trust
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 15 * * 1" # Lunes 09:00 hora CDMX (15:00 UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # actions/checkout v4.2.2 fijado por hash (Supply-Chain Security)
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          path: 01_Infraestructura_Web
+          persist-credentials: false
+      - name: Auditoria publicar.py
+        run: python3 01_Infraestructura_Web/scripts/publicar.py audit
