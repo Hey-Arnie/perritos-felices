@@ -2265,22 +2265,33 @@ textarea {
   }
 }
 
-/* Respeto estricto a usuarios sensibles al movimiento (WCAG 2.3.3) */
+/* Respeto estricto a usuarios sensibles al movimiento (WCAG 2.3.3 SC 2.3.3 & Impeccable A11y) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 
+  /* Preserva feedback de estado (color, opacidad) eliminando saltos espaciales */
+  .bento-card,
+  .article-card,
+  .business-card,
+  .btn,
+  .share-btn {
+    transform: none !important;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
   .kinetic-line {
+    animation: none !important;
     transform: none !important;
   }
 
   .svg-draw-path {
+    animation: none !important;
     stroke-dashoffset: 0 !important;
   }
 }
