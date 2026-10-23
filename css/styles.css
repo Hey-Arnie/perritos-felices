@@ -99,6 +99,9 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -107,6 +110,8 @@ body {
   color: var(--ink-primary);
   line-height: 1.65;
   overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   position: relative;
 }
@@ -1513,10 +1518,12 @@ h1, h2, h3, h4, .font-display {
 
 .article-page-layout {
   display: grid;
-  grid-template-columns: 290px 1fr;
+  grid-template-columns: 290px minmax(0, 1fr);
   gap: 3rem;
   align-items: start;
   padding: 3rem 0 5rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 .toc-sidebar {
@@ -1614,6 +1621,10 @@ h1, h2, h3, h4, .font-display {
   border-radius: var(--radius-md);
   padding: 3rem;
   box-shadow: 6px 6px 0 var(--border-strong);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .article-content h2 {
@@ -1706,6 +1717,7 @@ h1, h2, h3, h4, .font-display {
 
 .table-responsive {
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin: 1.5rem 0;
@@ -1714,17 +1726,16 @@ h1, h2, h3, h4, .font-display {
 
 .info-table {
   width: 100%;
-  min-width: 480px;
+  min-width: 440px;
   border-collapse: collapse;
   margin: 0;
   border: 1.5px solid var(--border-strong);
 }
 
 .article-content table {
-  display: block;
+  width: 100%;
   max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  border-collapse: collapse;
 }
 
 .form-grid-2col {
@@ -1902,7 +1913,20 @@ h1, h2, h3, h4, .font-display {
   .cta-banner,
   .blog-layout,
   .article-page-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .blog-layout {
+    gap: 2rem;
+  }
+
+  .blog-sidebar {
+    position: static;
+  }
+
+  .article-page-layout {
+    gap: 2rem;
+    padding: 2.25rem 0 3.5rem;
   }
 
   .bento-col-7, .bento-col-5, .bento-col-4 {
@@ -1964,13 +1988,25 @@ h1, h2, h3, h4, .font-display {
     gap: 2.5rem;
   }
 
+  /* En layout de artículo: desempaquetar sidebar para ubicar TOC arriba y Compartir al final */
   .toc-sidebar {
+    display: contents;
     position: static;
-    order: 2;
+  }
+
+  .toc-card {
+    order: 1;
   }
 
   .article-content {
-    order: 1;
+    order: 2;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .share-card {
+    order: 3;
+    margin-top: 0.5rem;
   }
 }
 
@@ -1981,7 +2017,17 @@ h1, h2, h3, h4, .font-display {
   }
 
   .container {
-    padding: 0 1.25rem;
+    padding: 0 1.15rem;
+    max-width: 100%;
+  }
+
+  .navbar {
+    height: 72px;
+  }
+
+  .nav-links {
+    top: 72px;
+    max-height: calc(100vh - 72px);
   }
 
   /* En móvil (<768px), ocultar todos los botones de acción para máxima limpieza */
@@ -1989,9 +2035,18 @@ h1, h2, h3, h4, .font-display {
     display: none;
   }
 
-  /* Topbar compacta */
+  /* Topbar compacta y centrada */
   .topbar {
-    padding: 0.45rem 0;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.66rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .topbar .container {
+    padding: 0 0.5rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .topbar-inner {
@@ -2058,21 +2113,188 @@ h1, h2, h3, h4, .font-display {
   }
 
   .filter-bar {
-    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    padding: 0.85rem;
+  }
+
+  .category-pills {
+    width: 100%;
+    padding-bottom: 0.35rem;
   }
 
   .directory-grid,
   .articles-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;
   }
 
-  .article-header {
-    padding: 2.25rem 0 1.75rem;
+  .article-card {
+    min-width: 0;
   }
 
+  .article-thumb {
+    height: 170px;
+    padding: 1rem 1.15rem;
+  }
+
+  .article-body {
+    padding: 1.25rem 1.15rem;
+  }
+
+  .article-title {
+    font-size: 1.18rem;
+    line-height: 1.25;
+  }
+
+  /* Cabecera y metadatos del artículo en móvil */
+  .article-header {
+    padding: 1.75rem 0 1.5rem;
+  }
+
+  .breadcrumb {
+    font-size: 0.72rem;
+    gap: 0.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .article-hero-title {
+    font-size: clamp(1.6rem, 5.8vw, 2.25rem);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    word-break: break-word;
+  }
+
+  .section-subtitle {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .article-byline {
+    gap: 0.65rem 1rem;
+    font-size: 0.74rem;
+    margin-top: 1rem;
+  }
+
+  .author-chip {
+    font-size: 0.86rem;
+  }
+
+  .author-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 0.74rem;
+  }
+
+  /* TOC arriba del contenido en móvil */
+  .toc-card {
+    padding: 1.15rem 1.25rem;
+    box-shadow: 4px 4px 0 var(--border-strong);
+  }
+
+  .toc-title {
+    font-size: 0.76rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .toc-list {
+    gap: 0.35rem;
+  }
+
+  .toc-link {
+    font-size: 0.84rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  /* Cuerpo editorial del artículo */
   .article-content {
-    padding: 1.5rem;
+    padding: 1.35rem 1.15rem;
+    box-shadow: 4px 4px 0 var(--border-strong);
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .article-content h2 {
+    font-size: 1.38rem;
+    margin: 1.75rem 0 0.75rem;
+    line-height: 1.2;
+    scroll-margin-top: 88px;
+  }
+
+  .article-content h3 {
+    font-size: 1.15rem;
+    margin: 1.35rem 0 0.5rem;
+  }
+
+  .article-content p {
+    font-size: 0.98rem;
+    line-height: 1.62;
+    margin-bottom: 1.05rem;
+  }
+
+  .article-content ul, .article-content ol {
+    margin: 0.75rem 0 1.25rem 1.15rem;
+  }
+
+  .article-content li {
+    font-size: 0.96rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem;
+  }
+
+  .callout-box {
+    padding: 1rem 1.15rem;
+    margin: 1.35rem 0;
+  }
+
+  .tldr-box {
+    padding: 1.15rem 1.25rem;
+    margin: 1.35rem 0;
+  }
+
+  /* Tablas responsivas en móvil */
+  .article-content table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.25rem 0;
+  }
+
+  .info-table {
+    min-width: 420px;
+    font-size: 0.82rem;
+  }
+
+  .info-table th, .info-table td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  /* Tarjeta de compartir al final del artículo */
+  .share-card {
+    padding: 1.15rem;
+    box-shadow: 4px 4px 0 var(--logo-yellow);
+  }
+
+  .share-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .share-btn {
+    padding: 0.55rem 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  /* Blog hero y artículo destacado */
+  .featured-post {
+    padding: 1.35rem 1.15rem;
+    box-shadow: 4px 4px 0 var(--border-strong);
+    margin-bottom: 2rem;
   }
 
   .cta-banner {
@@ -2103,17 +2325,17 @@ h1, h2, h3, h4, .font-display {
 
 @media (max-width: 480px) {
   .brand-logo-icon {
-    width: 42px;
-    height: 42px;
-    padding: 5px;
+    width: 38px;
+    height: 38px;
+    padding: 4px;
   }
 
   .brand-logo-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
   }
 
   .brand-logo-slogan {
-    font-size: 0.58rem;
+    font-size: 0.55rem;
   }
 
   .modal-dialog {
@@ -2127,6 +2349,28 @@ h1, h2, h3, h4, .font-display {
   .modal-close {
     top: 0.75rem;
     right: 0.75rem;
+  }
+
+  .share-buttons {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+  }
+
+  .share-btn {
+    font-size: 0.68rem;
+    padding: 0.5rem 0.35rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (max-width: 360px) {
+  .share-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .info-table {
+    min-width: 380px;
+    font-size: 0.78rem;
   }
 }
 

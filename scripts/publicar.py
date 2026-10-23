@@ -189,6 +189,26 @@ def sanitize_article_body_html(body_html: str, source_label: str = "") -> str:
     return cleaned
 
 
+def wrap_tables_responsive(body: str) -> str:
+    """Garantiza que todas las tablas editoriales estén envueltas en .table-responsive para scroll táctil móvil."""
+    if "<table" not in body.lower():
+        return body
+    # Limpiar wrappers previos si existieran para evitar duplicación
+    cleaned = re.sub(
+        r'<div class="table-responsive">\s*(<table[\s\S]*?</table>)\s*</div>',
+        r"\1",
+        body,
+        flags=re.IGNORECASE,
+    )
+    # Envolver todas las tablas en el contenedor con scroll horizontal seguro
+    return re.sub(
+        r'(<table[\s\S]*?</table>)',
+        r'<div class="table-responsive">\n\1\n</div>',
+        cleaned,
+        flags=re.IGNORECASE,
+    )
+
+
 def get_author_initials(author_name: str) -> str:
     name_low = author_name.lower()
     if "editorial" in name_low or "perritos" in name_low:
@@ -466,6 +486,7 @@ def render_article_from_template(article: dict, template_str: str) -> str:
     body_html = sanitize_article_body_html(
         article.get("bodyHtml", "").strip(), article.get("slug", "articulo")
     )
+    body_html = wrap_tables_responsive(body_html)
     toc_list = article.get("toc") or extract_toc_from_body(body_html)
 
     toc_lines = []
