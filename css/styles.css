@@ -5,26 +5,29 @@
    ========================================================================== */
 
 :root {
-  /* Colores Oficiales del Logo Perritos Felices */
-  --logo-blue: #2241C8;          /* rgb(34, 65, 200) */
-  --logo-blue-dark: #162C96;
+  /* Brand Book PF-2027: Colores Primarios Oficiales */
+  --logo-blue: #2C4BCA;          /* AzulPF Oficial (#2C4BCA) */
+  --logo-blue-dark: #1A34A6;
   --logo-blue-deep: #0D1747;
-  --logo-blue-light: #E6ECFF;
+  --logo-blue-light: #E8EDFF;    /* Azul Glacial UI (#E8EDFF) */
   --logo-blue-soft: #F0F4FF;
 
-  --logo-yellow: #FFBE58;        /* rgb(255, 190, 88) */
-  --logo-yellow-dark: #E89D24;
-  --logo-yellow-light: #FFF1D6;
+  --logo-yellow: #FDB54A;        /* AmarilloPF Oficial (#FDB54A) */
+  --logo-yellow-dark: #E29928;
+  --logo-yellow-light: #FFF3E0;  /* Durazno Suave UI (#FFF3E0) */
   --logo-yellow-pale: #FAF5EA;
 
-  /* Superficies Papel Algodón & Estudio */
-  --bg-cream: #F6F4EE;
-  --bg-sand: #ECE8DF;
+  /* Superficies Secundarias UI (PF-2027) */
+  --bg-cream: #FDFBF7;           /* Crema Editorial (#FDFBF7) */
+  --color-ice-blue: #E8EDFF;     /* Azul Glacial */
+  --color-peach: #FFF3E0;        /* Durazno Suave */
+  --color-mint: #EAF2EB;         /* Menta Botánica (#EAF2EB) */
+  --bg-sand: #F5EFE6;
   --bg-sand-deep: #DFD9CC;
   --surface-white: #FFFFFF;
   --surface-dark: #10152B;
 
-  /* Tinta & Textos */
+  /* Tinta & Textos (WCAG 2.2 AA) */
   --ink-primary: #10152B;
   --ink-secondary: #3D4463;
   --ink-muted: #575E7E;
@@ -40,36 +43,38 @@
   --brand-brown-muted: var(--ink-muted);
 
   --brand-sage: #007A56;
-  --brand-sage-light: #DFF5ED;
+  --brand-sage-light: var(--color-mint);
   --brand-coral: #D9381E;
 
   /* Líneas de Construcción y Bordes */
-  --grid-line: rgba(16, 21, 43, 0.14);
+  --grid-line: rgba(16, 21, 43, 0.12);
   --border-strong: #10152B;
-  --border-warm: rgba(16, 21, 43, 0.16);
-  --border-subtle: rgba(16, 21, 43, 0.1);
+  --border-warm: rgba(16, 21, 43, 0.14);
+  --border-subtle: rgba(16, 21, 43, 0.08);
   --border-gold: #E8A63A;
 
-  /* Sombras Táctiles / Studio */
+  /* Sombras Táctiles / Studio & Glassmorfismo */
   --shadow-sm: 0 2px 0 rgba(16, 21, 43, 0.08);
   --shadow-md: 5px 5px 0 #10152B;
   --shadow-lg: 8px 8px 0 #10152B;
   --shadow-blue: 5px 5px 0 #10152B;
-  --shadow-yellow: 5px 5px 0 #2241C8;
+  --shadow-yellow: 5px 5px 0 #2C4BCA;
+  --glass-shadow: 0 10px 30px rgba(16, 21, 43, 0.06), 4px 4px 0 #10152B;
 
-  /* Radios Refinados */
+  /* Radios & Squircles (Bento 2.0) */
   --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 22px;
   --radius-xl: 28px;
+  --radius-squircle: 24px;       /* Squircle PF-2027 */
   --radius-pill: 9999px;
 
-  /* Sistema Tipográfico de 3 Familias */
-  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Sistema Tipográfico PF-2027 (Maximalismo Editorial) */
+  --font-serif: 'Fraunces', 'Instrument Serif', Georgia, serif;
+  --font-display: 'Fraunces', 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
 
   /* Curvas Expresivas y Física de Resortes (web-mobile-motion-graphics) */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
@@ -774,7 +779,7 @@ h1, h2, h3, h4, .font-display {
 
 .bento-card {
   background-color: var(--surface-white);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-squircle);
   padding: 2.15rem;
   border: 1.5px solid var(--border-strong);
   box-shadow: 5px 5px 0 var(--border-strong);
@@ -898,20 +903,24 @@ h1, h2, h3, h4, .font-display {
   gap: 1.75rem;
 }
 
+/* Ficha del Directorio Canino: Glassmorfismo Táctil (PF-2027) */
 .business-card {
-  background-color: var(--surface-white);
-  border-radius: var(--radius-md);
+  background-color: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-squircle);
   border: 1.5px solid var(--border-strong);
   padding: 1.75rem;
   box-shadow: 5px 5px 0 var(--border-strong);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.25s var(--ease-tactile), box-shadow 0.25s var(--ease-tactile);
+  transition: transform 0.25s var(--ease-tactile), box-shadow 0.25s var(--ease-tactile), background-color 0.25s var(--ease-out-expo);
   position: relative;
 }
 
 .business-card:hover {
+  background-color: rgba(255, 255, 255, 0.96);
   transform: translate(-3px, -3px);
   box-shadow: 7px 7px 0 var(--logo-yellow);
 }
@@ -1674,6 +1683,25 @@ h1, h2, h3, h4, .font-display {
   font-size: 1.05rem;
   color: var(--ink-primary);
   margin-bottom: 0.35rem;
+}
+
+/* Caja TL;DR Oficial de Guía Editorial (PF-2027) */
+.tldr-box {
+  background-color: var(--color-peach);
+  border: 1.5px solid var(--border-strong);
+  border-left: 6px solid var(--logo-yellow);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.6rem;
+  margin: 1.75rem 0;
+  box-shadow: 4px 4px 0 var(--border-strong);
+}
+
+.tldr-box strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
 }
 
 .table-responsive {
