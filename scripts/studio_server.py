@@ -28,6 +28,7 @@ sys.path.insert(0, str(SCRIPT_DIR))
 import publicar as pub  # noqa: E402
 
 STUDIO_DIR = pub.ROOT_DIR / "05_Studio_Privado"
+REACT_DIST_DIR = STUDIO_DIR / "referencia_ai_studio" / "dist"
 STUDIO_STATE_FILE = STUDIO_DIR / "studio_state.json"
 
 
@@ -140,8 +141,21 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path in ("/", "/index.html", "/studio", "/studio/", "/studio/index.html"):
+            if (REACT_DIST_DIR / "index.html").is_file():
+                self._serve_file(REACT_DIST_DIR, "index.html")
+                return
             self._serve_file(STUDIO_DIR, "index.html")
             return
+
+        if path in ("/vanilla", "/classic", "/vanilla/index.html"):
+            self._serve_file(STUDIO_DIR, "index.html")
+            return
+
+        if path.startswith("/assets/"):
+            candidate_react_asset = (REACT_DIST_DIR / path.lstrip("/")).resolve()
+            if candidate_react_asset.is_relative_to(REACT_DIST_DIR.resolve()) and candidate_react_asset.is_file():
+                self._serve_file(REACT_DIST_DIR, path)
+                return
 
         if path.startswith("/studio/"):
             rel = path[len("/studio/") :]
