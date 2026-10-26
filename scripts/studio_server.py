@@ -28,8 +28,9 @@ sys.path.insert(0, str(SCRIPT_DIR))
 import publicar as pub  # noqa: E402
 
 STUDIO_DIR = pub.ROOT_DIR / "05_Studio_Privado"
-REACT_DIST_DIR = STUDIO_DIR / "referencia_ai_studio" / "dist"
 STUDIO_STATE_FILE = STUDIO_DIR / "studio_state.json"
+WEEKLY_DIR = pub.ROOT_DIR / "02_Estrategia_Y_Contenido" / "entregas_semanales"
+CURRENT_WEEK_DIR = WEEKLY_DIR / "semana_2026_10_26"
 
 
 def get_studio_state():
@@ -104,6 +105,70 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
+        if path == "/api/weekly/current":
+            prop_file = CURRENT_WEEK_DIR / "propuesta_semanal.json"
+            if prop_file.exists():
+                try:
+                    data = json.loads(prop_file.read_text(encoding="utf-8"))
+                    self._send_json(data)
+                    return
+                except Exception as exc:
+                    self._send_json({"error": f"Error leyendo propuesta: {exc}"}, status=500)
+                    return
+            self._send_json({"error": "No hay propuesta semanal activa"}, status=404)
+            return
+
+        if path == "/api/weekly/download-kit":
+            zip_file = CURRENT_WEEK_DIR / "kit_descargables_semana_2026_10_26.zip"
+            if zip_file.exists():
+                data = zip_file.read_bytes()
+                self.send_response(200)
+                self._add_cors_headers()
+                self.send_header("Content-Type", "application/zip")
+                self.send_header("Content-Disposition", 'attachment; filename="kit_semanal_perritos_felices.zip"')
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_error(404, "Kit descargable no encontrado")
+            return
+
+        if path.startswith("/api/weekly/artes/"):
+            art_name = path[len("/api/weekly/artes/"):]
+            art_file = (CURRENT_WEEK_DIR / "artes" / art_name).resolve()
+            if art_file.is_file() and art_file.is_relative_to(CURRENT_WEEK_DIR.resolve()):
+                data = art_file.read_bytes()
+                ctype = "image/svg+xml" if art_name.endswith(".svg") else "image/png"
+                self.send_response(200)
+                self._add_cors_headers()
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "public, max-age=3600")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_error(404, "Arte no encontrado")
+            return
+
+        if path.startswith("/api/mascotas/"):
+            photo_name = path[len("/api/mascotas/"):]
+            ref_dir = pub.ROOT_DIR / "03_Assets_Visuales" / "referencias_mascotas"
+            photo_file = (ref_dir / photo_name).resolve()
+            if photo_file.is_file() and photo_file.is_relative_to(ref_dir.resolve()):
+                data = photo_file.read_bytes()
+                ctype = "image/jpeg" if photo_name.endswith((".jpg", ".jpeg")) else "image/png"
+                self.send_response(200)
+                self._add_cors_headers()
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "public, max-age=3600")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_error(404, "Foto de referencia no encontrada")
+            return
+
         if path == "/api/state":
             pub.ensure_editorial_calendar()
             articles = (
@@ -141,9 +206,6 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path in ("/", "/index.html", "/studio", "/studio/", "/studio/index.html"):
-            if (REACT_DIST_DIR / "index.html").is_file():
-                self._serve_file(REACT_DIST_DIR, "index.html")
-                return
             self._serve_file(STUDIO_DIR, "index.html")
             return
 
@@ -152,10 +214,12 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path.startswith("/assets/"):
-            candidate_react_asset = (REACT_DIST_DIR / path.lstrip("/")).resolve()
-            if candidate_react_asset.is_relative_to(REACT_DIST_DIR.resolve()) and candidate_react_asset.is_file():
-                self._serve_file(REACT_DIST_DIR, path)
+            candidate_studio_asset = (STUDIO_DIR / path.lstrip("/")).resolve()
+            if candidate_studio_asset.is_relative_to(STUDIO_DIR.resolve()) and candidate_studio_asset.is_file():
+                self._serve_file(STUDIO_DIR, path)
                 return
+            self._serve_file(pub.WEB_DIR, path)
+            return
 
         if path.startswith("/studio/"):
             rel = path[len("/studio/") :]
@@ -194,6 +258,134 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         try:
+            if path == "/api/weekly/approve-article":
+                prop_file = CURRENT_WEEK_DIR / "propuesta_semanal.json"
+                if not prop_file.exists():
+                    self._send_json({"error": "No hay propuesta semanal activa"}, status=404)
+                    return
+                prop_data = json.loads(prop_file.read_text(encoding="utf-8"))
+                art_info = prop_data.get("articuloWeb", {})
+
+                title = art_info.get("titulo", "Alergias en perros: señales en piel, orejas y patitas")
+                slug = "alergias-alimentarias-ambientales-perros-guia"
+                cat = art_info.get("categoria", "Salud y Prevención")
+                defaults = pub.CATEGORY_DEFAULTS.get(cat, pub.CATEGORY_DEFAULTS["Salud y Prevención"])
+
+                sections = [
+                    {
+                        "h2": "¿Por qué mi perro se lame las patas obsesivamente?",
+                        "paragraphs": [
+                            "El lamido constante de patas y el enrojecimiento interdigital no es un hábito nervioso ni una manía: es la manifestación clínica más común del prurito alérgico en caninos. Las almohadillas y los espacios entre dedos concentran una gran cantidad de glándulas sudoríparas y terminaciones nerviosas que reaccionan con inflamación aguda ante alérgenos de contacto.",
+                            "Cuando un perro camina sobre césped tratado con fertilizantes, áreas con esporas de moho o alfombras con ácaros del polvo, los alérgenos penetran la barrera cutánea. El lamido continuo empeora el cuadro al generar humedad constante, creando el caldo de cultivo ideal para sobrecrecimiento de levaduras (Malassezia) y bacterias secundarias."
+                        ],
+                        "bullets": [
+                            "Enrojecimiento brillante entre las almohadillas y tinción marrón del pelaje por la saliva.",
+                            "Sacudidas frecuentes de cabeza y rascado en la base de las orejas (otitis alérgica).",
+                            "Pérdida localizada de pelo alrededor de los ojos o en la zona del abdomen."
+                        ],
+                        "callout": "Regla de oro Fear-Free: Nunca uses collares isabelinos rígidos o castigos cuando tu perro se lama. El picor produce angustia real. Trata la causa médica de la mano de tu veterinario con champús calmantes y dietas de apoyo."
+                    },
+                    {
+                        "h2": "Alergias ambientales (Atopia) vs. Alergias alimentarias: cómo diferenciarlas",
+                        "paragraphs": [
+                            "Aunque ambas condiciones producen picor intenso, existen patrones clínicos muy claros que permiten orientar el diagnóstico inicial junto con tu equipo veterinario de confianza.",
+                            "La dermatitis atópica (ambiental) suele tener un fuerte componente estacional. Empeora de manera notable en primavera y verano debido a la floración del polen, o tras los paseos diarios en parques con césped húmedo. Por el contrario, la alergia alimentaria persiste los 365 días del año sin importar la estación."
+                        ],
+                        "bullets": [
+                            "Ambiental: Picor estacional, empeora tras salidas al aire libre, responde rápidamente al lavado de patas pospaseo.",
+                            "Alimentaria: Picor perenne todo el año, suele acompañarse de heces blandas, gases frecuentes o más de 3 defecaciones diarias.",
+                            "Combinada: Hasta un 25% de los perros con atopia presentan también sensibilidad alimentaria a proteínas comunes como pollo, res o lácteos."
+                        ],
+                        "callout": "Diagnóstico certero: No gastes en pruebas serológicas rápidas de saliva o pelo vendidas en internet; carecen de rigor científico canino. El único método validado por la dermatología veterinaria para alergia a la comida es la dieta de eliminación estricta durante 8 semanas."
+                    },
+                    {
+                        "h2": "Protocolo de alivio diario respetuoso en casa",
+                        "paragraphs": [
+                            "Mientras realizas los estudios veterinarios correspondientes, existen medidas higiénicas no invasivas que reducen drásticamente la carga de alérgenos sobre la piel de tu compañero:",
+                            "1. Baño de patas pospaseo: Limpia sus cuatro extremidades con agua tibia y jabón de avena coloidal o toallitas suaves hipoalergénicas. Es fundamental secar con una toalla suave sin frotar con fuerza.",
+                            "2. Aspirado con filtro HEPA: Reduce los ácaros del polvo en sus camas y zonas de descanso habituales al menos dos veces por semana.",
+                            "3. Suplementación con Ácidos Grasos Omega-3 (EPA/DHA): Ayudan a restaurar la integridad de la barrera lipídica epidérmica, reduciendo la penetración de alérgenos."
+                        ],
+                        "bullets": [
+                            "Lava sus mantas y camas con detergente hipoalergénico sin fragancias artificiales.",
+                            "Evita pasear en horas pico de polen o tras el corte de césped reciente.",
+                            "Cepillado suave diario para retirar partículas ambientales atrapadas en el manto."
+                        ]
+                    }
+                ]
+
+                body_html, toc = pub.build_body_from_sections(sections)
+
+                articles = (
+                    json.loads(pub.ARTICLES_JSON.read_text(encoding="utf-8"))
+                    if pub.ARTICLES_JSON.exists()
+                    else []
+                )
+
+                art_obj = {
+                    "id": art_info.get("id", "cal-02"),
+                    "slug": slug,
+                    "title": title,
+                    "subtitle": art_info.get("resumen", "Guía médica Fear-Free para cuidar la piel y patitas de tu compañero."),
+                    "excerpt": art_info.get("resumen", "Guía médica Fear-Free para cuidar la piel y patitas de tu compañero."),
+                    "category": cat,
+                    "readTime": art_info.get("tiempoLectura", "6 min de lectura"),
+                    "date": "26 de octubre, 2026",
+                    "author": "Equipo Editorial",
+                    "authorRole": "Perritos Felices",
+                    "emoji": defaults["emoji"],
+                    "topbarTag": defaults["topbarTag"],
+                    "sectionTag": defaults["sectionTag"],
+                    "bgGradient": defaults["bgGradient"],
+                    "featured": True,
+                    "toc": toc,
+                    "bodyHtml": body_html,
+                }
+
+                for a in articles:
+                    a["featured"] = False
+
+                replaced = False
+                for idx, existing in enumerate(articles):
+                    if existing.get("slug") == slug or existing.get("id") == art_obj["id"]:
+                        articles[idx] = art_obj
+                        replaced = True
+                        break
+                if not replaced:
+                    articles.insert(0, art_obj)
+
+                pub.write_markdown_file(art_obj)
+                pub.ARTICLES_JSON.write_text(
+                    json.dumps(articles, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+
+                if pub.CALENDAR_JSON.exists():
+                    cal_list = json.loads(pub.CALENDAR_JSON.read_text(encoding="utf-8"))
+                    for c in cal_list:
+                        if c.get("id") == art_info.get("id", "cal-02"):
+                            c["status"] = "publicada"
+                    pub.CALENDAR_JSON.write_text(
+                        json.dumps(cal_list, ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8",
+                    )
+
+                prop_data["articuloWeb"]["estado"] = "publicado_en_web"
+                prop_data["estado"] = "aprobado_parcial"
+                prop_file.write_text(
+                    json.dumps(prop_data, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+
+                code, out = capture_cmd(pub.cmd_build)
+                self._send_json({
+                    "ok": code == 0,
+                    "slug": slug,
+                    "url": f"/site/articulos/{slug}.html",
+                    "output": out
+                })
+                return
+
             if path == "/api/build":
                 code, out = capture_cmd(pub.cmd_build)
                 self._send_json({"ok": code == 0, "output": out}, status=200 if code == 0 else 500)

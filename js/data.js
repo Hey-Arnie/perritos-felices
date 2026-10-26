@@ -7,6 +7,20 @@
 window.PERRITOS_DATA = {
   "articles": [
     {
+      "id": "cal-02",
+      "slug": "alergias-alimentarias-ambientales-perros-guia.html",
+      "title": "Alergias alimentarias y ambientales en perros: señales en piel, orejas y patitas",
+      "excerpt": "Aprende a diferenciar una alergia estacional por polen de una intolerancia proteica. Guía médica Fear-Free sin fármacos que sedan a tu perro.",
+      "category": "Salud y Prevención",
+      "readTime": "6 min de lectura",
+      "date": "26 de octubre, 2026",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
+      "emoji": "🩺",
+      "bgGradient": "linear-gradient(135deg, #FFE4B5 0%, #E8EFFF 100%)",
+      "featured": true
+    },
+    {
       "id": "art-12",
       "slug": "como-saber-si-tu-perro-es-feliz.html",
       "title": "¿Cómo saber si tu perro es feliz? Señales de bienestar canino y etología",
