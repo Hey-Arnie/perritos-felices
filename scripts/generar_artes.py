@@ -524,6 +524,16 @@ HASHTAGS: #PerritosFelices #AlergiasCaninas #LokiElPerro #FrodoElPerro #CuidadoR
         zf.write(p4, arcname="artes/post_04_lou_arnes_en_y.svg")
         zf.write(flow_file, arcname="video_flow/proyecto_semana_flow.json")
         zf.write(guion_file, arcname="video_flow/guion_tiktok_lou_frodo_loki.txt")
+        video_mp4 = VIDEOS_DIR / "reel_semana_alergias_lou_frodo.mp4"
+        if video_mp4.exists():
+            zf.write(video_mp4, arcname="video_flow/reel_semana_alergias_lou_frodo.mp4")
+        ref_lou = ASSETS_DIR / "referencias_personajes" / "lou_frodo_loki_reference.jpg"
+        if ref_lou.exists():
+            zf.write(ref_lou, arcname="video_flow/lou_frodo_loki_reference.jpg")
+            zf.write(ref_lou, arcname="referencias/lou_personaje_oficial.jpg")
+        char_sheet = ASSETS_DIR / "referencias_personajes" / "LOU_CHARACTER_SHEET.md"
+        if char_sheet.exists():
+            zf.write(char_sheet, arcname="referencias/FICHA_TECNICA_LOU.md")
         if (ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg").exists():
             zf.write(ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg", arcname="referencias/loki_referencia.jpg")
         if (ASSETS_DIR / "referencias_mascotas" / "frodo_01_front.jpg").exists():

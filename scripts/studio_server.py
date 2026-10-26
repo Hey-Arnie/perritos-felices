@@ -198,6 +198,41 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             self.send_error(404, "Kit descargable no encontrado")
             return
 
+        if path.startswith("/api/weekly/videos/"):
+            vid_name = path[len("/api/weekly/videos/"):]
+            vid_file = (CURRENT_WEEK_DIR / "videos" / vid_name).resolve()
+            if vid_file.is_file() and vid_file.is_relative_to(CURRENT_WEEK_DIR.resolve()):
+                data = vid_file.read_bytes()
+                ctype = "video/mp4" if vid_name.endswith(".mp4") else "image/jpeg"
+                self.send_response(200)
+                self._add_cors_headers()
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "public, max-age=3600")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_error(404, "Video no encontrado")
+            return
+
+        if path.startswith("/api/personajes/"):
+            ref_name = path[len("/api/personajes/"):]
+            ref_dir = pub.ROOT_DIR / "03_Assets_Visuales" / "referencias_personajes"
+            p_file = (ref_dir / ref_name).resolve()
+            if p_file.is_file() and p_file.is_relative_to(ref_dir.resolve()):
+                data = p_file.read_bytes()
+                ctype = "image/jpeg" if ref_name.endswith((".jpg", ".jpeg")) else "text/markdown"
+                self.send_response(200)
+                self._add_cors_headers()
+                self.send_header("Content-Type", ctype)
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "public, max-age=3600")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_error(404, "Recurso de personaje no encontrado")
+            return
+
         if path.startswith("/api/weekly/artes/"):
             art_name = path[len("/api/weekly/artes/"):]
             art_file = (CURRENT_WEEK_DIR / "artes" / art_name).resolve()
