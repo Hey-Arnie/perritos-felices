@@ -534,10 +534,19 @@ HASHTAGS: #PerritosFelices #AlergiasCaninas #LokiElPerro #FrodoElPerro #CuidadoR
         char_sheet = ASSETS_DIR / "referencias_personajes" / "LOU_CHARACTER_SHEET.md"
         if char_sheet.exists():
             zf.write(char_sheet, arcname="referencias/FICHA_TECNICA_LOU.md")
-        if (ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg").exists():
-            zf.write(ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg", arcname="referencias/loki_referencia.jpg")
-        if (ASSETS_DIR / "referencias_mascotas" / "frodo_01_front.jpg").exists():
-            zf.write(ASSETS_DIR / "referencias_mascotas" / "frodo_01_front.jpg", arcname="referencias/frodo_referencia.jpg")
+        # Proyecto Oficial Flow
+        flow_proj_master = ROOT_DIR / "02_Estrategia_Y_Contenido" / "proyectos_flow" / "perritos_felices_flow" / "flow_project.json"
+        if flow_proj_master.exists():
+            zf.write(flow_proj_master, arcname="google_flow/flow_project_master.json")
+
+        # 3 Personajes Oficiales por separado
+        char_base = ASSETS_DIR / "personajes_oficiales"
+        for cname in ["lou", "frodo", "loki"]:
+            cdir = char_base / cname
+            if cdir.exists():
+                for f in cdir.glob("*"):
+                    if f.is_file():
+                        zf.write(f, arcname=f"personajes_oficiales/{cname}/{f.name}")
 
     print(f"✔ 4 Artes vectoriales generados en: {ARTES_DIR}")
     print(f"✔ Proyecto Google Flow generado en: {flow_file}")
