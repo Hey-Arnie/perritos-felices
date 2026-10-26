@@ -29,8 +29,52 @@ import publicar as pub  # noqa: E402
 
 STUDIO_DIR = pub.ROOT_DIR / "05_Studio_Privado"
 STUDIO_STATE_FILE = STUDIO_DIR / "studio_state.json"
+CONNECTIONS_FILE = STUDIO_DIR / "studio_connections.json"
 WEEKLY_DIR = pub.ROOT_DIR / "02_Estrategia_Y_Contenido" / "entregas_semanales"
 CURRENT_WEEK_DIR = WEEKLY_DIR / "semana_2026_10_26"
+
+DEFAULT_CONNECTIONS = {
+    "googleFlow": {
+        "engine": "Google Veo 3.1 Fast / Quality",
+        "flowUrl": "https://labs.google/flow",
+        "hasGeminiKey": False,
+        "status": "Configurado (Export de Proyecto .flow.json Activo)",
+        "lastExport": "2026-10-26"
+    },
+    "metaGraphApi": {
+        "pageId": "",
+        "instagramAccountId": "",
+        "status": "Listo para Vincular Token de Página",
+        "mode": "hybrid_download"
+    },
+    "tikTokApi": {
+        "clientKey": "",
+        "status": "Listo para Vincular Token Creator",
+        "mode": "hybrid_download"
+    },
+    "searchConsole": {
+        "site": "https://www.perritosfelices.com",
+        "sitemapUrl": "https://www.perritosfelices.com/sitemap.xml",
+        "status": "Sitemap Activo (18 URLs Indexables)",
+        "indexedUrls": 18
+    }
+}
+
+
+def get_connections():
+    if CONNECTIONS_FILE.exists():
+        try:
+            return json.loads(CONNECTIONS_FILE.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return DEFAULT_CONNECTIONS
+
+
+def save_connections(data: dict):
+    CONNECTIONS_FILE.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def get_studio_state():
@@ -104,6 +148,26 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
+
+        if path == "/api/connections":
+            self._send_json(get_connections())
+            return
+
+        if path == "/api/video/download-flow-project":
+            flow_file = CURRENT_WEEK_DIR / "videos" / "proyecto_semana_flow.json"
+            if flow_file.exists():
+                data = flow_file.read_bytes()
+                self.send_response(200)
+                self._add_cors_headers()
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Disposition", 'attachment; filename="proyecto_semana_google_flow.flow.json"')
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            self.send_error(404, "Proyecto Google Flow no encontrado")
+            return
 
         if path == "/api/weekly/current":
             prop_file = CURRENT_WEEK_DIR / "propuesta_semanal.json"
@@ -258,6 +322,27 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         try:
+            if path == "/api/connections":
+                conns = get_connections()
+                for k, v in body.items():
+                    if k in conns and isinstance(v, dict):
+                        conns[k].update(v)
+                    elif k in conns:
+                        conns[k] = v
+                save_connections(conns)
+                self._send_json({"ok": True, "connections": conns})
+                return
+
+            if path == "/api/video/render-flow":
+                import generar_artes
+                generar_artes.main()
+                self._send_json({
+                    "ok": True,
+                    "message": "Proyecto Google Flow (.flow.json) generado y compilado con Lou, Frodo y Loki.",
+                    "downloadUrl": "/api/video/download-flow-project"
+                })
+                return
+
             if path == "/api/weekly/approve-article":
                 prop_file = CURRENT_WEEK_DIR / "propuesta_semanal.json"
                 if not prop_file.exists():
