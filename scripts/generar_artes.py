@@ -34,9 +34,9 @@ def get_image_data_uri(path: Path) -> str:
 # =====================================================================
 
 def get_official_logo_uri() -> str:
-    logo_path = ASSETS_DIR / "icononly_transparent_nobuffer.png"
+    logo_path = ASSETS_DIR / "fulllogo_transparent_nobuffer.png"
     if not logo_path.exists():
-        logo_path = ASSETS_DIR / "icononly_transparent.png"
+        logo_path = ASSETS_DIR / "fulllogo_transparent.png"
     return get_image_data_uri(logo_path)
 
 
@@ -74,16 +74,11 @@ def generar_arte_loki() -> str:
   <!-- Veladura de Contraste Tipográfico -->
   <rect width="1080" height="1080" fill="url(#scrimLoki)" />
 
-  <!-- Cabecera Superior (Safe Zone: 64px) con Logo Oficial -->
+  <!-- Cabecera Superior (Safe Zone: 64px) con Logo Oficial Nítido (Sin sellos invasivos) -->
   <g transform="translate(64, 64)">
-    <!-- Pill Branding con Logo Oficial -->
-    <rect width="390" height="52" rx="26" fill="rgba(16, 21, 43, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
-    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
-    <text x="62" y="33" class="badge-txt">PF // SALUD &amp; DERMATOLOGÍA</text>
-
-    <!-- Sello Fear-Free Micro -->
-    <rect x="792" y="2" width="160" height="48" rx="24" fill="rgba(253, 181, 74, 0.95)" />
-    <text x="872" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">FEAR-FREE 🛡️</text>
+    <rect width="360" height="56" rx="28" fill="rgba(16, 21, 43, 0.75)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="10" y="6" width="44" height="44" preserveAspectRatio="xMidYMid meet" />
+    <text x="66" y="35" class="badge-txt">SALUD // DERMATOLOGÍA</text>
   </g>
 
   <!-- Bloque Tipográfico Hero (Foco Único: Pregunta Provocadora + Diagnóstico) -->
@@ -98,7 +93,7 @@ def generar_arte_loki() -> str:
       <tspan x="0" y="195">por contacto con polen o pesticidas tras el paseo.</tspan>
     </text>
 
-    <!-- Barra de Acción y Deslizar (Sin nombres de perros) -->
+    <!-- Barra de Acción y Deslizar -->
     <g transform="translate(0, 240)">
       <rect width="380" height="54" rx="27" fill="#FDB54A" />
       <text x="190" y="34" class="cta-txt" text-anchor="middle">DESLIZA PARA VER LA GUÍA ➔</text>
@@ -142,15 +137,11 @@ def generar_arte_frodo() -> str:
   <!-- Veladura Cálida -->
   <rect width="1080" height="1080" fill="url(#scrimFrodo)" />
 
-  <!-- Cabecera Superior con Logo Oficial -->
+  <!-- Cabecera Superior con Logo Oficial Nítido -->
   <g transform="translate(64, 64)">
-    <rect width="390" height="52" rx="26" fill="rgba(26, 18, 8, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
-    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
-    <text x="62" y="33" class="badge-txt">PF // COCINA NATURAL</text>
-
-    <!-- Tag 100% Natural -->
-    <rect x="770" y="2" width="182" height="48" rx="24" fill="rgba(255, 179, 0, 0.95)" />
-    <text x="861" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">100% NATURAL 🌿</text>
+    <rect width="360" height="56" rx="28" fill="rgba(26, 18, 8, 0.75)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="10" y="6" width="44" height="44" preserveAspectRatio="xMidYMid meet" />
+    <text x="66" y="35" class="badge-txt">COCINA // RECETA FRESCA</text>
   </g>
 
   <!-- Bloque Tipográfico Hero -->
@@ -176,7 +167,7 @@ def generar_arte_frodo() -> str:
       <tspan x="0" y="225">Digestivo, hidratante y antiinflamatorio para días calurosos.</tspan>
     </text>
 
-    <!-- Botón CTA (Sin nombres de perros) -->
+    <!-- Botón CTA -->
     <g transform="translate(0, 260)">
       <rect width="360" height="54" rx="27" fill="#FFE082" />
       <text x="180" y="34" class="cta-txt" text-anchor="middle">VER RECETA PASO A PASO ➔</text>
@@ -217,15 +208,11 @@ def generar_arte_etologia() -> str:
   <!-- Veladura Verde Bosque Oscuro -->
   <rect width="1080" height="1080" fill="url(#scrimEto)" />
 
-  <!-- Cabecera Superior con Logo Oficial -->
+  <!-- Cabecera Superior con Logo Oficial Nítido -->
   <g transform="translate(64, 64)">
-    <rect width="390" height="52" rx="26" fill="rgba(14, 35, 18, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
-    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
-    <text x="62" y="33" class="badge-txt">PF // ETOLOGÍA &amp; LENGUAJE</text>
-
-    <!-- Tag Señales de Calma -->
-    <rect x="750" y="2" width="202" height="48" rx="24" fill="rgba(129, 199, 132, 0.95)" />
-    <text x="851" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">SEÑALES DE CALMA 🐾</text>
+    <rect width="360" height="56" rx="28" fill="rgba(14, 35, 18, 0.75)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="10" y="6" width="44" height="44" preserveAspectRatio="xMidYMid meet" />
+    <text x="66" y="35" class="badge-txt">ETOLOGÍA // LENGUAJE</text>
   </g>
 
   <!-- Bloque Tipográfico Hero -->
@@ -240,7 +227,7 @@ def generar_arte_etologia() -> str:
       <tspan x="0" y="195">Aprender a leer su lenguaje es el mayor acto de amor.</tspan>
     </text>
 
-    <!-- Botón CTA (Sin nombres de perros) -->
+    <!-- Botón CTA -->
     <g transform="translate(0, 240)">
       <rect width="380" height="54" rx="27" fill="#81C784" />
       <text x="190" y="34" class="cta-txt" text-anchor="middle">DESCUBRE LAS 5 SEÑALES ➔</text>
@@ -284,15 +271,11 @@ def generar_arte_lou() -> str:
   <!-- Veladura de Contraste Tipográfico AzulPF Profundo -->
   <rect width="1080" height="1080" fill="url(#scrimLou)" />
 
-  <!-- Cabecera Superior con Logo Oficial -->
+  <!-- Cabecera Superior con Logo Oficial Nítido -->
   <g transform="translate(64, 64)">
-    <rect width="390" height="52" rx="26" fill="rgba(16, 21, 43, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
-    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
-    <text x="62" y="33" class="badge-txt">PF // PASEO RESPETUOSO</text>
-
-    <!-- Tag Lou Oficial -->
-    <rect x="730" y="2" width="222" height="48" rx="24" fill="rgba(44, 75, 202, 0.95)" />
-    <text x="841" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">LOU TE ENSEÑA 👩‍🦰</text>
+    <rect width="360" height="56" rx="28" fill="rgba(16, 21, 43, 0.75)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="10" y="6" width="44" height="44" preserveAspectRatio="xMidYMid meet" />
+    <text x="66" y="35" class="badge-txt">PASEO RESPETUOSO // GUÍA</text>
   </g>
 
   <!-- Bloque Tipográfico Hero con la Cita Inmortal de Lou -->
@@ -308,7 +291,7 @@ def generar_arte_lou() -> str:
       <tspan x="0" y="205">Libera hombros, protege tráquea y cervicales.</tspan>
     </text>
 
-    <!-- Botón CTA (Sin nombres de perros) -->
+    <!-- Botón CTA -->
     <g transform="translate(0, 245)">
       <rect width="360" height="54" rx="27" fill="#FDB54A" />
       <text x="180" y="34" class="cta-txt" text-anchor="middle">GUÍA DE ELECCIÓN DE ARNÉS ➔</text>
