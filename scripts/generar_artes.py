@@ -30,8 +30,10 @@ def get_image_data_uri(path: Path) -> str:
 
 # 1. PLANTILLA 1: GUÍA MÉDICA / SALUD (LOKI - EL NEGRO)
 def generar_arte_loki() -> str:
-    loki_face = ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg"
-    img_uri = get_image_data_uri(loki_face)
+    loki_img = ARTES_DIR / "post_01_loki_dermatologia.jpg"
+    if not loki_img.exists():
+        loki_img = ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg"
+    img_uri = get_image_data_uri(loki_img)
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
@@ -150,8 +152,10 @@ def generar_arte_loki() -> str:
 
 # 2. PLANTILLA 2: NUTRICIÓN FRESCA Y RECETAS (FRODO - EL RUBIO)
 def generar_arte_frodo() -> str:
-    frodo_face = ASSETS_DIR / "referencias_mascotas" / "frodo_01_front.jpg"
-    img_uri = get_image_data_uri(frodo_face)
+    frodo_img = ARTES_DIR / "post_02_frodo_nutricion.jpg"
+    if not frodo_img.exists():
+        frodo_img = ASSETS_DIR / "referencias_mascotas" / "frodo_01_front.jpg"
+    img_uri = get_image_data_uri(frodo_img)
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
