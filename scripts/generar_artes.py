@@ -58,13 +58,13 @@ def generar_arte_loki() -> str:
       .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 1.5px; fill: #FFFFFF; text-transform: uppercase; }}
       .cta-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; fill: #10152B; }}
     </style>
-    <!-- Gradiente Cinematográfico Full-Bleed (Regla Figma Safe-Zones) -->
+    <!-- Gradiente Cinematográfico Suave: preserva la foto visible y natural sin empastados -->
     <linearGradient id="scrimLoki" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#10152B" stop-opacity="0.45" />
-      <stop offset="30%" stop-color="#10152B" stop-opacity="0.05" />
-      <stop offset="55%" stop-color="#10152B" stop-opacity="0.5" />
-      <stop offset="80%" stop-color="#10152B" stop-opacity="0.92" />
-      <stop offset="100%" stop-color="#10152B" stop-opacity="0.98" />
+      <stop offset="0%" stop-color="#10152B" stop-opacity="0.35" />
+      <stop offset="45%" stop-color="#10152B" stop-opacity="0.0" />
+      <stop offset="65%" stop-color="#10152B" stop-opacity="0.40" />
+      <stop offset="85%" stop-color="#10152B" stop-opacity="0.72" />
+      <stop offset="100%" stop-color="#10152B" stop-opacity="0.78" />
     </linearGradient>
   </defs>
 
@@ -123,11 +123,11 @@ def generar_arte_frodo() -> str:
       .pill-ing {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; fill: #FFFFFF; }}
     </style>
     <linearGradient id="scrimFrodo" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#1A1208" stop-opacity="0.45" />
-      <stop offset="30%" stop-color="#1A1208" stop-opacity="0.05" />
-      <stop offset="55%" stop-color="#1A1208" stop-opacity="0.5" />
-      <stop offset="80%" stop-color="#1A1208" stop-opacity="0.92" />
-      <stop offset="100%" stop-color="#1A1208" stop-opacity="0.98" />
+      <stop offset="0%" stop-color="#1A1208" stop-opacity="0.35" />
+      <stop offset="45%" stop-color="#1A1208" stop-opacity="0.0" />
+      <stop offset="65%" stop-color="#1A1208" stop-opacity="0.40" />
+      <stop offset="85%" stop-color="#1A1208" stop-opacity="0.72" />
+      <stop offset="100%" stop-color="#1A1208" stop-opacity="0.78" />
     </linearGradient>
   </defs>
 
@@ -194,11 +194,11 @@ def generar_arte_etologia() -> str:
       .cta-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; fill: #10152B; }}
     </style>
     <linearGradient id="scrimEto" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0E2312" stop-opacity="0.45" />
-      <stop offset="30%" stop-color="#0E2312" stop-opacity="0.05" />
-      <stop offset="55%" stop-color="#0E2312" stop-opacity="0.5" />
-      <stop offset="80%" stop-color="#0E2312" stop-opacity="0.92" />
-      <stop offset="100%" stop-color="#0E2312" stop-opacity="0.98" />
+      <stop offset="0%" stop-color="#0E2312" stop-opacity="0.35" />
+      <stop offset="45%" stop-color="#0E2312" stop-opacity="0.0" />
+      <stop offset="65%" stop-color="#0E2312" stop-opacity="0.40" />
+      <stop offset="85%" stop-color="#0E2312" stop-opacity="0.72" />
+      <stop offset="100%" stop-color="#0E2312" stop-opacity="0.78" />
     </linearGradient>
   </defs>
 
@@ -257,11 +257,11 @@ def generar_arte_lou() -> str:
       .quote-italics {{ font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 32px; font-weight: 700; fill: #FDB54A; }}
     </style>
     <linearGradient id="scrimLou" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#10152B" stop-opacity="0.45" />
-      <stop offset="30%" stop-color="#10152B" stop-opacity="0.05" />
-      <stop offset="55%" stop-color="#10152B" stop-opacity="0.5" />
-      <stop offset="80%" stop-color="#10152B" stop-opacity="0.92" />
-      <stop offset="100%" stop-color="#10152B" stop-opacity="0.98" />
+      <stop offset="0%" stop-color="#10152B" stop-opacity="0.35" />
+      <stop offset="45%" stop-color="#10152B" stop-opacity="0.0" />
+      <stop offset="65%" stop-color="#10152B" stop-opacity="0.40" />
+      <stop offset="85%" stop-color="#10152B" stop-opacity="0.72" />
+      <stop offset="100%" stop-color="#10152B" stop-opacity="0.78" />
     </linearGradient>
   </defs>
 
