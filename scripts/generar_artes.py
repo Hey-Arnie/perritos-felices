@@ -264,21 +264,30 @@ def generar_arte_frodo() -> str:
 </svg>"""
 
 
-# 3. PLANTILLA 3: ETOLOGÍA & SEÑALES DE CALMA (VARIEDAD: GOLDEN RETRIEVER / MESTIZO)
+# 3. PLANTILLA 3: ETOLOGÍA & SEÑALES DE CALMA (FOTOGRAFÍA DOCUMENTAL + BENTO)
 def generar_arte_etologia() -> str:
-    return """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+    eto_img = ARTES_DIR / "post_03_etologia_calma.jpg"
+    img_uri = get_image_data_uri(eto_img)
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Space+Mono:wght@700&amp;display=swap');
-      .title { font-family: 'Fraunces', Georgia, serif; font-size: 58px; font-weight: 800; fill: #10152B; line-height: 1.1; }
-      .title-accent { fill: #2C4BCA; }
-      .card-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; fill: #10152B; }
-      .card-desc { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 19px; font-weight: 500; fill: #575E7E; }
+      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 56px; font-weight: 800; fill: #10152B; line-height: 1.1; }}
+      .title-accent {{ fill: #2E7D32; }}
+      .card-title {{ font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; fill: #10152B; }}
+      .card-desc {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 500; fill: #575E7E; line-height: 1.35; }}
     </style>
     <linearGradient id="bgEto" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#F4FAF5" />
       <stop offset="100%" stop-color="#EBF4EC" />
     </linearGradient>
+    <clipPath id="etoClip">
+      <rect x="60" y="240" width="440" height="480" rx="40" ry="40" />
+    </clipPath>
+    <filter id="shadowEto" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#10152B" flood-opacity="0.08" />
+    </filter>
   </defs>
 
   <rect width="1080" height="1080" fill="url(#bgEto)" />
@@ -294,40 +303,53 @@ def generar_arte_etologia() -> str:
     <text x="820" y="32" font-family="'Space Mono', monospace" font-size="19" font-weight="700" fill="#2E7D32" text-anchor="middle">SEÑALES DE CALMA</text>
   </g>
 
-  <!-- Título -->
-  <g transform="translate(60, 180)">
-    <text class="title">
-      <tspan x="0" y="0">¿Tu perro bosteza</tspan>
-      <tspan x="0" y="68" class="title-accent">cuando lo abrazas?</tspan>
-    </text>
-    <text x="0" y="125" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" font-weight="500" fill="#575E7E">No tiene sueño: te está pidiendo un poco de espacio respetuoso.</text>
+  <!-- Foto Documental con Señal de Calma (Lado Izquierdo) -->
+  <g filter="url(#shadowEto)">
+    <rect x="60" y="240" width="440" height="480" rx="40" fill="#10152B" />
+    <image href="{img_uri}" x="60" y="240" width="440" height="480" preserveAspectRatio="xMidYMid slice" clip-path="url(#etoClip)" />
+    <rect x="60" y="240" width="440" height="480" rx="40" fill="none" stroke="#2E7D32" stroke-width="6" />
+
+    <!-- Badge Foto Calma -->
+    <g transform="translate(90, 650)">
+      <rect width="250" height="46" rx="23" fill="#10152B" />
+      <text x="125" y="30" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#A5D6A7" text-anchor="middle">LAMIDO DE TRUFA 👅</text>
+    </g>
   </g>
 
-  <!-- Grilla Bento de Señales Caninas -->
-  <g transform="translate(60, 360)">
+  <!-- Título y 4 Señales Bento (Lado Derecho) -->
+  <g transform="translate(540, 175)">
+    <text class="title">
+      <tspan x="0" y="0">¿Tu perro bosteza</tspan>
+      <tspan x="0" y="62" class="title-accent">cuando lo abrazas?</tspan>
+    </text>
+    <text x="0" y="112" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#575E7E">No tiene sueño: te está pidiendo un poco de espacio respetuoso.</text>
+  </g>
+
+  <!-- Grilla Bento Compacta (Lado Derecho) -->
+  <g transform="translate(540, 310)">
     <!-- Bento 1: Bostezo -->
-    <rect x="0" y="0" width="460" height="210" rx="28" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="35" y="65" font-size="44">🥱</text>
-    <text x="100" y="60" class="card-title">El Bostezo Social</text>
-    <text x="35" y="115" class="card-desc">Es una señal de apaciguamiento. Lo hace para reducir la tensión propia y la de quien tiene enfrente.</text>
+    <rect x="0" y="0" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
+    <text x="24" y="56" font-size="34">🥱</text>
+    <text x="76" y="38" class="card-title">El Bostezo Social</text>
+    <text x="76" y="66" class="card-desc">Reduce la tensión propia y la de quien tiene enfrente.</text>
 
     <!-- Bento 2: Lamerse la trufa -->
-    <rect x="500" y="0" width="460" height="210" rx="28" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="535" y="65" font-size="44">👅</text>
-    <text x="600" y="60" class="card-title">Lamido de Hocico</text>
-    <text x="535" y="115" class="card-desc">Movimiento rápido de lengua hacia la nariz cuando alguien se inclina de golpe sobre su cabeza.</text>
+    <rect x="0" y="104" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
+    <text x="24" y="160" font-size="34">👅</text>
+    <text x="76" y="142" class="card-title">Lamido de Hocico</text>
+    <text x="76" y="170" class="card-desc">Lengua rápida a la nariz ante movimientos invasivos.</text>
 
     <!-- Bento 3: Mirada desviada -->
-    <rect x="0" y="240" width="460" height="210" rx="28" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="35" y="305" font-size="44">👀</text>
-    <text x="100" y="300" class="card-title">Girar la Cabeza</text>
-    <text x="35" y="355" class="card-desc">Evita el contacto visual directo para comunicar: 'No busco conflicto, por favor baja la intensidad'.</text>
+    <rect x="0" y="208" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
+    <text x="24" y="264" font-size="34">👀</text>
+    <text x="76" y="246" class="card-title">Girar la Cabeza</text>
+    <text x="76" y="274" class="card-desc">Evita contacto visual directo para pacificar la situación.</text>
 
     <!-- Bento 4: Sacudida -->
-    <rect x="500" y="240" width="460" height="210" rx="28" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="535" y="305" font-size="44">🐕</text>
-    <text x="600" y="300" class="card-title">Sacudirse en Seco</text>
-    <text x="535" y="355" class="card-desc">Al terminar un momento tenso (veterinario o saludo incómodo), se sacude para resetear su sistema nervioso.</text>
+    <rect x="0" y="312" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
+    <text x="24" y="368" font-size="34">🐕</text>
+    <text x="76" y="350" class="card-title">Sacudirse en Seco</text>
+    <text x="76" y="378" class="card-desc">Resetea su sistema nervioso tras un momento de tensión.</text>
   </g>
 
   <!-- Footer Fear-Free -->
@@ -341,78 +363,97 @@ def generar_arte_etologia() -> str:
 </svg>"""
 
 
-# 4. PLANTILLA 4: "LOU TE ENSEÑA" (PERSONAJE LOU + ARNÉS EN Y)
+# 4. PLANTILLA 4: "LOU TE ENSEÑA" (FOTOGRAFÍA OFICIAL DE LOU, FRODO Y LOKI)
 def generar_arte_lou() -> str:
-    return """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+    lou_img = ARTES_DIR / "post_04_lou_arnes_en_y.jpg"
+    if not lou_img.exists():
+        lou_img = ARTES_DIR / "post_04_lou_arnes.jpg"
+    img_uri = get_image_data_uri(lou_img)
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Space+Mono:wght@700&amp;display=swap');
-      .title { font-family: 'Fraunces', Georgia, serif; font-size: 56px; font-weight: 800; fill: #10152B; line-height: 1.15; }
-      .title-accent { fill: #2C4BCA; }
-      .col-h { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 800; }
-      .col-p { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 500; fill: #3D4463; line-height: 1.5; }
+      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 52px; font-weight: 800; fill: #10152B; line-height: 1.15; }}
+      .title-accent {{ fill: #2C4BCA; }}
+      .col-h {{ font-family: 'Fraunces', serif; font-size: 24px; font-weight: 800; }}
+      .col-p {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 500; fill: #3D4463; line-height: 1.45; }}
     </style>
     <linearGradient id="bgLou" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FDFBF7" />
       <stop offset="100%" stop-color="#E8EDFF" />
     </linearGradient>
+    <clipPath id="louClip">
+      <rect x="580" y="240" width="440" height="480" rx="40" ry="40" />
+    </clipPath>
+    <filter id="shadowLou" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#10152B" flood-opacity="0.08" />
+    </filter>
   </defs>
 
   <rect width="1080" height="1080" fill="url(#bgLou)" />
 
   <!-- Cabecera -->
   <g transform="translate(60, 60)">
-    <!-- Avatar Lou -->
     <circle cx="28" cy="28" r="28" fill="#2C4BCA" />
     <text x="28" y="38" font-size="28" text-anchor="middle">👩‍🦰</text>
     <text x="75" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="800" fill="#10152B">Lou • Educadora Canina Fear-Free</text>
-    <text x="75" y="54" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#575E7E">27 AÑOS • CRIANZA POSITIVA</text>
+    <text x="75" y="54" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#575E7E">27 AÑOS • CRIANZA POSITIVA CON LOKI &amp; FRODO</text>
     
     <rect x="710" y="8" width="250" height="42" rx="21" fill="#FDB54A" />
     <text x="835" y="35" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#10152B" text-anchor="middle">GUÍA DE PASEO</text>
   </g>
 
   <!-- Título -->
-  <g transform="translate(60, 170)">
+  <g transform="translate(60, 165)">
     <text class="title">
       <tspan x="0" y="0">Arnés en "Y" vs. Collares de Ahogo:</tspan>
-      <tspan x="0" y="68" class="title-accent">¿Por qué nunca debes estrangular a tu perro?</tspan>
+      <tspan x="0" y="58" class="title-accent">¿Por qué nunca debes estrangularlo?</tspan>
     </text>
   </g>
 
-  <!-- Comparativa 2 Columnas -->
-  <g transform="translate(60, 330)">
-    <!-- Columna Izquierda: Collar de Castigo / Ahogo (NO) -->
-    <rect x="0" y="0" width="460" height="480" rx="30" fill="#FFEBEE" stroke="#EF5350" stroke-width="3" />
-    <rect x="40" y="40" width="120" height="40" rx="20" fill="#D32F2F" />
-    <text x="100" y="66" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">PELIGRO ❌</text>
-    
-    <text x="40" y="130" class="col-h" fill="#C62828">Collar de ahogo o púas</text>
-    <text x="40" y="180" class="col-p">• Aplasta tráquea y tiroides.</text>
-    <text x="40" y="225" class="col-p">• Aumenta presión ocular (glaucoma).</text>
-    <text x="40" y="270" class="col-p">• Asocia paseos con dolor y miedo.</text>
-    <text x="40" y="315" class="col-p">• Genera reactividad y agresividad por defensa.</text>
+  <!-- Comparativa (Lado Izquierdo) -->
+  <g transform="translate(60, 275)">
+    <!-- Peligro: Collar de Ahogo -->
+    <rect x="0" y="0" width="490" height="210" rx="24" fill="#FFEBEE" stroke="#EF5350" stroke-width="2" />
+    <rect x="25" y="20" width="115" height="34" rx="17" fill="#D32F2F" />
+    <text x="82" y="43" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">PELIGRO ❌</text>
+    <text x="155" y="44" class="col-h" fill="#C62828">Collar de ahogo o púas</text>
+    <text x="25" y="85" class="col-p">• Aplasta tráquea, tiroides y daña cervicales.</text>
+    <text x="25" y="115" class="col-p">• Dispara presión ocular e induce pánico.</text>
+    <text x="25" y="145" class="col-p">• Provoca agresividad defensiva por dolor.</text>
 
-    <!-- Columna Derecha: Arnés Anatómico en Y (SÍ) -->
-    <rect x="500" y="0" width="460" height="480" rx="30" fill="#E8F5E9" stroke="#66BB6A" stroke-width="3" />
-    <rect x="540" y="40" width="130" height="40" rx="20" fill="#2E7D32" />
-    <text x="605" y="66" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">CORRECTO ✔</text>
+    <!-- Correcto: Arnés Anatómico en Y -->
+    <rect x="0" y="230" width="490" height="210" rx="24" fill="#E8F5E9" stroke="#66BB6A" stroke-width="2" />
+    <rect x="25" y="250" width="125" height="34" rx="17" fill="#2E7D32" />
+    <text x="87" y="273" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">CORRECTO ✔</text>
+    <text x="165" y="274" class="col-h" fill="#1B5E20">Arnés Ergonómico en 'Y'</text>
+    <text x="25" y="315" class="col-p">• Reparte la tracción en el esternón seguro.</text>
+    <text x="25" y="345" class="col-p">• Deja escápulas 100% libres de fricción.</text>
+    <text x="25" y="375" class="col-p">• Paseos relajados basados en olfateo libre.</text>
+  </g>
 
-    <text x="540" y="130" class="col-h" fill="#1B5E20">Arnés anatómico en 'Y'</text>
-    <text x="540" y="180" class="col-p">• Distribuye la fuerza en el esternón.</text>
-    <text x="540" y="225" class="col-p">• Deja libres las escápulas y hombros.</text>
-    <text x="540" y="270" class="col-p">• 0 presión en el cuello o columna.</text>
-    <text x="540" y="315" class="col-p">• Paseos relajados basados en olfateo.</text>
+  <!-- Foto de Lou con Loki y Frodo (Lado Derecho) -->
+  <g filter="url(#shadowLou)">
+    <rect x="580" y="240" width="440" height="480" rx="40" fill="#10152B" />
+    <image href="{img_uri}" x="580" y="240" width="440" height="480" preserveAspectRatio="xMidYMid slice" clip-path="url(#louClip)" />
+    <rect x="580" y="240" width="440" height="480" rx="40" fill="none" stroke="#2C4BCA" stroke-width="6" />
+
+    <!-- Badge Lou & Mascotas -->
+    <g transform="translate(610, 650)">
+      <rect width="260" height="46" rx="23" fill="#10152B" />
+      <text x="130" y="30" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#FDB54A" text-anchor="middle">LOU + FRODO &amp; LOKI 🐕‍🦺</text>
+    </g>
   </g>
 
   <!-- Footer con Cita de Lou -->
-  <g transform="translate(60, 845)">
-    <rect width="960" height="155" rx="30" fill="#10152B" />
-    <text x="50" y="65" font-family="'Fraunces', serif" font-size="26" font-weight="700" fill="#FDB54A">"El dolor jamás enseña respeto, solo enseña pánico."</text>
-    <text x="50" y="105" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#FFFFFF">— Lou, educadora canina en Perritos Felices</text>
+  <g transform="translate(60, 840)">
+    <rect width="960" height="160" rx="30" fill="#10152B" />
+    <text x="50" y="70" font-family="'Fraunces', serif" font-size="28" font-weight="700" fill="#FDB54A">"El dolor jamás enseña respeto, solo enseña pánico."</text>
+    <text x="50" y="110" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#FFFFFF">— Lou, educadora canina en Perritos Felices</text>
 
-    <rect x="760" y="50" width="160" height="56" rx="28" fill="#2C4BCA" />
-    <text x="840" y="85" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">VER GUÍA ↗</text>
+    <rect x="760" y="52" width="160" height="56" rx="28" fill="#2C4BCA" />
+    <text x="840" y="87" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">VER GUÍA ↗</text>
   </g>
 </svg>"""
 
@@ -522,15 +563,40 @@ HASHTAGS: #PerritosFelices #AlergiasCaninas #LokiElPerro #FrodoElPerro #CuidadoR
     # Empaquetar Kit Descargables ZIP Completo
     zip_path = WEEKLY_DIR / "kit_descargables_semana_2026_10_26.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        # 4 Plantillas Vectoriales SVG
         zf.write(p1, arcname="artes/post_01_instagram_loki.svg")
         zf.write(p2, arcname="artes/post_02_instagram_frodo.svg")
         zf.write(p3, arcname="artes/post_03_etologia_senales.svg")
         zf.write(p4, arcname="artes/post_04_lou_arnes_en_y.svg")
+
+        # 4 Fotografías Editoriales de Alta Resolución (Generativas Flow)
+        for img_name in [
+            "post_01_loki_dermatologia.jpg",
+            "post_02_frodo_nutricion.jpg",
+            "post_03_etologia_calma.jpg",
+            "post_04_lou_arnes_en_y.jpg"
+        ]:
+            img_file = ARTES_DIR / img_name
+            if img_file.exists():
+                zf.write(img_file, arcname=f"artes_hd/{img_name}")
+
+        # Guiones y Proyecto Flow
         zf.write(flow_file, arcname="video_flow/proyecto_semana_flow.json")
         zf.write(guion_file, arcname="video_flow/guion_tiktok_lou_frodo_loki.txt")
-        video_mp4 = VIDEOS_DIR / "reel_semana_alergias_lou_frodo.mp4"
-        if video_mp4.exists():
-            zf.write(video_mp4, arcname="video_flow/reel_semana_alergias_lou_frodo.mp4")
+
+        # Videos y Subtítulos
+        reel_completo = VIDEOS_DIR / "reel_completo_lou_frodo_loki.mp4"
+        if not reel_completo.exists():
+            reel_completo = ROOT_DIR / "02_Estrategia_Y_Contenido" / "videos_flow_generados" / "reel_completo_lou_frodo_loki.mp4"
+        if reel_completo.exists():
+            zf.write(reel_completo, arcname="video_flow/reel_completo_lou_frodo_loki.mp4")
+
+        srt_file = VIDEOS_DIR / "subtitulos_lou_reel.srt"
+        if not srt_file.exists():
+            srt_file = ROOT_DIR / "05_Studio_Privado" / "assets" / "subtitulos_lou_reel.srt"
+        if srt_file.exists():
+            zf.write(srt_file, arcname="video_flow/subtitulos_lou_reel.srt")
+
         ref_lou = ASSETS_DIR / "referencias_personajes" / "lou_frodo_loki_reference.jpg"
         if ref_lou.exists():
             zf.write(ref_lou, arcname="video_flow/lou_frodo_loki_reference.jpg")
@@ -538,6 +604,7 @@ HASHTAGS: #PerritosFelices #AlergiasCaninas #LokiElPerro #FrodoElPerro #CuidadoR
         char_sheet = ASSETS_DIR / "referencias_personajes" / "LOU_CHARACTER_SHEET.md"
         if char_sheet.exists():
             zf.write(char_sheet, arcname="referencias/FICHA_TECNICA_LOU.md")
+
         # Proyecto Oficial Flow
         flow_proj_master = ROOT_DIR / "02_Estrategia_Y_Contenido" / "proyectos_flow" / "perritos_felices_flow" / "flow_project.json"
         if flow_proj_master.exists():
