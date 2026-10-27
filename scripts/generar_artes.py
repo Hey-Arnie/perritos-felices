@@ -28,7 +28,12 @@ def get_image_data_uri(path: Path) -> str:
     return f"data:{mime};base64,{encoded}"
 
 
-# 1. PLANTILLA 1: GUÍA MÉDICA / SALUD (LOKI - EL NEGRO)
+# =====================================================================
+# PLANTILLAS EDITORIALES PF-2027 (ESTÁNDARES FIGMA RESOURCE LIBRARY)
+# Fotografía Full-Bleed a sangre, gradientes cinematográficos y tipografía Fraunces
+# =====================================================================
+
+# 1. PLANTILLA 1: GUÍA MÉDICA / SALUD (LOKI) — FULL-BLEED EDITORIAL
 def generar_arte_loki() -> str:
     loki_img = ARTES_DIR / "post_01_loki_dermatologia.jpg"
     if not loki_img.exists():
@@ -39,118 +44,64 @@ def generar_arte_loki() -> str:
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Space+Mono:wght@700&amp;display=swap');
-      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 58px; font-weight: 800; fill: #10152B; line-height: 1.1; }}
-      .title-accent {{ fill: #2C4BCA; }}
-      .subtitle {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 500; fill: #575E7E; }}
-      .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; text-transform: uppercase; fill: #2C4BCA; }}
-      .card-bold {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 700; fill: #10152B; }}
-      .card-desc {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 500; fill: #575E7E; }}
-      .pill-txt {{ font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; fill: #10152B; }}
+      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 64px; font-weight: 800; fill: #FFFFFF; line-height: 1.08; }}
+      .title-accent {{ fill: #FDB54A; }}
+      .subtitle {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 500; fill: #E8EDFF; line-height: 1.4; }}
+      .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 1.5px; fill: #FFFFFF; text-transform: uppercase; }}
+      .cta-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; fill: #10152B; }}
     </style>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FDFBF7" />
-      <stop offset="100%" stop-color="#F4EFE6" />
+    <!-- Gradiente Cinematográfico Full-Bleed (Regla Figma Safe-Zones) -->
+    <linearGradient id="scrimLoki" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10152B" stop-opacity="0.45" />
+      <stop offset="30%" stop-color="#10152B" stop-opacity="0.05" />
+      <stop offset="55%" stop-color="#10152B" stop-opacity="0.5" />
+      <stop offset="80%" stop-color="#10152B" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#10152B" stop-opacity="0.98" />
     </linearGradient>
-    <clipPath id="lokiClip">
-      <rect x="580" y="240" width="440" height="480" rx="40" ry="40" />
-    </clipPath>
-    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
-      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#10152B" flood-opacity="0.08" />
-    </filter>
   </defs>
 
-  <!-- Fondo Editorial -->
-  <rect width="1080" height="1080" fill="url(#bgGrad)" />
+  <!-- Fotografía Protagonista a Sangre Completa -->
+  <image href="{img_uri}" x="0" y="0" width="1080" height="1080" preserveAspectRatio="xMidYMid slice" />
+  
+  <!-- Veladura de Contraste Tipográfico -->
+  <rect width="1080" height="1080" fill="url(#scrimLoki)" />
 
-  <!-- Patrón de fondo geométrico sutil -->
-  <circle cx="980" cy="100" r="320" fill="#E8EDFF" opacity="0.6" />
-  <circle cx="100" cy="980" r="280" fill="#FFF3E0" opacity="0.5" />
+  <!-- Cabecera Superior (Safe Zone: 64px) -->
+  <g transform="translate(64, 64)">
+    <!-- Pill Branding -->
+    <rect width="360" height="48" rx="24" fill="rgba(16, 21, 43, 0.65)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+    <circle cx="24" cy="24" r="14" fill="#2C4BCA" />
+    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FDB54A" text-anchor="middle">PF</text>
+    <text x="52" y="30" class="badge-txt">SALUD // DERMATOLOGÍA</text>
 
-  <!-- Cabecera Superior: Branding Oficial -->
-  <g transform="translate(60, 60)">
-    <rect width="52" height="52" rx="14" fill="#2C4BCA" />
-    <text x="26" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FDB54A" text-anchor="middle">PF</text>
-    <text x="70" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" font-weight="800" fill="#10152B">Perritos Felices</text>
-    
-    <!-- Tag Categoría -->
-    <rect x="680" y="4" width="280" height="44" rx="22" fill="#E8EDFF" stroke="#2C4BCA" stroke-width="2" />
-    <text x="820" y="32" class="badge-txt" text-anchor="middle">SALUD &amp; DERMATOLOGÍA</text>
+    <!-- Sello Fear-Free Micro -->
+    <rect x="792" y="0" width="160" height="48" rx="24" fill="rgba(253, 181, 74, 0.95)" />
+    <text x="872" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">FEAR-FREE 🛡️</text>
   </g>
 
-  <!-- Título Masivo Editorial -->
-  <g transform="translate(60, 180)">
+  <!-- Bloque Tipográfico Hero (Foco Único: Pregunta Provocadora + Diagnóstico) -->
+  <g transform="translate(64, 660)">
     <text class="title">
       <tspan x="0" y="0">¿Tu perro se lame</tspan>
-      <tspan x="0" y="68" class="title-accent">las patas sin parar?</tspan>
+      <tspan x="0" y="74" class="title-accent">las patas sin parar?</tspan>
     </text>
-    <text x="0" y="125" class="subtitle">No es ansiedad ni maña: el 80% de las veces es picor alérgico.</text>
-  </g>
 
-  <!-- Tarjeta Fotográfica con Loki -->
-  <g filter="url(#shadow)">
-    <!-- Marco y Sombra -->
-    <rect x="580" y="240" width="440" height="480" rx="40" fill="#10152B" />
-    <image href="{img_uri}" x="580" y="240" width="440" height="480" preserveAspectRatio="xMidYMid slice" clip-path="url(#lokiClip)" />
-    
-    <!-- Borde decorativo -->
-    <rect x="580" y="240" width="440" height="480" rx="40" fill="none" stroke="#FDB54A" stroke-width="6" />
+    <text class="subtitle">
+      <tspan x="0" y="155">No es maña ni ansiedad. El 80% de los casos es picor</tspan>
+      <tspan x="0" y="195">por contacto con polen o pesticidas tras el paseo.</tspan>
+    </text>
 
-    <!-- Badge Embajador Loki -->
-    <g transform="translate(610, 650)">
-      <rect width="220" height="46" rx="23" fill="#10152B" />
-      <text x="110" y="30" font-family="'Space Mono', monospace" font-size="16" font-weight="700" fill="#FDB54A" text-anchor="middle">LOKI • RESCATADO</text>
+    <!-- Barra de Acción y Deslizar -->
+    <g transform="translate(0, 240)">
+      <rect width="380" height="54" rx="27" fill="#FDB54A" />
+      <text x="190" y="34" class="cta-txt" text-anchor="middle">DESLIZA PARA VER LA GUÍA ➔</text>
+      <text x="420" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Loki • Embajador Perritos Felices</text>
     </g>
-  </g>
-
-  <!-- 3 Puntos Clave de Alivio (Lado Izquierdo) -->
-  <g transform="translate(60, 360)">
-    <!-- Punto 1 -->
-    <g transform="translate(0, 0)">
-      <circle cx="28" cy="28" r="28" fill="#FDB54A" />
-      <text x="28" y="36" font-family="'Fraunces', serif" font-size="24" font-weight="800" fill="#10152B" text-anchor="middle">1</text>
-      <text x="76" y="26" class="card-bold">Lava sus patas pospaseo</text>
-      <text x="76" y="54" class="card-desc">Agua tibia + avena coloidal quita polen y químicos.</text>
-    </g>
-
-    <!-- Punto 2 -->
-    <g transform="translate(0, 110)">
-      <circle cx="28" cy="28" r="28" fill="#FDB54A" />
-      <text x="28" y="36" font-family="'Fraunces', serif" font-size="24" font-weight="800" fill="#10152B" text-anchor="middle">2</text>
-      <text x="76" y="26" class="card-bold">Seca siempre entre dedos</text>
-      <text x="76" y="54" class="card-desc">La humedad constante atrae hongos (Malassezia).</text>
-    </g>
-
-    <!-- Punto 3 -->
-    <g transform="translate(0, 220)">
-      <circle cx="28" cy="28" r="28" fill="#FDB54A" />
-      <text x="28" y="36" font-family="'Fraunces', serif" font-size="24" font-weight="800" fill="#10152B" text-anchor="middle">3</text>
-      <text x="76" y="26" class="card-bold">Cero castigos ni conos</text>
-      <text x="76" y="54" class="card-desc">El picor causa estrés real. Busca atención médica.</text>
-    </g>
-  </g>
-
-  <!-- Tarjeta Footer / Call to Action Fear-Free -->
-  <g transform="translate(60, 840)">
-    <rect width="960" height="160" rx="30" fill="#2C4BCA" />
-    
-    <!-- Sello Fear-Free -->
-    <g transform="translate(40, 35)">
-      <circle cx="45" cy="45" r="42" fill="#FDB54A" />
-      <text x="45" y="52" font-family="'Space Mono', monospace" font-size="12" font-weight="700" fill="#10152B" text-anchor="middle">100%</text>
-      <text x="45" y="66" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="#10152B" text-anchor="middle">FEAR-FREE</text>
-    </g>
-
-    <text x="160" y="68" font-family="'Fraunces', serif" font-size="30" font-weight="700" fill="#FFFFFF">Guía Médica Completa &amp; Directorio Veterinario</text>
-    <text x="160" y="106" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#E8EDFF">Encuentra clínicas sin jaulas en perritosfelices.com</text>
-
-    <!-- Botón / Micro-sticker -->
-    <rect x="760" y="52" width="160" height="56" rx="28" fill="#FDB54A" />
-    <text x="840" y="87" class="pill-txt" text-anchor="middle">LEER ↗</text>
   </g>
 </svg>"""
 
 
-# 2. PLANTILLA 2: NUTRICIÓN FRESCA Y RECETAS (FRODO - EL RUBIO)
+# 2. PLANTILLA 2: NUTRICIÓN FRESCA Y RECETAS (FRODO) — FULL-BLEED EDITORIAL
 def generar_arte_frodo() -> str:
     frodo_img = ARTES_DIR / "post_02_frodo_nutricion.jpg"
     if not frodo_img.exists():
@@ -161,110 +112,74 @@ def generar_arte_frodo() -> str:
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Space+Mono:wght@700&amp;display=swap');
-      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 56px; font-weight: 800; fill: #10152B; line-height: 1.1; }}
-      .title-accent {{ fill: #E65100; }}
-      .subtitle {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 500; fill: #575E7E; }}
-      .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 19px; font-weight: 700; fill: #E65100; }}
-      .box-title {{ font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; fill: #10152B; }}
-      .box-desc {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 19px; font-weight: 500; fill: #3D4463; }}
-      .ing-pill {{ font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; fill: #10152B; }}
+      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 62px; font-weight: 800; fill: #FFFFFF; line-height: 1.08; }}
+      .title-accent {{ fill: #FFE082; }}
+      .subtitle {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 500; fill: #FFF3E0; line-height: 1.4; }}
+      .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 1.5px; fill: #FFFFFF; text-transform: uppercase; }}
+      .cta-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; fill: #10152B; }}
+      .pill-ing {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 700; fill: #FFFFFF; }}
     </style>
-    <linearGradient id="bgNutri" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FFF8E7" />
-      <stop offset="100%" stop-color="#FBF4E2" />
+    <linearGradient id="scrimFrodo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1208" stop-opacity="0.45" />
+      <stop offset="30%" stop-color="#1A1208" stop-opacity="0.05" />
+      <stop offset="55%" stop-color="#1A1208" stop-opacity="0.5" />
+      <stop offset="80%" stop-color="#1A1208" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#1A1208" stop-opacity="0.98" />
     </linearGradient>
-    <clipPath id="frodoClip">
-      <rect x="60" y="240" width="440" height="480" rx="40" ry="40" />
-    </clipPath>
-    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
-      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#10152B" flood-opacity="0.08" />
-    </filter>
   </defs>
 
-  <!-- Fondo Gastronómico Cálido -->
-  <rect width="1080" height="1080" fill="url(#bgNutri)" />
-
-  <!-- Círculos de luz suaves -->
-  <circle cx="150" cy="120" r="280" fill="#FFE082" opacity="0.3" />
-  <circle cx="950" cy="900" r="340" fill="#FFCC80" opacity="0.25" />
+  <!-- Fotografía Protagonista a Sangre Completa -->
+  <image href="{img_uri}" x="0" y="0" width="1080" height="1080" preserveAspectRatio="xMidYMid slice" />
+  
+  <!-- Veladura Cálida -->
+  <rect width="1080" height="1080" fill="url(#scrimFrodo)" />
 
   <!-- Cabecera Superior -->
-  <g transform="translate(60, 60)">
-    <rect width="52" height="52" rx="14" fill="#E65100" />
-    <text x="26" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF" text-anchor="middle">PF</text>
-    <text x="70" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" font-weight="800" fill="#10152B">Perritos Felices • Cocina Natural</text>
-    
-    <!-- Tag Nutrición -->
-    <rect x="710" y="4" width="250" height="44" rx="22" fill="#FFE0B2" stroke="#E65100" stroke-width="2" />
-    <text x="835" y="32" class="badge-txt" text-anchor="middle">SNACK FRESCO</text>
+  <g transform="translate(64, 64)">
+    <rect width="360" height="48" rx="24" fill="rgba(26, 18, 8, 0.7)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+    <circle cx="24" cy="24" r="14" fill="#E65100" />
+    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FFFFFF" text-anchor="middle">PF</text>
+    <text x="52" y="30" class="badge-txt">COCINA // RECETA FRESCA</text>
+
+    <!-- Tag 100% Natural -->
+    <rect x="770" y="0" width="182" height="48" rx="24" fill="rgba(255, 179, 0, 0.95)" />
+    <text x="861" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">100% NATURAL 🌿</text>
   </g>
 
-  <!-- Foto con Frodo (Lado Izquierdo) -->
-  <g filter="url(#shadow)">
-    <rect x="60" y="240" width="440" height="480" rx="40" fill="#10152B" />
-    <image href="{img_uri}" x="60" y="240" width="440" height="480" preserveAspectRatio="xMidYMid slice" clip-path="url(#frodoClip)" />
-    <rect x="60" y="240" width="440" height="480" rx="40" fill="none" stroke="#E65100" stroke-width="6" />
+  <!-- Bloque Tipográfico Hero -->
+  <g transform="translate(64, 650)">
+    <!-- 3 Pills de Ingredientes Limpias (Sin cajitas con emojis pesados) -->
+    <g transform="translate(0, 0)">
+      <rect width="180" height="38" rx="19" fill="rgba(255, 255, 255, 0.2)" />
+      <text x="90" y="25" class="pill-ing" text-anchor="middle">🍉 Sandía natural</text>
 
-    <!-- Badge Frodo -->
-    <g transform="translate(90, 650)">
-      <rect width="230" height="46" rx="23" fill="#10152B" />
-      <text x="115" y="30" font-family="'Space Mono', monospace" font-size="16" font-weight="700" fill="#FFE082" text-anchor="middle">FRODO • EL RUBIO 🐕</text>
+      <rect x="195" y="0" width="195" height="38" rx="19" fill="rgba(255, 255, 255, 0.2)" />
+      <text x="292" y="25" class="pill-ing" text-anchor="middle">🥛 Yogur sin lactosa</text>
+
+      <rect x="405" y="0" width="155" height="38" rx="19" fill="rgba(255, 255, 255, 0.2)" />
+      <text x="482" y="25" class="pill-ing" text-anchor="middle">🌱 Menta fresca</text>
     </g>
-  </g>
 
-  <!-- Título y Receta (Lado Derecho) -->
-  <g transform="translate(540, 180)">
     <text class="title">
-      <tspan x="0" y="0">Helado casero de</tspan>
-      <tspan x="0" y="66" class="title-accent">zanahoria &amp; manzana</tspan>
+      <tspan x="0" y="95">Helado casero de</tspan>
+      <tspan x="0" y="165" class="title-accent">sandía &amp; yogur fresco</tspan>
     </text>
-    <text x="0" y="118" class="subtitle">100% natural, digestivo y libre de lactosa dañina.</text>
-  </g>
 
-  <!-- Lista de Ingredientes en Cajitas Bento -->
-  <g transform="translate(540, 340)">
-    <!-- Ingrediente 1 -->
-    <rect x="0" y="0" width="480" height="80" rx="20" fill="#FFFFFF" stroke="#FFE0B2" stroke-width="2" />
-    <text x="24" y="48" font-size="30">🥕</text>
-    <text x="76" y="38" class="box-title">1 taza de puré de zanahoria</text>
-    <text x="76" y="64" class="box-desc">Cocida y sin sal (rica en betacarotenos y fibra)</text>
+    <text class="subtitle">
+      <tspan x="0" y="225">Digestivo, hidratante y antiinflamatorio para días calurosos.</tspan>
+    </text>
 
-    <!-- Ingrediente 2 -->
-    <rect x="0" y="96" width="480" height="80" rx="20" fill="#FFFFFF" stroke="#FFE0B2" stroke-width="2" />
-    <text x="24" y="144" font-size="30">🍎</text>
-    <text x="76" y="134" class="box-title">1 manzana sin semillas</text>
-    <text x="76" y="160" class="box-desc">Pectina prebiótica para su flora intestinal</text>
-
-    <!-- Ingrediente 3 -->
-    <rect x="0" y="192" width="480" height="80" rx="20" fill="#FFFFFF" stroke="#FFE0B2" stroke-width="2" />
-    <text x="24" y="240" font-size="30">🥣</text>
-    <text x="76" y="230" class="box-title">Caldo de huesos o agua fresca</text>
-    <text x="76" y="256" class="box-desc">Hidratación antiinflamatoria sin condimentos</text>
-
-    <!-- Ingrediente 4 -->
-    <rect x="0" y="288" width="480" height="80" rx="20" fill="#FFFFFF" stroke="#FFE0B2" stroke-width="2" />
-    <text x="24" y="336" font-size="30">🌿</text>
-    <text x="76" y="326" class="box-title">Pizca de perejil fresco</text>
-    <text x="76" y="352" class="box-desc">Aliento fresco y apoyo renal natural</text>
-  </g>
-
-  <!-- Footer con Preparación -->
-  <g transform="translate(60, 840)">
-    <rect width="960" height="160" rx="30" fill="#10152B" />
-    <g transform="translate(40, 40)">
-      <circle cx="40" cy="40" r="38" fill="#FDB54A" />
-      <text x="40" y="48" font-size="32" text-anchor="middle">❄️</text>
+    <!-- Botón CTA -->
+    <g transform="translate(0, 260)">
+      <rect width="360" height="54" rx="27" fill="#FFE082" />
+      <text x="180" y="34" class="cta-txt" text-anchor="middle">VER RECETA PASO A PASO ➔</text>
+      <text x="400" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Frodo ("El Rubio") • Chef Canino</text>
     </g>
-    <text x="150" y="65" font-family="'Fraunces', serif" font-size="28" font-weight="700" fill="#FFFFFF">Modo de preparación: 3 horas al congelador</text>
-    <text x="150" y="102" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#D1D5E8">Licúa todo, sirve en moldes de silicona o tapete LickiMat y ¡a disfrutar!</text>
-    
-    <rect x="760" y="52" width="160" height="56" rx="28" fill="#FDB54A" />
-    <text x="840" y="87" class="ing-pill" text-anchor="middle">GUARDAR 📥</text>
   </g>
 </svg>"""
 
 
-# 3. PLANTILLA 3: ETOLOGÍA & SEÑALES DE CALMA (FOTOGRAFÍA DOCUMENTAL + BENTO)
+# 3. PLANTILLA 3: ETOLOGÍA & SEÑALES DE CALMA — FULL-BLEED EDITORIAL
 def generar_arte_etologia() -> str:
     eto_img = ARTES_DIR / "post_03_etologia_calma.jpg"
     img_uri = get_image_data_uri(eto_img)
@@ -273,97 +188,62 @@ def generar_arte_etologia() -> str:
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Space+Mono:wght@700&amp;display=swap');
-      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 56px; font-weight: 800; fill: #10152B; line-height: 1.1; }}
-      .title-accent {{ fill: #2E7D32; }}
-      .card-title {{ font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; fill: #10152B; }}
-      .card-desc {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 500; fill: #575E7E; line-height: 1.35; }}
+      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 62px; font-weight: 800; fill: #FFFFFF; line-height: 1.1; }}
+      .title-accent {{ fill: #81C784; }}
+      .subtitle {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 500; fill: #E8F5E9; line-height: 1.4; }}
+      .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 1.5px; fill: #FFFFFF; text-transform: uppercase; }}
+      .cta-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; fill: #10152B; }}
     </style>
-    <linearGradient id="bgEto" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#F4FAF5" />
-      <stop offset="100%" stop-color="#EBF4EC" />
+    <linearGradient id="scrimEto" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E2312" stop-opacity="0.45" />
+      <stop offset="30%" stop-color="#0E2312" stop-opacity="0.05" />
+      <stop offset="55%" stop-color="#0E2312" stop-opacity="0.5" />
+      <stop offset="80%" stop-color="#0E2312" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#0E2312" stop-opacity="0.98" />
     </linearGradient>
-    <clipPath id="etoClip">
-      <rect x="60" y="240" width="440" height="480" rx="40" ry="40" />
-    </clipPath>
-    <filter id="shadowEto" x="-5%" y="-5%" width="115%" height="115%">
-      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#10152B" flood-opacity="0.08" />
-    </filter>
   </defs>
 
-  <rect width="1080" height="1080" fill="url(#bgEto)" />
-  <circle cx="950" cy="150" r="320" fill="#D4EDDA" opacity="0.6" />
+  <!-- Fotografía Protagonista a Sangre Completa -->
+  <image href="{img_uri}" x="0" y="0" width="1080" height="1080" preserveAspectRatio="xMidYMid slice" />
+  
+  <!-- Veladura Verde Bosque Oscuro -->
+  <rect width="1080" height="1080" fill="url(#scrimEto)" />
 
-  <!-- Cabecera -->
-  <g transform="translate(60, 60)">
-    <rect width="52" height="52" rx="14" fill="#2E7D32" />
-    <text x="26" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" fill="#FFFFFF" text-anchor="middle">PF</text>
-    <text x="70" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" font-weight="800" fill="#10152B">Perritos Felices • Etología y Lenguaje</text>
-    
-    <rect x="680" y="4" width="280" height="44" rx="22" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" />
-    <text x="820" y="32" font-family="'Space Mono', monospace" font-size="19" font-weight="700" fill="#2E7D32" text-anchor="middle">SEÑALES DE CALMA</text>
+  <!-- Cabecera Superior -->
+  <g transform="translate(64, 64)">
+    <rect width="360" height="48" rx="24" fill="rgba(14, 35, 18, 0.7)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+    <circle cx="24" cy="24" r="14" fill="#2E7D32" />
+    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FFFFFF" text-anchor="middle">PF</text>
+    <text x="52" y="30" class="badge-txt">ETOLOGÍA // LENGUAJE</text>
+
+    <!-- Tag Señales de Calma -->
+    <rect x="750" y="0" width="202" height="48" rx="24" fill="rgba(129, 199, 132, 0.95)" />
+    <text x="851" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">SEÑALES DE CALMA 🐾</text>
   </g>
 
-  <!-- Foto Documental con Señal de Calma (Lado Izquierdo) -->
-  <g filter="url(#shadowEto)">
-    <rect x="60" y="240" width="440" height="480" rx="40" fill="#10152B" />
-    <image href="{img_uri}" x="60" y="240" width="440" height="480" preserveAspectRatio="xMidYMid slice" clip-path="url(#etoClip)" />
-    <rect x="60" y="240" width="440" height="480" rx="40" fill="none" stroke="#2E7D32" stroke-width="6" />
-
-    <!-- Badge Foto Calma -->
-    <g transform="translate(90, 650)">
-      <rect width="250" height="46" rx="23" fill="#10152B" />
-      <text x="125" y="30" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#A5D6A7" text-anchor="middle">LAMIDO DE TRUFA 👅</text>
-    </g>
-  </g>
-
-  <!-- Título y 4 Señales Bento (Lado Derecho) -->
-  <g transform="translate(540, 175)">
+  <!-- Bloque Tipográfico Hero -->
+  <g transform="translate(64, 660)">
     <text class="title">
-      <tspan x="0" y="0">¿Tu perro bosteza</tspan>
-      <tspan x="0" y="62" class="title-accent">cuando lo abrazas?</tspan>
+      <tspan x="0" y="0">¿Tu perro bosteza o</tspan>
+      <tspan x="0" y="74" class="title-accent">se lame la trufa al abrazarlo?</tspan>
     </text>
-    <text x="0" y="112" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#575E7E">No tiene sueño: te está pidiendo un poco de espacio respetuoso.</text>
-  </g>
 
-  <!-- Grilla Bento Compacta (Lado Derecho) -->
-  <g transform="translate(540, 310)">
-    <!-- Bento 1: Bostezo -->
-    <rect x="0" y="0" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="24" y="56" font-size="34">🥱</text>
-    <text x="76" y="38" class="card-title">El Bostezo Social</text>
-    <text x="76" y="66" class="card-desc">Reduce la tensión propia y la de quien tiene enfrente.</text>
+    <text class="subtitle">
+      <tspan x="0" y="155">No tiene sueño ni hambre: te está pidiendo espacio.</tspan>
+      <tspan x="0" y="195">Aprender a leer su lenguaje es el mayor acto de amor.</tspan>
+    </text>
 
-    <!-- Bento 2: Lamerse la trufa -->
-    <rect x="0" y="104" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="24" y="160" font-size="34">👅</text>
-    <text x="76" y="142" class="card-title">Lamido de Hocico</text>
-    <text x="76" y="170" class="card-desc">Lengua rápida a la nariz ante movimientos invasivos.</text>
-
-    <!-- Bento 3: Mirada desviada -->
-    <rect x="0" y="208" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="24" y="264" font-size="34">👀</text>
-    <text x="76" y="246" class="card-title">Girar la Cabeza</text>
-    <text x="76" y="274" class="card-desc">Evita contacto visual directo para pacificar la situación.</text>
-
-    <!-- Bento 4: Sacudida -->
-    <rect x="0" y="312" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#C8E6C9" stroke-width="2" />
-    <text x="24" y="368" font-size="34">🐕</text>
-    <text x="76" y="350" class="card-title">Sacudirse en Seco</text>
-    <text x="76" y="378" class="card-desc">Resetea su sistema nervioso tras un momento de tensión.</text>
-  </g>
-
-  <!-- Footer Fear-Free -->
-  <g transform="translate(60, 840)">
-    <rect width="960" height="160" rx="30" fill="#2E7D32" />
-    <text x="50" y="70" font-family="'Fraunces', serif" font-size="30" font-weight="700" fill="#FFFFFF">Amar a tu perro es aprender su lenguaje</text>
-    <text x="50" y="110" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#D4EDDA">Descubre la guía completa de etología positiva en perritosfelices.com</text>
-    <rect x="760" y="52" width="160" height="56" rx="28" fill="#FDB54A" />
-    <text x="840" y="87" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#10152B" text-anchor="middle">COMPARTIR ↗</text>
+    <!-- Botón CTA -->
+    <g transform="translate(0, 240)">
+      <rect width="380" height="54" rx="27" fill="#81C784" />
+      <text x="190" y="34" class="cta-txt" text-anchor="middle">DESCUBRE LAS 5 SEÑALES ➔</text>
+      <text x="420" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Educación 100% Positiva • Fear-Free</text>
+    </g>
   </g>
 </svg>"""
 
 
-# 4. PLANTILLA 4: "LOU TE ENSEÑA" (FOTOGRAFÍA OFICIAL DE LOU, FRODO Y LOKI)
+# 4. PLANTILLA 4: "LOU TE ENSEÑA" (ARNÉS EN Y) — FULL-BLEED EDITORIAL
 def generar_arte_lou() -> str:
     lou_img = ARTES_DIR / "post_04_lou_arnes_en_y.jpg"
     if not lou_img.exists():
@@ -374,86 +254,59 @@ def generar_arte_lou() -> str:
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Space+Mono:wght@700&amp;display=swap');
-      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 52px; font-weight: 800; fill: #10152B; line-height: 1.15; }}
-      .title-accent {{ fill: #2C4BCA; }}
-      .col-h {{ font-family: 'Fraunces', serif; font-size: 24px; font-weight: 800; }}
-      .col-p {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 17px; font-weight: 500; fill: #3D4463; line-height: 1.45; }}
+      .title {{ font-family: 'Fraunces', Georgia, serif; font-size: 58px; font-weight: 800; fill: #FFFFFF; line-height: 1.1; }}
+      .title-accent {{ fill: #FDB54A; }}
+      .subtitle {{ font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 500; fill: #E8EDFF; line-height: 1.4; }}
+      .badge-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 1.5px; fill: #FFFFFF; text-transform: uppercase; }}
+      .cta-txt {{ font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; fill: #10152B; }}
+      .quote-italics {{ font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 32px; font-weight: 700; fill: #FDB54A; }}
     </style>
-    <linearGradient id="bgLou" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#FDFBF7" />
-      <stop offset="100%" stop-color="#E8EDFF" />
+    <linearGradient id="scrimLou" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10152B" stop-opacity="0.45" />
+      <stop offset="30%" stop-color="#10152B" stop-opacity="0.05" />
+      <stop offset="55%" stop-color="#10152B" stop-opacity="0.5" />
+      <stop offset="80%" stop-color="#10152B" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#10152B" stop-opacity="0.98" />
     </linearGradient>
-    <clipPath id="louClip">
-      <rect x="580" y="240" width="440" height="480" rx="40" ry="40" />
-    </clipPath>
-    <filter id="shadowLou" x="-5%" y="-5%" width="115%" height="115%">
-      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#10152B" flood-opacity="0.08" />
-    </filter>
   </defs>
 
-  <rect width="1080" height="1080" fill="url(#bgLou)" />
+  <!-- Fotografía Protagonista de Lou con Loki y Frodo a Sangre Completa -->
+  <image href="{img_uri}" x="0" y="0" width="1080" height="1080" preserveAspectRatio="xMidYMid slice" />
+  
+  <!-- Veladura de Contraste Tipográfico AzulPF Profundo -->
+  <rect width="1080" height="1080" fill="url(#scrimLou)" />
 
-  <!-- Cabecera -->
-  <g transform="translate(60, 60)">
-    <circle cx="28" cy="28" r="28" fill="#2C4BCA" />
-    <text x="28" y="38" font-size="28" text-anchor="middle">👩‍🦰</text>
-    <text x="75" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="800" fill="#10152B">Lou • Educadora Canina Fear-Free</text>
-    <text x="75" y="54" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#575E7E">27 AÑOS • CRIANZA POSITIVA CON LOKI &amp; FRODO</text>
-    
-    <rect x="710" y="8" width="250" height="42" rx="21" fill="#FDB54A" />
-    <text x="835" y="35" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#10152B" text-anchor="middle">GUÍA DE PASEO</text>
+  <!-- Cabecera Superior -->
+  <g transform="translate(64, 64)">
+    <rect width="360" height="48" rx="24" fill="rgba(16, 21, 43, 0.7)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
+    <circle cx="24" cy="24" r="14" fill="#2C4BCA" />
+    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FDB54A" text-anchor="middle">PF</text>
+    <text x="52" y="30" class="badge-txt">EDUCACIÓN // PASEO AMABLE</text>
+
+    <!-- Tag Lou Oficial -->
+    <rect x="730" y="0" width="222" height="48" rx="24" fill="rgba(44, 75, 202, 0.95)" />
+    <text x="841" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">LOU TE ENSEÑA 👩‍🦰</text>
   </g>
 
-  <!-- Título -->
-  <g transform="translate(60, 165)">
+  <!-- Bloque Tipográfico Hero con la Cita Inmortal de Lou -->
+  <g transform="translate(64, 650)">
+    <text class="quote-italics">"El dolor jamás enseña respeto, solo pánico."</text>
+
     <text class="title">
-      <tspan x="0" y="0">Arnés en "Y" vs. Collares de Ahogo:</tspan>
-      <tspan x="0" y="58" class="title-accent">¿Por qué nunca debes estrangularlo?</tspan>
+      <tspan x="0" y="68">Arnés ergonómico en 'Y':</tspan>
+      <tspan x="0" y="136" class="title-accent">Paseos sin tirones ni ahogo.</tspan>
     </text>
-  </g>
 
-  <!-- Comparativa (Lado Izquierdo) -->
-  <g transform="translate(60, 275)">
-    <!-- Peligro: Collar de Ahogo -->
-    <rect x="0" y="0" width="490" height="210" rx="24" fill="#FFEBEE" stroke="#EF5350" stroke-width="2" />
-    <rect x="25" y="20" width="115" height="34" rx="17" fill="#D32F2F" />
-    <text x="82" y="43" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">PELIGRO ❌</text>
-    <text x="155" y="44" class="col-h" fill="#C62828">Collar de ahogo o púas</text>
-    <text x="25" y="85" class="col-p">• Aplasta tráquea, tiroides y daña cervicales.</text>
-    <text x="25" y="115" class="col-p">• Dispara presión ocular e induce pánico.</text>
-    <text x="25" y="145" class="col-p">• Provoca agresividad defensiva por dolor.</text>
+    <text class="subtitle">
+      <tspan x="0" y="205">Libera hombros, protege tráquea y cervicales.</tspan>
+    </text>
 
-    <!-- Correcto: Arnés Anatómico en Y -->
-    <rect x="0" y="230" width="490" height="210" rx="24" fill="#E8F5E9" stroke="#66BB6A" stroke-width="2" />
-    <rect x="25" y="250" width="125" height="34" rx="17" fill="#2E7D32" />
-    <text x="87" y="273" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">CORRECTO ✔</text>
-    <text x="165" y="274" class="col-h" fill="#1B5E20">Arnés Ergonómico en 'Y'</text>
-    <text x="25" y="315" class="col-p">• Reparte la tracción en el esternón seguro.</text>
-    <text x="25" y="345" class="col-p">• Deja escápulas 100% libres de fricción.</text>
-    <text x="25" y="375" class="col-p">• Paseos relajados basados en olfateo libre.</text>
-  </g>
-
-  <!-- Foto de Lou con Loki y Frodo (Lado Derecho) -->
-  <g filter="url(#shadowLou)">
-    <rect x="580" y="240" width="440" height="480" rx="40" fill="#10152B" />
-    <image href="{img_uri}" x="580" y="240" width="440" height="480" preserveAspectRatio="xMidYMid slice" clip-path="url(#louClip)" />
-    <rect x="580" y="240" width="440" height="480" rx="40" fill="none" stroke="#2C4BCA" stroke-width="6" />
-
-    <!-- Badge Lou & Mascotas -->
-    <g transform="translate(610, 650)">
-      <rect width="260" height="46" rx="23" fill="#10152B" />
-      <text x="130" y="30" font-family="'Space Mono', monospace" font-size="15" font-weight="700" fill="#FDB54A" text-anchor="middle">LOU + FRODO &amp; LOKI 🐕‍🦺</text>
+    <!-- Botón CTA -->
+    <g transform="translate(0, 245)">
+      <rect width="360" height="54" rx="27" fill="#FDB54A" />
+      <text x="180" y="34" class="cta-txt" text-anchor="middle">GUÍA DE ELECCIÓN DE ARNÉS ➔</text>
+      <text x="400" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Con Lou, Frodo y Loki en vivo</text>
     </g>
-  </g>
-
-  <!-- Footer con Cita de Lou -->
-  <g transform="translate(60, 840)">
-    <rect width="960" height="160" rx="30" fill="#10152B" />
-    <text x="50" y="70" font-family="'Fraunces', serif" font-size="28" font-weight="700" fill="#FDB54A">"El dolor jamás enseña respeto, solo enseña pánico."</text>
-    <text x="50" y="110" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="500" fill="#FFFFFF">— Lou, educadora canina en Perritos Felices</text>
-
-    <rect x="760" y="52" width="160" height="56" rx="28" fill="#2C4BCA" />
-    <text x="840" y="87" font-family="'Space Mono', monospace" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">VER GUÍA ↗</text>
   </g>
 </svg>"""
 
