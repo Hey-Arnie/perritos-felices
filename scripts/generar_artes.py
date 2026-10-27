@@ -30,15 +30,23 @@ def get_image_data_uri(path: Path) -> str:
 
 # =====================================================================
 # PLANTILLAS EDITORIALES PF-2027 (ESTÁNDARES FIGMA RESOURCE LIBRARY)
-# Fotografía Full-Bleed a sangre, gradientes cinematográficos y tipografía Fraunces
+# Fotografía Full-Bleed a sangre, gradientes cinematográficos y logo oficial
 # =====================================================================
 
-# 1. PLANTILLA 1: GUÍA MÉDICA / SALUD (LOKI) — FULL-BLEED EDITORIAL
+def get_official_logo_uri() -> str:
+    logo_path = ASSETS_DIR / "icononly_transparent_nobuffer.png"
+    if not logo_path.exists():
+        logo_path = ASSETS_DIR / "icononly_transparent.png"
+    return get_image_data_uri(logo_path)
+
+
+# 1. PLANTILLA 1: GUÍA MÉDICA / SALUD — FULL-BLEED EDITORIAL
 def generar_arte_loki() -> str:
     loki_img = ARTES_DIR / "post_01_loki_dermatologia.jpg"
     if not loki_img.exists():
         loki_img = ASSETS_DIR / "referencias_mascotas" / "loki_01_face.jpg"
     img_uri = get_image_data_uri(loki_img)
+    logo_uri = get_official_logo_uri()
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
@@ -66,17 +74,16 @@ def generar_arte_loki() -> str:
   <!-- Veladura de Contraste Tipográfico -->
   <rect width="1080" height="1080" fill="url(#scrimLoki)" />
 
-  <!-- Cabecera Superior (Safe Zone: 64px) -->
+  <!-- Cabecera Superior (Safe Zone: 64px) con Logo Oficial -->
   <g transform="translate(64, 64)">
-    <!-- Pill Branding -->
-    <rect width="360" height="48" rx="24" fill="rgba(16, 21, 43, 0.65)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
-    <circle cx="24" cy="24" r="14" fill="#2C4BCA" />
-    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FDB54A" text-anchor="middle">PF</text>
-    <text x="52" y="30" class="badge-txt">SALUD // DERMATOLOGÍA</text>
+    <!-- Pill Branding con Logo Oficial -->
+    <rect width="390" height="52" rx="26" fill="rgba(16, 21, 43, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
+    <text x="62" y="33" class="badge-txt">PF // SALUD &amp; DERMATOLOGÍA</text>
 
     <!-- Sello Fear-Free Micro -->
-    <rect x="792" y="0" width="160" height="48" rx="24" fill="rgba(253, 181, 74, 0.95)" />
-    <text x="872" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">FEAR-FREE 🛡️</text>
+    <rect x="792" y="2" width="160" height="48" rx="24" fill="rgba(253, 181, 74, 0.95)" />
+    <text x="872" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">FEAR-FREE 🛡️</text>
   </g>
 
   <!-- Bloque Tipográfico Hero (Foco Único: Pregunta Provocadora + Diagnóstico) -->
@@ -91,22 +98,23 @@ def generar_arte_loki() -> str:
       <tspan x="0" y="195">por contacto con polen o pesticidas tras el paseo.</tspan>
     </text>
 
-    <!-- Barra de Acción y Deslizar -->
+    <!-- Barra de Acción y Deslizar (Sin nombres de perros) -->
     <g transform="translate(0, 240)">
       <rect width="380" height="54" rx="27" fill="#FDB54A" />
       <text x="190" y="34" class="cta-txt" text-anchor="middle">DESLIZA PARA VER LA GUÍA ➔</text>
-      <text x="420" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Loki • Embajador Perritos Felices</text>
+      <text x="420" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Cuidado Veterinario Preventivo</text>
     </g>
   </g>
 </svg>"""
 
 
-# 2. PLANTILLA 2: NUTRICIÓN FRESCA Y RECETAS (FRODO) — FULL-BLEED EDITORIAL
+# 2. PLANTILLA 2: NUTRICIÓN FRESCA Y RECETAS — FULL-BLEED EDITORIAL
 def generar_arte_frodo() -> str:
     frodo_img = ARTES_DIR / "post_02_frodo_nutricion.jpg"
     if not frodo_img.exists():
         frodo_img = ASSETS_DIR / "referencias_mascotas" / "frodo_01_front.jpg"
     img_uri = get_image_data_uri(frodo_img)
+    logo_uri = get_official_logo_uri()
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
@@ -134,21 +142,20 @@ def generar_arte_frodo() -> str:
   <!-- Veladura Cálida -->
   <rect width="1080" height="1080" fill="url(#scrimFrodo)" />
 
-  <!-- Cabecera Superior -->
+  <!-- Cabecera Superior con Logo Oficial -->
   <g transform="translate(64, 64)">
-    <rect width="360" height="48" rx="24" fill="rgba(26, 18, 8, 0.7)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
-    <circle cx="24" cy="24" r="14" fill="#E65100" />
-    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FFFFFF" text-anchor="middle">PF</text>
-    <text x="52" y="30" class="badge-txt">COCINA // RECETA FRESCA</text>
+    <rect width="390" height="52" rx="26" fill="rgba(26, 18, 8, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
+    <text x="62" y="33" class="badge-txt">PF // COCINA NATURAL</text>
 
     <!-- Tag 100% Natural -->
-    <rect x="770" y="0" width="182" height="48" rx="24" fill="rgba(255, 179, 0, 0.95)" />
-    <text x="861" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">100% NATURAL 🌿</text>
+    <rect x="770" y="2" width="182" height="48" rx="24" fill="rgba(255, 179, 0, 0.95)" />
+    <text x="861" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">100% NATURAL 🌿</text>
   </g>
 
   <!-- Bloque Tipográfico Hero -->
   <g transform="translate(64, 650)">
-    <!-- 3 Pills de Ingredientes Limpias (Sin cajitas con emojis pesados) -->
+    <!-- 3 Pills de Ingredientes Limpias -->
     <g transform="translate(0, 0)">
       <rect width="180" height="38" rx="19" fill="rgba(255, 255, 255, 0.2)" />
       <text x="90" y="25" class="pill-ing" text-anchor="middle">🍉 Sandía natural</text>
@@ -169,11 +176,11 @@ def generar_arte_frodo() -> str:
       <tspan x="0" y="225">Digestivo, hidratante y antiinflamatorio para días calurosos.</tspan>
     </text>
 
-    <!-- Botón CTA -->
+    <!-- Botón CTA (Sin nombres de perros) -->
     <g transform="translate(0, 260)">
       <rect width="360" height="54" rx="27" fill="#FFE082" />
       <text x="180" y="34" class="cta-txt" text-anchor="middle">VER RECETA PASO A PASO ➔</text>
-      <text x="400" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Frodo ("El Rubio") • Chef Canino</text>
+      <text x="400" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Snack Saludable &amp; Seguro</text>
     </g>
   </g>
 </svg>"""
@@ -183,6 +190,7 @@ def generar_arte_frodo() -> str:
 def generar_arte_etologia() -> str:
     eto_img = ARTES_DIR / "post_03_etologia_calma.jpg"
     img_uri = get_image_data_uri(eto_img)
+    logo_uri = get_official_logo_uri()
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
@@ -209,16 +217,15 @@ def generar_arte_etologia() -> str:
   <!-- Veladura Verde Bosque Oscuro -->
   <rect width="1080" height="1080" fill="url(#scrimEto)" />
 
-  <!-- Cabecera Superior -->
+  <!-- Cabecera Superior con Logo Oficial -->
   <g transform="translate(64, 64)">
-    <rect width="360" height="48" rx="24" fill="rgba(14, 35, 18, 0.7)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
-    <circle cx="24" cy="24" r="14" fill="#2E7D32" />
-    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FFFFFF" text-anchor="middle">PF</text>
-    <text x="52" y="30" class="badge-txt">ETOLOGÍA // LENGUAJE</text>
+    <rect width="390" height="52" rx="26" fill="rgba(14, 35, 18, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
+    <text x="62" y="33" class="badge-txt">PF // ETOLOGÍA &amp; LENGUAJE</text>
 
     <!-- Tag Señales de Calma -->
-    <rect x="750" y="0" width="202" height="48" rx="24" fill="rgba(129, 199, 132, 0.95)" />
-    <text x="851" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">SEÑALES DE CALMA 🐾</text>
+    <rect x="750" y="2" width="202" height="48" rx="24" fill="rgba(129, 199, 132, 0.95)" />
+    <text x="851" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#10152B" text-anchor="middle">SEÑALES DE CALMA 🐾</text>
   </g>
 
   <!-- Bloque Tipográfico Hero -->
@@ -233,7 +240,7 @@ def generar_arte_etologia() -> str:
       <tspan x="0" y="195">Aprender a leer su lenguaje es el mayor acto de amor.</tspan>
     </text>
 
-    <!-- Botón CTA -->
+    <!-- Botón CTA (Sin nombres de perros) -->
     <g transform="translate(0, 240)">
       <rect width="380" height="54" rx="27" fill="#81C784" />
       <text x="190" y="34" class="cta-txt" text-anchor="middle">DESCUBRE LAS 5 SEÑALES ➔</text>
@@ -249,6 +256,7 @@ def generar_arte_lou() -> str:
     if not lou_img.exists():
         lou_img = ARTES_DIR / "post_04_lou_arnes.jpg"
     img_uri = get_image_data_uri(lou_img)
+    logo_uri = get_official_logo_uri()
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
   <defs>
@@ -270,22 +278,21 @@ def generar_arte_lou() -> str:
     </linearGradient>
   </defs>
 
-  <!-- Fotografía Protagonista de Lou con Loki y Frodo a Sangre Completa -->
+  <!-- Fotografía Protagonista de Lou a Sangre Completa -->
   <image href="{img_uri}" x="0" y="0" width="1080" height="1080" preserveAspectRatio="xMidYMid slice" />
   
   <!-- Veladura de Contraste Tipográfico AzulPF Profundo -->
   <rect width="1080" height="1080" fill="url(#scrimLou)" />
 
-  <!-- Cabecera Superior -->
+  <!-- Cabecera Superior con Logo Oficial -->
   <g transform="translate(64, 64)">
-    <rect width="360" height="48" rx="24" fill="rgba(16, 21, 43, 0.7)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" />
-    <circle cx="24" cy="24" r="14" fill="#2C4BCA" />
-    <text x="24" y="29" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#FDB54A" text-anchor="middle">PF</text>
-    <text x="52" y="30" class="badge-txt">EDUCACIÓN // PASEO AMABLE</text>
+    <rect width="390" height="52" rx="26" fill="rgba(16, 21, 43, 0.72)" stroke="rgba(255, 255, 255, 0.25)" stroke-width="1.5" />
+    <image href="{logo_uri}" x="12" y="8" width="36" height="36" preserveAspectRatio="xMidYMid meet" />
+    <text x="62" y="33" class="badge-txt">PF // PASEO RESPETUOSO</text>
 
     <!-- Tag Lou Oficial -->
-    <rect x="730" y="0" width="222" height="48" rx="24" fill="rgba(44, 75, 202, 0.95)" />
-    <text x="841" y="30" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">LOU TE ENSEÑA 👩‍🦰</text>
+    <rect x="730" y="2" width="222" height="48" rx="24" fill="rgba(44, 75, 202, 0.95)" />
+    <text x="841" y="32" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">LOU TE ENSEÑA 👩‍🦰</text>
   </g>
 
   <!-- Bloque Tipográfico Hero con la Cita Inmortal de Lou -->
@@ -301,11 +308,11 @@ def generar_arte_lou() -> str:
       <tspan x="0" y="205">Libera hombros, protege tráquea y cervicales.</tspan>
     </text>
 
-    <!-- Botón CTA -->
+    <!-- Botón CTA (Sin nombres de perros) -->
     <g transform="translate(0, 245)">
       <rect width="360" height="54" rx="27" fill="#FDB54A" />
       <text x="180" y="34" class="cta-txt" text-anchor="middle">GUÍA DE ELECCIÓN DE ARNÉS ➔</text>
-      <text x="400" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Con Lou, Frodo y Loki en vivo</text>
+      <text x="400" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="600" fill="rgba(255, 255, 255, 0.8)">Educación Canina Amable</text>
     </g>
   </g>
 </svg>"""
