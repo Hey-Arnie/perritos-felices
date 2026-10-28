@@ -1858,6 +1858,64 @@ h1, h2, h3, h4, .font-display {
   margin-bottom: 0.5rem;
 }
 
+/* Sección de Referencias Científicas y Fuentes Clínicas (EBVM Top 10) */
+.article-references {
+  margin: 3.5rem 0 2rem;
+  padding: 1.75rem 2rem;
+  background-color: var(--surface-white);
+  border: 1.5px solid var(--border-subtle);
+  border-left: 5px solid var(--color-botanical-mint);
+  border-radius: var(--radius-md);
+  box-shadow: 2px 2px 0 var(--border-subtle);
+}
+
+.article-references h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink-primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.article-references ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.article-references li {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.article-references li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--logo-blue);
+  font-weight: bold;
+}
+
+.article-references li strong {
+  color: var(--ink-primary);
+  font-weight: 700;
+}
+
+.article-references li em {
+  font-style: italic;
+  color: var(--ink-primary);
+}
+
 .ethical-recommendation-box p {
   font-size: 0.96rem;
   color: var(--ink-primary);
@@ -2754,6 +2812,532 @@ textarea {
   .category-pill {
     scroll-snap-align: start;
     flex-shrink: 0;
+  }
+}
+
+/* =========================================================================
+   HERRAMIENTAS CLÍNICAS & PRODUCT-LED HUB (PF-2027 / TOP 10 VET SCIENCE)
+   ========================================================================= */
+
+.tools-hero {
+  padding: 4rem 0 2.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-ice-blue) 0%, var(--bg-cream) 100%);
+  border-bottom: 1.5px solid var(--border-strong);
+}
+
+.tools-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background-color: var(--surface-white);
+  border: 1.5px solid var(--logo-blue);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--logo-blue);
+  margin-bottom: 1.25rem;
+}
+
+.tools-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  max-width: 820px;
+  margin: 0 auto 1.25rem;
+}
+
+.tools-hero p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--ink-secondary);
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Sección de la Calculadora Metabólica */
+.calc-section {
+  padding: 3.5rem 0;
+  background-color: var(--bg-cream);
+}
+
+.calc-card {
+  background-color: var(--surface-white);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-squircle);
+  box-shadow: 6px 6px 0 var(--border-strong);
+  padding: 2.25rem;
+  margin-top: 1.5rem;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.calc-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.form-group label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
+}
+
+.calc-weight-val {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--logo-blue);
+  font-weight: 700;
+}
+
+.calc-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.calc-range {
+  flex: 1;
+  accent-color: var(--logo-blue);
+  height: 8px;
+  cursor: pointer;
+}
+
+.calc-number-input {
+  width: 84px;
+  padding: 0.5rem 0.65rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  text-align: center;
+  background-color: var(--surface-white);
+}
+
+.calc-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  background-color: var(--surface-white);
+  cursor: pointer;
+}
+
+.calc-results {
+  background-color: var(--color-ice-blue);
+  border: 1.5px solid var(--logo-blue);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calc-stat-hero {
+  border-bottom: 1px solid rgba(44, 75, 202, 0.2);
+  padding-bottom: 1.25rem;
+}
+
+.calc-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--logo-blue);
+}
+
+.calc-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  line-height: 1.1;
+  margin: 0.25rem 0 0.25rem;
+}
+
+.calc-substat {
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+}
+
+.calc-topper-box {
+  background-color: var(--surface-white);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+}
+
+.calc-topper-box h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--ink-primary);
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+}
+
+.calc-topper-box p {
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.calc-equivalences-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+}
+
+.equiv-item {
+  background-color: var(--bg-cream);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.78rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.equiv-item strong {
+  font-family: var(--font-mono);
+  color: var(--logo-blue);
+}
+
+.calc-disclaimer-box {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  line-height: 1.45;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 0.85rem;
+}
+
+.calc-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toast-pill {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-salvia);
+  background-color: var(--surface-white);
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid var(--color-salvia);
+  border-radius: var(--radius-full);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Sección del Semáforo Toxicológico */
+.food-section {
+  padding: 3.5rem 0;
+  background-color: var(--surface-white);
+  border-top: 1.5px solid var(--border-strong);
+  border-bottom: 1.5px solid var(--border-strong);
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.food-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.food-search-box {
+  flex: 1;
+  min-width: 260px;
+}
+
+.food-search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink-primary);
+  background-color: var(--bg-cream);
+  outline: none;
+}
+
+.food-search-input:focus {
+  border-color: var(--logo-blue);
+  box-shadow: 0 0 0 3px rgba(44, 75, 202, 0.15);
+}
+
+.food-filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.food-filter-btn {
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-white);
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.food-filter-btn:hover {
+  background-color: var(--color-ice-blue);
+  color: var(--logo-blue);
+}
+
+.food-filter-btn.active {
+  background-color: var(--logo-blue);
+  color: var(--surface-white);
+  border-color: var(--logo-blue);
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 1.25rem;
+}
+
+.food-card {
+  background-color: var(--bg-cream);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 3px 3px 0 var(--border-strong);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.food-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 var(--border-strong);
+}
+
+.food-card.food-safe {
+  border-top: 5px solid var(--color-salvia);
+}
+
+.food-card.food-caution {
+  border-top: 5px solid var(--logo-yellow);
+}
+
+.food-card.food-toxic {
+  border-top: 5px solid var(--brand-coral);
+  background-color: #FFF6F6;
+}
+
+.food-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.food-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.food-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+}
+
+.badge-safe {
+  background-color: #EBF7EE;
+  color: #1E663B;
+  border: 1px solid #1E663B;
+}
+
+.badge-caution {
+  background-color: #FFF9E6;
+  color: #8C6500;
+  border: 1px solid #8C6500;
+}
+
+.badge-toxic {
+  background-color: #FDEDED;
+  color: #C02626;
+  border: 1px solid #C02626;
+  font-weight: 800;
+}
+
+.food-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink-primary);
+  margin: 0 0 0.5rem;
+}
+
+.food-active {
+  font-size: 0.8rem;
+  color: var(--ink-secondary);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.food-detail {
+  font-size: 0.85rem;
+  color: var(--ink-primary);
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.food-portion {
+  font-size: 0.8rem;
+  color: var(--ink-secondary);
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.food-card-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+}
+
+.empty-food-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: var(--bg-cream);
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--ink-secondary);
+}
+
+/* Sección de Señales de Calma */
+.signals-section {
+  padding: 3.5rem 0 4.5rem;
+  background-color: var(--bg-cream);
+}
+
+.signals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.signal-card {
+  background-color: var(--surface-white);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 3px 3px 0 var(--border-strong);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.signal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.signal-emoji {
+  font-size: 2rem;
+}
+
+.signal-cat {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  background-color: var(--color-ice-blue);
+  color: var(--logo-blue);
+  border-radius: var(--radius-full);
+}
+
+.signal-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink-primary);
+  margin: 0 0 0.5rem;
+}
+
+.signal-meaning {
+  font-size: 0.86rem;
+  color: var(--ink-secondary);
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.signal-action {
+  font-size: 0.84rem;
+  color: var(--ink-primary);
+  background-color: var(--color-peach);
+  border-left: 3px solid var(--logo-yellow);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  line-height: 1.4;
+  margin-top: auto;
+}
+
+@media (max-width: 840px) {
+  .calc-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .calc-stat-num {
+    font-size: 2.2rem;
+  }
+
+  .calc-card {
+    padding: 1.5rem;
   }
 }
 

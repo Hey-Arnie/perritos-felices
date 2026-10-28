@@ -916,6 +916,7 @@ def cmd_build() -> int:
         "https://www.perritosfelices.com/",
         "https://www.perritosfelices.com/blog.html",
         "https://www.perritosfelices.com/directorio.html",
+        "https://www.perritosfelices.com/herramientas.html",
     ] + [
         f"https://www.perritosfelices.com/articulos/{sanitize_slug(a['slug'], a['title'])}"
         for a in clean_articles_for_js
@@ -1100,6 +1101,7 @@ SAFE_GIT_PATHS = [
     "index.html",
     "blog.html",
     "directorio.html",
+    "herramientas.html",
     "sitemap.xml",
     "robots.txt",
     "_headers",
