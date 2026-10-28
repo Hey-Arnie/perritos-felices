@@ -106,6 +106,22 @@
     <!-- Buscador y Filtros del Directorio -->
     <section style="padding: 2.75rem 0 4.5rem;">
       <div class="container">
+        <!-- Selector Rápido de Ciudad 1-Tap -->
+        <div class="city-pills-bar" role="tablist" aria-label="Filtrar por ciudad rápida">
+          <span class="mono-label" style="color: var(--logo-blue); font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem;">
+            📍 CIUDAD:
+          </span>
+          <div class="city-pills">
+            <button type="button" class="category-pill js-city-pill active" data-city="Todas">Todas (90)</button>
+            <button type="button" class="category-pill js-city-pill" data-city="Ciudad de Guatemala">Ciudad de Guatemala (18)</button>
+            <button type="button" class="category-pill js-city-pill" data-city="Ciudad de México">CDMX (17)</button>
+            <button type="button" class="category-pill js-city-pill" data-city="Bogotá">Bogotá (16)</button>
+            <button type="button" class="category-pill js-city-pill" data-city="Guadalajara">Guadalajara (13)</button>
+            <button type="button" class="category-pill js-city-pill" data-city="Monterrey">Monterrey (13)</button>
+            <button type="button" class="category-pill js-city-pill" data-city="Antigua Guatemala">Antigua (13)</button>
+          </div>
+        </div>
+
         <div class="directory-controls" role="search" aria-label="Filtros del directorio canino">
           <div class="filter-group">
             <label for="dir-search">1. ¿QUÉ BUSCAS HOY?</label>

@@ -12,11 +12,11 @@
   <meta property="og:description" content="{{EXCERPT}}" />
   <meta property="og:url" content="https://www.perritosfelices.com/articulos/{{SLUG}}" />
   <meta property="og:site_name" content="Perritos Felices — Ladridos que inspiran" />
-  <meta property="og:image" content="https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="{{OG_IMAGE}}" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{TITLE}} | Perritos Felices" />
   <meta name="twitter:description" content="{{EXCERPT}}" />
-  <meta name="twitter:image" content="https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png" />
+  <meta name="twitter:image" content="{{OG_IMAGE}}" />
 
   <!-- Datos Estructurados Schema.org (Article) -->
   <script type="application/ld+json">
@@ -117,7 +117,10 @@
 
       <!-- Cuerpo del Artículo -->
       <article class="article-content">
+{{TLDR_BOX}}
+{{HERO_MEDIA}}
 {{ARTICLE_BODY}}
+{{ETHICAL_CTA}}
       </article>
     </div>
 

@@ -315,24 +315,45 @@ function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
   const safeHref = `${basePath}${encodeURIComponent(safeSlug)}`;
   const safeGradient = sanitizeBgGradient(article.bgGradient);
 
+  const thumbChildren = [
+    createEl("div", { className: "article-thumb-top" }, [
+      createEl("span", { className: "article-doc-id", text: docNum }),
+      createEl("span", { className: "badge badge-category", text: article.category })
+    ])
+  ];
+
+  if (article.image) {
+    const imgPrefix = basePath === "articulos/" ? "" : "../";
+    thumbChildren.push(
+      createEl("img", {
+        className: "article-thumb-bg-img",
+        attrs: {
+          src: `${imgPrefix}${article.image}`,
+          alt: article.title,
+          loading: "lazy",
+          decoding: "async"
+        }
+      })
+    );
+  } else {
+    thumbChildren.push(createCategorySvgNode(article.category));
+  }
+
+  thumbChildren.push(
+    createEl("div", {
+      className: "article-thumb-author",
+      text: `Por ${article.author}`
+    })
+  );
+
   const thumbLink = createEl(
     "a",
     {
-      className: "article-thumb",
+      className: `article-thumb ${article.image ? "has-photo" : ""}`,
       attrs: { href: safeHref },
       style: `background: ${safeGradient};`
     },
-    [
-      createEl("div", { className: "article-thumb-top" }, [
-        createEl("span", { className: "article-doc-id", text: docNum }),
-        createEl("span", { className: "badge badge-category", text: article.category })
-      ]),
-      createCategorySvgNode(article.category),
-      createEl("div", {
-        style: "font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--ink-primary); z-index: 2;",
-        text: `Por ${article.author}`
-      })
-    ]
+    thumbChildren
   );
 
   const body = createEl("div", { className: "article-body" }, [
@@ -426,6 +447,22 @@ function createBusinessCardNode(biz, idx = 0) {
     ["Ver en Mapa ", createEl("span", { className: "arrow-diag", text: "↗" })]
   );
 
+  const copyAddrBtn = createEl("button", {
+    className: "btn btn-outline btn-sm",
+    attrs: { type: "button", title: "Copiar dirección completa" },
+    text: "Copiar dirección"
+  });
+  copyAddrBtn.addEventListener("click", () => {
+    const fullAddr = `${biz.name}, ${biz.address}, ${biz.city}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(fullAddr).then(() => {
+        window.showToast(`[COPIADO] Dirección guardada en el portapapeles.`);
+      });
+    } else {
+      window.showToast(`Dirección: ${fullAddr}`);
+    }
+  });
+
   const bottomBlock = createEl("div", {}, [
     createEl("div", { className: "business-meta" }, [
       createEl("span", {}, [
@@ -441,7 +478,11 @@ function createBusinessCardNode(biz, idx = 0) {
         ` ${biz.phone}`
       ])
     ]),
-    createEl("div", { className: "business-footer" }, [contactBtn, mapLink])
+    createEl("div", { className: "business-footer", style: "display:flex; flex-wrap:wrap; gap:0.5rem;" }, [
+      contactBtn,
+      copyAddrBtn,
+      mapLink
+    ])
   ]);
 
   return createEl("article", { className: "business-card", dataset: { id: biz.id } }, [topBlock, bottomBlock]);
@@ -672,12 +713,32 @@ function initDirectoryPage() {
     dirGrid.replaceChildren(...filtered.map((b, i) => createBusinessCardNode(b, i)));
   }
 
+  const cityPills = document.querySelectorAll(".js-city-pill");
+
+  function syncCityPills(selectedCity) {
+    cityPills.forEach((pill) => {
+      pill.classList.toggle("active", pill.dataset.city === selectedCity);
+    });
+  }
+
+  cityPills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const targetCity = pill.dataset.city || "Todas";
+      if (citySelect) citySelect.value = targetCity;
+      syncCityPills(targetCity);
+      updateViewWithMotion(filterAndRenderDirectory);
+    });
+  });
+
   if (searchInput) {
     searchInput.addEventListener("input", filterAndRenderDirectory);
   }
   [citySelect, categorySelect, ratingSelect].forEach((el) => {
     if (el) {
       el.addEventListener("change", () => {
+        if (el === citySelect) {
+          syncCityPills(citySelect.value);
+        }
         updateViewWithMotion(filterAndRenderDirectory);
       });
     }
@@ -689,6 +750,7 @@ function initDirectoryPage() {
       if (citySelect) citySelect.value = "Todas";
       if (categorySelect) categorySelect.value = "Todas";
       if (ratingSelect) ratingSelect.value = "0";
+      syncCityPills("Todas");
       updateViewWithMotion(filterAndRenderDirectory);
     });
   }
@@ -798,6 +860,22 @@ function initArticlePage() {
   const articleBody = document.querySelector(".article-content");
 
   if (progressBar && articleBody) {
+    // Botón flotante interactivo para regresar al Índice
+    const backToTopBtn = createEl("button", {
+      className: "back-to-top-btn",
+      attrs: { type: "button", "aria-label": "Volver al índice de la guía" },
+      text: "↑ Índice"
+    });
+    backToTopBtn.addEventListener("click", () => {
+      const toc = document.querySelector(".toc-card") || document.querySelector(".article-header");
+      if (toc) {
+        toc.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+    document.body.appendChild(backToTopBtn);
+
     window.addEventListener(
       "scroll",
       () => {
@@ -810,6 +888,12 @@ function initArticlePage() {
         const current = Math.min(Math.max(scrollTop - articleTop + windowHeight * 0.25, 0), maxScroll);
         const ratio = (current / maxScroll).toFixed(4);
         progressBar.style.transform = `scaleX(${ratio})`;
+
+        if (scrollTop > 600) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
       },
       { passive: true }
     );

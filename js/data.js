@@ -18,7 +18,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🩺",
       "bgGradient": "linear-gradient(135deg, #FFE4B5 0%, #E8EFFF 100%)",
-      "featured": true
+      "featured": true,
+      "image": "assets/articulos/alergias-alimentarias-ambientales-perros-guia.jpg"
     },
     {
       "id": "art-12",
@@ -32,7 +33,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🐕",
       "bgGradient": "linear-gradient(135deg, #DDE6FF 0%, #FFF1D6 100%)",
-      "featured": true
+      "featured": true,
+      "image": "assets/articulos/como-saber-si-tu-perro-es-feliz.jpg"
     },
     {
       "id": "art-12",
@@ -46,7 +48,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🐕",
       "bgGradient": "linear-gradient(135deg, #DDE6FF 0%, #FFF1D6 100%)",
-      "featured": true
+      "featured": true,
+      "image": "assets/articulos/miedo-pirotecnia-ruidos-fuertes-perros.jpg"
     },
     {
       "id": "art-11",
@@ -60,7 +63,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🐾",
       "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFF0CE 100%)",
-      "featured": true
+      "featured": true,
+      "image": "assets/articulos/como-elegir-arnes-en-y-perros.jpg"
     },
     {
       "id": "art-01",
@@ -74,7 +78,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🥣",
       "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFE2AD 100%)",
-      "featured": true
+      "featured": true,
+      "image": "assets/articulos/guia-alimentacion-natural-perros.jpg"
     },
     {
       "id": "art-02",
@@ -88,7 +93,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🐕",
       "bgGradient": "linear-gradient(135deg, #DDE6FF 0%, #FFF1D6 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/lenguaje-corporal-canino-senales.jpg"
     },
     {
       "id": "art-03",
@@ -102,7 +108,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🩺",
       "bgGradient": "linear-gradient(135deg, #FFE4B5 0%, #E8EFFF 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/calendario-vacunacion-desparasitacion.jpg"
     },
     {
       "id": "art-04",
@@ -116,7 +123,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "💙",
       "bgGradient": "linear-gradient(135deg, #E2EAFF 0%, #FFDF9E 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/ansiedad-por-separacion-como-ayudarlo.jpg"
     },
     {
       "id": "art-05",
@@ -130,7 +138,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🌿",
       "bgGradient": "linear-gradient(135deg, #FFECB8 0%, #E3F4ED 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/paseos-olfativos-enriquecimiento-ambiental.jpg"
     },
     {
       "id": "art-06",
@@ -144,7 +153,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "⛑️",
       "bgGradient": "linear-gradient(135deg, #FFE0A3 0%, #EAEFFF 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/primeros-auxilios-caninos-botiquin.jpg"
     },
     {
       "id": "art-07",
@@ -158,7 +168,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🪥",
       "bgGradient": "linear-gradient(135deg, #DCE6FF 0%, #FFF4DB 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/cuidado-dental-perros-guia-practica.jpg"
     },
     {
       "id": "art-08",
@@ -172,7 +183,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🐾",
       "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFF0CE 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/socializacion-cachorros-primeros-meses.jpg"
     },
     {
       "id": "art-09",
@@ -186,7 +198,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🛋️",
       "bgGradient": "linear-gradient(135deg, #E8EEFF 0%, #FFE6B3 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/cuidados-perro-senior-calidad-vida.jpg"
     },
     {
       "id": "art-10",
@@ -200,7 +213,8 @@ window.PERRITOS_DATA = {
       "authorRole": "Perritos Felices",
       "emoji": "🎒",
       "bgGradient": "linear-gradient(135deg, #FFE5B0 0%, #DCE6FF 100%)",
-      "featured": false
+      "featured": false,
+      "image": "assets/articulos/viajar-con-tu-perro-consejos-seguridad.jpg"
     }
   ],
   "directory": [

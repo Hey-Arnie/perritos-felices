@@ -508,11 +508,81 @@ def render_article_from_template(article: dict, template_str: str) -> str:
         return html.escape(strip_dangerous_unicode(str(val)), quote=True)
 
     safe_slug_val = sanitize_slug(article["slug"], article["title"])
+    slug_base = safe_slug_val.replace(".html", "")
+
+    # 1. Portada Fotográfica Editorial (Hero Media)
+    img_rel = f"assets/articulos/{slug_base}.jpg"
+    img_full = WEB_DIR / img_rel
+    if img_full.exists():
+        hero_media_html = (
+            f'        <figure class="article-hero-media">\n'
+            f'          <img src="../{img_rel}" alt="{esc(article["title"])}" class="article-hero-img" width="1200" height="675" fetchpriority="high" decoding="async" />\n'
+            f'          <figcaption class="article-hero-caption">\n'
+            f'            <span>FOTOGRAFÍA DOCUMENTAL PERRITOS FELICES // CRIANZA RESPETUOSA</span>\n'
+            f'            <span>ESTÁNDAR FEAR-FREE</span>\n'
+            f'          </figcaption>\n'
+            f'        </figure>'
+        )
+        og_image_url = f"https://www.perritosfelices.com/{img_rel}"
+    else:
+        hero_media_html = ""
+        og_image_url = "https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png"
+
+    # 2. Caja TL;DR Oficial PF-2027 (Escaneabilidad de 30 segundos)
+    if "tldr-box" not in body_html:
+        tldr_text = esc(article.get("subtitle") or article["excerpt"])
+        tldr_box_html = (
+            f'        <div class="tldr-box">\n'
+            f'          <strong>⚡ En 30 segundos: Lo que debes saber</strong>\n'
+            f'          <p>{tldr_text}</p>\n'
+            f'        </div>'
+        )
+    else:
+        tldr_box_html = ""
+
+    # 3. Recomendación Ética Cruzada (Blog -> Directorio Canino)
+    if "ethical-recommendation-box" not in body_html:
+        if cat in ("Comportamiento", "Educación y Entrenamiento"):
+            ethical_cta_html = (
+                '        <div class="ethical-recommendation-box">\n'
+                '          <h4>¿Buscas apoyo profesional y respetuoso para tu perro?</h4>\n'
+                '          <p>Encuentra educadores caninos, etólogos y guarderías 100% libres de castigo en tu ciudad dentro de nuestro Directorio Canino Verificado.</p>\n'
+                '          <a href="../directorio.html?categoria=Entrenamiento%20y%20Etolog%C3%ADa" class="btn btn-primary btn-sm">EXPLORAR ESPECIALISTAS EN ETOLOGÍA ↗</a>\n'
+                '        </div>'
+            )
+        elif cat == "Nutrición":
+            ethical_cta_html = (
+                '        <div class="ethical-recommendation-box">\n'
+                '          <h4>¿Quieres asesoría en nutrición natural o dietas caseras?</h4>\n'
+                '          <p>Encuentra veterinarias integrativas y tiendas con insumos frescos certificados en nuestro Directorio Canino.</p>\n'
+                '          <a href="../directorio.html?categoria=Nutrici%C3%B3n%20y%20Tienda" class="btn btn-primary btn-sm">BUSCAR TIENDAS Y NUTRICIONISTAS ↗</a>\n'
+                '        </div>'
+            )
+        elif cat in ("Salud y Prevención", "Higiene y Cuidado"):
+            ethical_cta_html = (
+                '        <div class="ethical-recommendation-box">\n'
+                '          <h4>Clínicas veterinarias y estéticas con manejo amable</h4>\n'
+                '          <p>Espacios con protocolos de bajo estrés, sin jaulas de espera y con trato cálido hacia tu familia.</p>\n'
+                '          <a href="../directorio.html?categoria=Veterinaria%20y%20Salud" class="btn btn-primary btn-sm">LOCALIZAR VETERINARIAS VERIFICADAS ↗</a>\n'
+                '        </div>'
+            )
+        else:
+            ethical_cta_html = (
+                '        <div class="ethical-recommendation-box">\n'
+                '          <h4>Hoteles campestres, parques y espacios Pet-Friendly</h4>\n'
+                '          <p>Disfruta de paseos y descanso con tu perro en lugares seguros y verificados bajo trato amable.</p>\n'
+                '          <a href="../directorio.html?categoria=Guarder%C3%ADa%20y%20Hotel" class="btn btn-primary btn-sm">VER HOTELES Y GUARDERÍAS ↗</a>\n'
+                '        </div>'
+            )
+    else:
+        ethical_cta_html = ""
+
     json_ld_data = {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": strip_dangerous_unicode(str(article["title"])),
         "description": strip_dangerous_unicode(str(article["excerpt"])),
+        "image": og_image_url,
         "url": f"https://www.perritosfelices.com/articulos/{safe_slug_val}",
         "datePublished": strip_dangerous_unicode(str(article["date"])),
         "author": {
@@ -548,7 +618,11 @@ def render_article_from_template(article: dict, template_str: str) -> str:
         "{{DATE}}": esc(article["date"]),
         "{{READ_TIME}}": esc(article["readTime"]),
         "{{TOC_ITEMS}}": toc_html,
+        "{{TLDR_BOX}}": tldr_box_html,
+        "{{HERO_MEDIA}}": hero_media_html,
         "{{ARTICLE_BODY}}": indented_body,
+        "{{ETHICAL_CTA}}": ethical_cta_html,
+        "{{OG_IMAGE}}": og_image_url,
         "{{JSON_LD}}": indented_json_ld,
     }
 
@@ -713,6 +787,8 @@ def cmd_build() -> int:
             target_html.write_text(rendered_html, encoding="utf-8")
             generated_pages += 1
 
+        slug_base = full_article["slug"].replace(".html", "")
+        img_rel = f"assets/articulos/{slug_base}.jpg"
         clean_articles_for_js.append({
             "id": full_article["id"],
             "slug": full_article["slug"],
@@ -726,6 +802,7 @@ def cmd_build() -> int:
             "emoji": full_article["emoji"],
             "bgGradient": full_article["bgGradient"],
             "featured": full_article["featured"],
+            "image": img_rel if (WEB_DIR / img_rel).exists() else "",
         })
 
     # Guardar cms_articulos.json sincronizado

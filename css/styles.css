@@ -719,6 +719,44 @@ h1, h2, h3, h4, .font-display {
   letter-spacing: 0.08em;
 }
 
+.hero-media-wrap {
+  position: relative;
+  width: 100%;
+  margin: 1.25rem 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1.5px solid var(--border-strong);
+  box-shadow: 4px 4px 0 var(--border-strong);
+  background-color: var(--color-ice-blue);
+}
+
+.hero-photo-cover {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.hero-illustration-card:hover .hero-photo-cover {
+  transform: scale(1.04);
+}
+
+.hero-brand-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 110px;
+  height: 110px;
+  filter: drop-shadow(0 4px 12px rgba(16, 21, 43, 0.35));
+  z-index: 3;
+  transition: transform 0.4s var(--ease-bounce);
+}
+
+.hero-illustration-card:hover .hero-brand-badge {
+  transform: scale(1.08) rotate(-4deg);
+}
+
 .hero-brand-showcase {
   max-width: 320px;
   width: 100%;
@@ -1083,7 +1121,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 .article-thumb {
-  height: 195px;
+  height: 200px;
   padding: 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -1093,11 +1131,48 @@ h1, h2, h3, h4, .font-display {
   border-bottom: 1.5px solid var(--border-strong);
 }
 
+.article-thumb-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: transform 0.45s var(--ease-out-expo);
+}
+
+.article-card:hover .article-thumb-bg-img {
+  transform: scale(1.06);
+}
+
+.article-thumb.has-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(16, 21, 43, 0.48) 0%, rgba(16, 21, 43, 0.12) 45%, rgba(16, 21, 43, 0.76) 100%);
+  z-index: 2;
+}
+
 .article-thumb-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 2;
+  position: relative;
+  z-index: 3;
+}
+
+.article-thumb-author {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  position: relative;
+  z-index: 3;
+}
+
+.article-thumb.has-photo .article-thumb-author {
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(16, 21, 43, 0.85);
 }
 
 .article-doc-id {
@@ -1414,6 +1489,20 @@ h1, h2, h3, h4, .font-display {
 /* ==========================================================================
    Página Directorio (directorio.html)
    ========================================================================== */
+.city-pills-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.city-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
 .directory-controls {
   background-color: var(--surface-white);
   border: 1.5px solid var(--border-strong);
@@ -1629,7 +1718,7 @@ h1, h2, h3, h4, .font-display {
 
 .article-content h2 {
   font-size: 1.75rem;
-  margin: 2.25rem 0 0.9rem;
+  margin: 2.75rem 0 1rem;
   padding-top: 0.5rem;
   scroll-margin-top: 110px;
   color: var(--logo-blue);
@@ -1641,17 +1730,21 @@ h1, h2, h3, h4, .font-display {
 
 .article-content h3 {
   font-size: 1.3rem;
-  margin: 1.5rem 0 0.6rem;
+  margin: 2.15rem 0 0.75rem;
 }
 
 .article-content p {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.35rem;
   color: var(--ink-primary);
   font-size: 1.06rem;
+  line-height: 1.72;
+  max-width: 68ch;
 }
 
 .article-content ul, .article-content ol {
   margin: 1rem 0 1.5rem 1.25rem;
+  max-width: 68ch;
+  line-height: 1.68;
 }
 
 .article-content li {
@@ -1713,6 +1806,99 @@ h1, h2, h3, h4, .font-display {
   font-size: 1.15rem;
   color: var(--ink-primary);
   margin-bottom: 0.5rem;
+}
+
+/* Portada Fotográfica Editorial de Artículo */
+.article-hero-media {
+  margin: 1.5rem 0 2.25rem;
+  border-radius: var(--radius-squircle);
+  overflow: hidden;
+  border: 1.5px solid var(--border-strong);
+  box-shadow: 6px 6px 0 var(--border-strong);
+  background-color: var(--color-ice-blue);
+  position: relative;
+}
+
+.article-hero-img {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.article-hero-caption {
+  padding: 0.65rem 1rem;
+  background-color: var(--surface-white);
+  border-top: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Caja de Recomendación Ética Cruzada (Blog -> Directorio) */
+.ethical-recommendation-box {
+  background-color: var(--color-ice-blue);
+  border: 1.5px solid var(--logo-blue);
+  border-left: 6px solid var(--logo-blue);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  margin: 3rem 0 2rem;
+  box-shadow: 4px 4px 0 var(--border-strong);
+}
+
+.ethical-recommendation-box h4 {
+  font-size: 1.15rem;
+  color: var(--logo-blue);
+  margin-bottom: 0.5rem;
+}
+
+.ethical-recommendation-box p {
+  font-size: 0.96rem;
+  color: var(--ink-primary);
+  margin-bottom: 1rem;
+}
+
+/* Botón flotante Volver al Índice / Arriba */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 999;
+  background-color: var(--surface-white);
+  color: var(--logo-blue);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 0.65rem 1.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 4px 4px 0 var(--border-strong);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.25s var(--ease-out-expo), transform 0.25s var(--ease-out-expo), visibility 0.25s;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+  background-color: var(--logo-yellow);
+  color: var(--ink-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--border-strong);
 }
 
 .table-responsive {
@@ -2095,6 +2281,35 @@ h1, h2, h3, h4, .font-display {
   .directory-preview-section,
   .articles-section {
     padding: 3.5rem 0;
+  }
+
+  /* Píldoras de ciudad en móvil */
+  .city-pills-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .city-pills {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    touch-action: pan-x;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    padding-bottom: 0.35rem;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+
+  .city-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .city-pills .category-pill {
+    scroll-snap-align: start;
+    flex-shrink: 0;
   }
 
   /* Controles de búsqueda y filtros */
