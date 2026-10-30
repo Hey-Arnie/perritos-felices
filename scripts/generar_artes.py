@@ -406,11 +406,15 @@ HASHTAGS: #PerritosFelices #AlergiasCaninas #LokiElPerro #FrodoElPerro #CuidadoR
     # Empaquetar Kit Descargables ZIP Completo
     zip_path = WEEKLY_DIR / "kit_descargables_semana_2026_10_26.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        # 4 Plantillas Vectoriales SVG
+        # 4 Plantillas Vectoriales SVG + Prototipo Animado
         zf.write(p1, arcname="artes/post_01_instagram_loki.svg")
         zf.write(p2, arcname="artes/post_02_instagram_frodo.svg")
         zf.write(p3, arcname="artes/post_03_etologia_senales.svg")
         zf.write(p4, arcname="artes/post_04_lou_arnes_en_y.svg")
+
+        p_anim = ARTES_DIR / "post_01_animado_dermatologia.svg"
+        if p_anim.exists():
+            zf.write(p_anim, arcname="artes/post_01_animado_dermatologia.svg")
 
         # 4 Fotografías Editoriales de Alta Resolución (Generativas Flow)
         for img_name in [
