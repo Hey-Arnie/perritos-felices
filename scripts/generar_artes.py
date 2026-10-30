@@ -412,9 +412,16 @@ HASHTAGS: #PerritosFelices #AlergiasCaninas #LokiElPerro #FrodoElPerro #CuidadoR
         zf.write(p3, arcname="artes/post_03_etologia_senales.svg")
         zf.write(p4, arcname="artes/post_04_lou_arnes_en_y.svg")
 
-        p_anim = ARTES_DIR / "post_01_animado_dermatologia.svg"
-        if p_anim.exists():
-            zf.write(p_anim, arcname="artes/post_01_animado_dermatologia.svg")
+        # 4 Plantillas Animadas Micro-Motion 60fps
+        for anim_name in [
+            "post_01_animado_dermatologia.svg",
+            "post_02_animado_nutricion.svg",
+            "post_03_animado_etologia.svg",
+            "post_04_animado_lou.svg"
+        ]:
+            p_anim = ARTES_DIR / anim_name
+            if p_anim.exists():
+                zf.write(p_anim, arcname=f"artes_animados_60fps/{anim_name}")
 
         # 4 Fotografías Editoriales de Alta Resolución (Generativas Flow)
         for img_name in [
