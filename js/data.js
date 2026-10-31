@@ -1932,29 +1932,29 @@ window.PERRITOS_DATA = {
   "marketing": {
     "topbarRight": "EDICIÓN ABIERTA — DIRECTORIO ÉTICO & BIBLIOTECA CANINA [WWW.PERRITOSFELICES.COM]",
     "heroTag": "COMUNIDAD DE BIENESTAR CANINO",
-    "heroCoords": "GUÍAS PRÁCTICAS // SALUD, NUTRICIÓN & AMOR",
-    "heroTitleMain": "Ciencia amable y vida digna para un",
+    "heroCoords": "GUÍAS VETERINARIAS // CIENCIA AMABLE & RESPETO",
+    "heroTitleMain": "Ciencia, empatía y calma para criar a un",
     "heroTitleHighlight": "perrito feliz.",
-    "heroDescription": "Acompañamos a familias y tutores de todas las edades con guías claras, fáciles de aplicar en casa y escritas por especialistas. Descubre alimentación natural segura, educación sin castigos y nuestro directorio de veterinarias y guarderías verificadas.",
-    "heroBtnPrimary": "EXPLORAR LAS 10 GUÍAS PRÁCTICAS",
+    "heroDescription": "Acompañamos a familias tutoras con guías prácticas de etología clínica y nutrición natural sin mitos ni castigos. Descubre herramientas de cálculo calórico, cuidados preventivos y nuestra red ética de veterinarias y guarderías verificadas.",
+    "heroBtnPrimary": "EXPLORAR LAS 14 GUÍAS CLÍNICAS",
     "heroBtnSecondary": "BUSCAR EN EL DIRECTORIO",
-    "stat1Number": "10 Guías",
-    "stat1Label": "Nutrición casera, lenguaje canino, vacunas y primeros auxilios",
+    "stat1Number": "14 Guías",
+    "stat1Label": "Nutrición natural, etología, vacunas y primeros auxilios",
     "stat2Number": "0% Castigos",
     "stat2Label": "Espacios revisados libres de jaulas y collares de ahogo",
     "stat3Number": "12,500+",
     "stat3Label": "Familias cuidando mejor la salud física y emocional de su perro",
     "tickerItems": [
       "EDUCACIÓN AMABLE EN POSITIVO",
-      "NUTRICIÓN NATURAL Y SEGURA",
+      "NUTRICIÓN NATURAL Y SEGURA WSAVA",
       "DIRECTORIO LIBRE DE JAULAS",
-      "SALUD PREVENTIVA PASO A PASO"
+      "SALUD PREVENTIVA BASADA EN EVIDENCIA"
     ],
     "newsletterTitle": "Ladridos que inspiran, directo en tu bandeja cada martes.",
-    "newsletterDescription": "Enviamos una sola lectura semanal: recetas de snacks naturales seguros, análisis de comportamiento canino y nuevos centros verificados en el directorio. Cero spam.",
-    "newsletterBtn": "SUSCRIBIRME AL BOLETÍN",
+    "newsletterDescription": "Una sola lectura semanal de 3 minutos: recetas de snacks naturales, etología explicada con empatía y nuevos centros verificados en tu ciudad. Cero spam.",
+    "newsletterBtn": "RECIBIR GUÍA SEMANAL",
     "ctaBoxTag": "CONVOCATORIA ABIERTA",
     "ctaBoxTitle": "¿Diriges un proyecto canino ético?",
-    "ctaBoxDesc": "Si eres veterinario Fear Free, etólogo en positivo, estética sin amarres o guardería campestre, postula tu espacio sin costo."
+    "ctaBoxDesc": "Si eres veterinario Fear Free, etólogo en positivo, estética sin estrés o guardería campestre, postula tu espacio sin costo."
   }
 };
