@@ -42,6 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initBlogPage();
   initDirectoryPage();
   initArticlePage();
+  initBentoSpotlight();
+  initSlidingSegmentedControls();
+  initCounterTickers();
+  initAccordions();
 });
 
 /* ==========================================================================
@@ -945,10 +949,17 @@ function initArticlePage() {
       } else if (network === "copy") {
         if (navigator.clipboard) {
           navigator.clipboard.writeText(url).then(() => {
-            window.showToast("[COPIADO] Enlace del artículo guardado en el portapapeles.");
+            btn.classList.add("copied");
+            const prevText = btn.textContent;
+            btn.textContent = "✓ COPIADO";
+            setTimeout(() => {
+              btn.classList.remove("copied");
+              btn.textContent = prevText;
+            }, 1800);
+            window.showToast("✓ Enlace del artículo guardado en el portapapeles.");
           });
         } else {
-          window.showToast("[OK] Enlace listo para compartir.");
+          window.showToast("✓ Enlace listo para compartir.");
         }
       }
     });
@@ -969,4 +980,187 @@ function initArticlePage() {
     const related = others.slice(0, 3);
     relatedGrid.replaceChildren(...related.map((a, i) => createArticleCardNode(a, "", i)));
   }
+}
+
+/* ==========================================================================
+   9. Suite de Micro-Animaciones de Alta Artesanía (Estándar Emil Kowalski)
+   ========================================================================== */
+
+/**
+ * 9.1 Foco de Luz Guiado por Cursor en Bento Cards (Spotlight Border Glow)
+ * Corre en GPU sin alterar el layout (cero CLS) y se desactiva en táctil o movimiento reducido.
+ */
+function initBentoSpotlight() {
+  const bentoCards = document.querySelectorAll(".bento-card");
+  if (!bentoCards.length) return;
+
+  const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isTouch = window.matchMedia("(pointer: coarse)").matches;
+  if (isReduced || isTouch) return;
+
+  bentoCards.forEach((card) => {
+    let rafId = null;
+    card.addEventListener(
+      "mousemove",
+      (e) => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty("--mouse-x", `${x}px`);
+          card.style.setProperty("--mouse-y", `${y}px`);
+        });
+      },
+      { passive: true }
+    );
+
+    card.addEventListener(
+      "mouseleave",
+      () => {
+        card.style.removeProperty("--mouse-x");
+        card.style.removeProperty("--mouse-y");
+      },
+      { passive: true }
+    );
+  });
+}
+
+/**
+ * 9.2 Píldora Deslizante Activa en Segmentos (Sliding Segmented Control)
+ * Sello de fluidez de Vercel/Linear: el fondo activo se desliza físicamente entre opciones.
+ */
+function initSlidingSegmentedControls() {
+  const containers = document.querySelectorAll(".category-pills, .city-pills");
+  if (!containers.length) return;
+
+  const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  containers.forEach((container) => {
+    let indicator = container.querySelector(".pill-indicator");
+    if (!indicator) {
+      indicator = createEl("div", {
+        className: "pill-indicator",
+        attrs: { "aria-hidden": "true" }
+      });
+      container.prepend(indicator);
+    }
+    container.classList.add("has-sliding-indicator");
+
+    function updateIndicator(activeBtn) {
+      if (!activeBtn) {
+        indicator.classList.remove("is-ready");
+        return;
+      }
+      const x = activeBtn.offsetLeft;
+      const y = activeBtn.offsetTop;
+      const w = activeBtn.offsetWidth;
+      const h = activeBtn.offsetHeight;
+
+      indicator.style.setProperty("--pill-x", `${x}px`);
+      indicator.style.setProperty("--pill-y", `${y}px`);
+      indicator.style.setProperty("--pill-w", `${w}px`);
+      indicator.style.setProperty("--pill-h", `${h}px`);
+
+      if (!indicator.classList.contains("is-ready")) {
+        requestAnimationFrame(() => indicator.classList.add("is-ready"));
+      }
+    }
+
+    const activeBtn = container.querySelector(".category-pill.active");
+    if (activeBtn) {
+      requestAnimationFrame(() => updateIndicator(activeBtn));
+    }
+
+    const buttons = container.querySelectorAll(".category-pill");
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (isReduced) return;
+        requestAnimationFrame(() => updateIndicator(btn));
+      });
+    });
+
+    window.addEventListener(
+      "resize",
+      () => {
+        const currentActive = container.querySelector(".category-pill.active");
+        if (currentActive) updateIndicator(currentActive);
+      },
+      { passive: true }
+    );
+  });
+}
+
+/**
+ * 9.3 Contador Dinámico Progresivo en Cifras Clave (Number Counter Ticker)
+ * Anima métricas con curva logarítmica/ease-out al cruzar el umbral del viewport.
+ */
+function initCounterTickers() {
+  const counterEls = document.querySelectorAll("[data-counter]");
+  if (!counterEls.length) return;
+
+  const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        obs.unobserve(entry.target);
+
+        const el = entry.target;
+        const targetVal = parseFloat(el.getAttribute("data-counter") || "0");
+        const prefix = el.getAttribute("data-prefix") || "";
+        const suffix = el.getAttribute("data-suffix") || "";
+        const isLocale = el.getAttribute("data-format") === "locale";
+
+        if (isReduced || isNaN(targetVal) || targetVal === 0) {
+          const displayVal = isLocale ? targetVal.toLocaleString("es-MX") : targetVal;
+          el.textContent = `${prefix}${displayVal}${suffix}`;
+          return;
+        }
+
+        const duration = 480; // ms
+        const startTime = performance.now();
+
+        function updateCounter(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease-out expo: 1 - 2^(-10t)
+          const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+          const currentVal = Math.round(targetVal * ease);
+          const displayVal = isLocale ? currentVal.toLocaleString("es-MX") : currentVal;
+          el.textContent = `${prefix}${displayVal}${suffix}`;
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            const finalDisplay = isLocale ? targetVal.toLocaleString("es-MX") : targetVal;
+            el.textContent = `${prefix}${finalDisplay}${suffix}`;
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  counterEls.forEach((el) => observer.observe(el));
+}
+
+/**
+ * 9.4 Acordeones Fluidos a 60 FPS con CSS Grid
+ * Soporte accesible con aria-expanded y despliegue suave sin JavaScript pesado.
+ */
+function initAccordions() {
+  const triggers = document.querySelectorAll(".accordion-trigger");
+  triggers.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".accordion-item");
+      if (!item) return;
+      const isOpen = item.classList.contains("is-open");
+      item.classList.toggle("is-open", !isOpen);
+      btn.setAttribute("aria-expanded", String(!isOpen));
+    });
+  });
 }

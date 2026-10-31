@@ -588,6 +588,37 @@
   }
 
   if (filterBtns && filterBtns.length > 0) {
+    const filterContainer = document.querySelector(".food-filter-pills");
+    let pillIndicator = null;
+    if (filterContainer) {
+      pillIndicator = document.createElement("div");
+      pillIndicator.className = "pill-indicator";
+      pillIndicator.setAttribute("aria-hidden", "true");
+      filterContainer.prepend(pillIndicator);
+      filterContainer.classList.add("has-sliding-indicator");
+
+      function updateFoodIndicator(activeBtn) {
+        if (!activeBtn || !pillIndicator) return;
+        pillIndicator.style.setProperty("--pill-x", `${activeBtn.offsetLeft}px`);
+        pillIndicator.style.setProperty("--pill-y", `${activeBtn.offsetTop}px`);
+        pillIndicator.style.setProperty("--pill-w", `${activeBtn.offsetWidth}px`);
+        pillIndicator.style.setProperty("--pill-h", `${activeBtn.offsetHeight}px`);
+        if (!pillIndicator.classList.contains("is-ready")) {
+          requestAnimationFrame(() => pillIndicator.classList.add("is-ready"));
+        }
+      }
+
+      const initialActive = filterContainer.querySelector(".food-filter-btn.active");
+      if (initialActive) {
+        requestAnimationFrame(() => updateFoodIndicator(initialActive));
+      }
+
+      window.addEventListener("resize", () => {
+        const current = filterContainer.querySelector(".food-filter-btn.active");
+        if (current) updateFoodIndicator(current);
+      }, { passive: true });
+    }
+
     filterBtns.forEach(function (btn) {
       btn.addEventListener("click", function () {
         filterBtns.forEach(function (b) {
@@ -595,6 +626,9 @@
         });
         btn.classList.add("active");
         currentCategory = btn.getAttribute("data-filter") || "all";
+        if (filterContainer && typeof updateFoodIndicator === "function") {
+          updateFoodIndicator(btn);
+        }
         filterAndRenderFoods();
       });
     });
@@ -703,10 +737,24 @@
     });
   }
 
+  function initAccordions() {
+    const triggers = document.querySelectorAll(".accordion-trigger");
+    triggers.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const item = btn.closest(".accordion-item");
+        if (!item) return;
+        const isOpen = item.classList.contains("is-open");
+        item.classList.toggle("is-open", !isOpen);
+        btn.setAttribute("aria-expanded", String(!isOpen));
+      });
+    });
+  }
+
   // Inicialización cuando el DOM esté listo
   document.addEventListener("DOMContentLoaded", function () {
     calculateEnergy();
     filterAndRenderFoods();
     renderCalmSignals();
+    initAccordions();
   });
 })();
