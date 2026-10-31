@@ -76,11 +76,13 @@
   --font-body: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
 
-  /* Curvas Expresivas y Física de Resortes (web-mobile-motion-graphics) */
+  /* Curvas Expresivas y Física de Resortes (web-mobile-motion-graphics & Emil Kowalski) */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-tactile: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-gentle: cubic-bezier(0.32, 0.72, 0, 1);
   --spring-snappy: linear(
     0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%, 0.938 16.7%, 1.017,
     1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%,
@@ -102,6 +104,33 @@ html {
   overflow-x: hidden;
   max-width: 100%;
   width: 100%;
+  scrollbar-color: rgba(16, 21, 43, 0.28) var(--bg-cream);
+  scrollbar-width: thin;
+}
+
+/* Impeccable Craft Floor: Browser Surfaces Theming */
+::selection {
+  background-color: var(--logo-yellow);
+  color: var(--ink-primary);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 21, 43, 0.24);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--bg-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--logo-blue);
 }
 
 body {
@@ -148,6 +177,17 @@ button, input, select, textarea {
   color: inherit;
   border: none;
   background: none;
+}
+
+input, select, textarea {
+  caret-color: var(--logo-blue);
+}
+
+.article-body a,
+.article-references a,
+.footer-links a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
 }
 
 button {
@@ -546,7 +586,7 @@ h1, h2, h3, h4, .font-display {
   color: var(--ink-secondary);
   padding: 0.45rem 1rem;
   border-radius: var(--radius-xs);
-  transition: all 0.2s var(--ease-out-expo);
+  transition: color 0.18s var(--ease-spring), background-color 0.18s var(--ease-spring);
 }
 
 .nav-link:hover,
@@ -829,7 +869,7 @@ h1, h2, h3, h4, .font-display {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.3s var(--ease-tactile), box-shadow 0.3s var(--ease-tactile);
+  transition: transform 0.24s var(--ease-spring), box-shadow 0.24s var(--ease-spring);
   position: relative;
   overflow: hidden;
 }
@@ -837,6 +877,36 @@ h1, h2, h3, h4, .font-display {
 .bento-card:hover {
   transform: translate(-3px, -3px);
   box-shadow: 8px 8px 0 var(--logo-blue);
+}
+
+.bento-card:active {
+  transform: scale(0.985) translate(-1px, -1px);
+  transition-duration: 0.06s;
+}
+
+/* Spotlight Glow guiado por cursor (Linear/Emil Kowalski) */
+.bento-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(253, 181, 74, 0.16), transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease-spring);
+  z-index: 1;
+}
+
+.bento-card.accent-blue::after {
+  background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(255, 255, 255, 0.14), transparent 65%);
+}
+
+.bento-card.accent-yellow::after {
+  background: radial-gradient(420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(44, 75, 202, 0.12), transparent 65%);
+}
+
+.bento-card:hover::after {
+  opacity: 1;
 }
 
 .bento-col-7 { grid-column: span 7; }
@@ -1327,6 +1397,7 @@ h1, h2, h3, h4, .font-display {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
+  position: relative;
 }
 
 .category-pill {
@@ -1340,7 +1411,9 @@ h1, h2, h3, h4, .font-display {
   background-color: var(--bg-cream);
   color: var(--ink-secondary);
   border: 1px solid var(--border-strong);
-  transition: all 0.2s var(--ease-out-expo);
+  transition: color 0.18s var(--ease-spring), border-color 0.18s var(--ease-spring), transform 0.12s var(--ease-tactile), background-color 0.18s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .category-pill:hover,
@@ -1349,6 +1422,38 @@ h1, h2, h3, h4, .font-display {
   color: #FFFFFF;
   border-color: var(--border-strong);
   box-shadow: 2px 2px 0 var(--logo-yellow);
+}
+
+/* Indicador Deslizante de Segmentos (Sliding Segmented Control - Emil Kowalski / Vercel style) */
+.pill-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--radius-xs);
+  background-color: var(--logo-blue);
+  box-shadow: 2px 2px 0 var(--logo-yellow);
+  pointer-events: none;
+  z-index: 1;
+  transform: translate3d(var(--pill-x, 0), var(--pill-y, 0), 0);
+  width: var(--pill-w, 0);
+  height: var(--pill-h, 0);
+  transition: transform 0.22s var(--ease-spring),
+              width 0.22s var(--ease-spring),
+              height 0.22s var(--ease-spring),
+              opacity 0.15s ease;
+  opacity: 0;
+}
+
+.pill-indicator.is-ready {
+  opacity: 1;
+}
+
+.has-sliding-indicator .category-pill.active,
+.has-sliding-indicator .food-filter-btn.active {
+  background-color: transparent !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+  border-color: var(--border-strong) !important;
 }
 
 .search-input-wrap {
@@ -1655,7 +1760,7 @@ h1, h2, h3, h4, .font-display {
   padding: 0.45rem 0.65rem;
   border-radius: 4px;
   border-left: 3px solid transparent;
-  transition: all 0.2s var(--ease-out-expo);
+  transition: background-color 0.18s var(--ease-spring), color 0.18s var(--ease-spring), border-color 0.18s var(--ease-spring);
 }
 
 .toc-link:hover,
@@ -1694,13 +1799,27 @@ h1, h2, h3, h4, .font-display {
   font-size: 0.76rem;
   font-weight: 600;
   text-transform: uppercase;
-  transition: all 0.2s var(--ease-out-expo);
+  transition: background-color 0.18s var(--ease-spring), color 0.18s var(--ease-spring), transform 0.12s var(--ease-tactile), border-color 0.18s ease;
 }
 
 .share-btn:hover {
   background-color: var(--logo-blue);
   color: #FFFFFF;
   transform: translate(-1px, -1px);
+}
+
+/* Micro-animación de confirmación al copiar enlace (Icon Morph / Check Pulse) */
+.share-btn.copied {
+  background-color: #1E663B !important;
+  color: #FFFFFF !important;
+  border-color: #1E663B !important;
+  animation: copy-pop 0.32s var(--ease-spring);
+}
+
+@keyframes copy-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 
 /* Contenido Editorial del Artículo */
@@ -2011,7 +2130,7 @@ h1, h2, h3, h4, .font-display {
 }
 
 /* ==========================================================================
-   Modal (<dialog closedby="any">) y Toast
+   Modal (<dialog closedby="any">) con Transición Nativa @starting-style y Toast Sonner
    ========================================================================== */
 .modal-dialog {
   border: none;
@@ -2020,26 +2139,63 @@ h1, h2, h3, h4, .font-display {
   max-width: 640px;
   width: 100%;
   margin: auto;
+  opacity: 0;
+  transform: scale(0.96) translateY(12px);
+  transition: opacity 0.22s var(--ease-spring),
+              transform 0.22s var(--ease-spring),
+              overlay 0.22s allow-discrete,
+              display 0.22s allow-discrete;
+}
+
+.modal-dialog[open] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+@starting-style {
+  .modal-dialog[open] {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
 }
 
 .modal-dialog::backdrop {
-  background-color: rgba(16, 21, 43, 0.7);
-  backdrop-filter: blur(4px);
+  background-color: rgba(16, 21, 43, 0);
+  backdrop-filter: blur(0px);
+  transition: background-color 0.22s var(--ease-spring),
+              backdrop-filter 0.22s var(--ease-spring),
+              overlay 0.22s allow-discrete,
+              display 0.22s allow-discrete;
+}
+
+.modal-dialog[open]::backdrop {
+  background-color: rgba(16, 21, 43, 0.72);
+  backdrop-filter: blur(5px);
+}
+
+@starting-style {
+  .modal-dialog[open]::backdrop {
+    background-color: rgba(16, 21, 43, 0);
+    backdrop-filter: blur(0px);
+  }
 }
 
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(16, 21, 43, 0.7);
-  backdrop-filter: blur(4px);
+  background-color: rgba(16, 21, 43, 0.72);
+  backdrop-filter: blur(5px);
   display: none;
   place-items: center;
   z-index: 2000;
   padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.22s var(--ease-spring);
 }
 
 .modal-backdrop.open {
   display: grid;
+  opacity: 1;
 }
 
 .modal-card {
@@ -2053,6 +2209,13 @@ h1, h2, h3, h4, .font-display {
   padding: 2.25rem;
   box-shadow: 10px 10px 0 var(--logo-yellow);
   position: relative;
+  transform: scale(0.97) translateY(8px);
+  transition: transform 0.22s var(--ease-spring);
+}
+
+.modal-dialog[open] .modal-card,
+.modal-backdrop.open .modal-card {
+  transform: scale(1) translateY(0);
 }
 
 .modal-close {
@@ -2069,29 +2232,42 @@ h1, h2, h3, h4, .font-display {
   place-items: center;
   font-family: var(--font-mono);
   font-weight: 700;
+  transition: transform 0.15s var(--ease-tactile), background-color 0.15s ease;
 }
 
+.modal-close:hover {
+  background-color: var(--logo-blue);
+  color: #FFFFFF;
+}
+
+/* Sistema de Notificaciones Flotantes (Física Sonner / Emil Kowalski) */
 .toast {
   position: fixed;
   bottom: 24px;
   right: 24px;
   background-color: var(--ink-primary);
   color: #FFFFFF;
-  border: 2px solid var(--logo-yellow);
-  padding: 0.9rem 1.35rem;
+  border: 1.5px solid var(--logo-yellow);
+  padding: 0.85rem 1.35rem;
   border-radius: var(--radius-xs);
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  box-shadow: 6px 6px 0 var(--logo-blue);
+  box-shadow: 0 10px 25px -5px rgba(16, 21, 43, 0.35), 0 8px 10px -6px rgba(16, 21, 43, 0.25), 4px 4px 0 var(--logo-blue);
   z-index: 3000;
-  transform: translateY(120%);
+  pointer-events: none;
+  transform: translateY(24px) scale(0.95);
   opacity: 0;
-  transition: all 0.3s var(--ease-bounce);
+  visibility: hidden;
+  transition: transform 0.25s var(--ease-spring),
+              opacity 0.2s var(--ease-spring),
+              visibility 0.25s;
 }
 
 .toast.show {
-  transform: translateY(0);
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
   opacity: 1;
+  visibility: visible;
 }
 
 /* ==========================================================================
@@ -2652,7 +2828,7 @@ h1, h2, h3, h4, .font-display {
    ========================================================================== */
 .skip-link {
   position: absolute;
-  top: -120%;
+  top: 1rem;
   left: 1rem;
   z-index: 10000;
   padding: 0.75rem 1.25rem;
@@ -2665,37 +2841,54 @@ h1, h2, h3, h4, .font-display {
   text-transform: uppercase;
   border-radius: var(--radius-xs);
   box-shadow: 4px 4px 0 var(--logo-blue);
-  transition: top 0.2s var(--ease-out-expo);
+  transform: translateY(-250%);
+  transition: transform 0.2s var(--ease-spring);
 }
 
 .skip-link:focus {
-  top: 1rem;
+  transform: translateY(0);
 }
 
-/* Indicador de Foco de Alto Contraste (WCAG 2.2 SC 2.4.11) */
+/* Indicador de Foco de Alto Contraste (WCAG 2.2 SC 2.4.11 & Impeccable A11y) */
 :focus-visible {
   outline: 2.5px solid var(--logo-blue);
   outline-offset: 3px;
 }
 
-/* Tamaño mínimo de objetivos interactivos (WCAG 2.2 SC 2.5.8 + Ergonomía 18-65 años) */
-button,
-[role="button"],
-a,
-input,
-select,
-textarea {
-  min-height: 24px;
-  min-width: 24px;
+/* Foco adaptativo sobre fondos oscuros o primarios */
+.btn-primary:focus-visible,
+.accent-blue:focus-visible,
+.accent-blue a:focus-visible,
+.site-footer a:focus-visible,
+.food-filter-btn.active:focus-visible,
+.category-pill.active:focus-visible {
+  outline-color: var(--logo-yellow);
 }
 
+/* Tamaño mínimo de objetivos interactivos (WCAG 2.2 SC 2.5.8 + Impeccable Touch Floor) */
 .btn,
 .category-pill,
+.food-filter-btn,
 .form-input,
 .form-select,
 .search-input,
-.share-btn {
+.share-btn,
+.calc-number-input,
+.food-search-input {
   min-height: 44px;
+}
+
+.category-pill,
+.food-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
 }
 
 /* ==========================================================================
@@ -2904,6 +3097,7 @@ textarea {
   font-size: 1.15rem;
   color: var(--logo-blue);
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .calc-slider-wrap {
@@ -2921,6 +3115,7 @@ textarea {
 
 .calc-number-input {
   width: 84px;
+  min-height: 44px;
   padding: 0.5rem 0.65rem;
   border: 1.5px solid var(--border-strong);
   border-radius: var(--radius-sm);
@@ -2930,6 +3125,7 @@ textarea {
   color: var(--ink-primary);
   text-align: center;
   background-color: var(--surface-white);
+  font-variant-numeric: tabular-nums;
 }
 
 .calc-select {
@@ -2975,6 +3171,7 @@ textarea {
   color: var(--ink-primary);
   line-height: 1.1;
   margin: 0.25rem 0 0.25rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .calc-substat {
@@ -3106,6 +3303,7 @@ textarea {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .food-filter-btn {
@@ -3118,7 +3316,9 @@ textarea {
   background-color: var(--surface-white);
   color: var(--ink-secondary);
   cursor: pointer;
-  transition: all 0.15s ease;
+  position: relative;
+  z-index: 2;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.12s var(--ease-tactile);
 }
 
 .food-filter-btn:hover {
@@ -3341,13 +3541,14 @@ textarea {
   }
 }
 
-/* Respeto estricto a usuarios sensibles al movimiento (WCAG 2.3.3 SC 2.3.3 & Impeccable A11y) */
+/* Respeto estricto a usuarios sensibles al movimiento (WCAG 2.3.3 & Impeccable Motion Floor) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.001ms !important;
+    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
     scroll-behavior: auto !important;
   }
 
@@ -3356,12 +3557,17 @@ textarea {
   .article-card,
   .business-card,
   .btn,
-  .share-btn {
+  .share-btn,
+  .category-pill,
+  .food-filter-btn,
+  .signal-card {
     transform: none !important;
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease !important;
   }
 
-  .kinetic-line {
+  .kinetic-line,
+  .hero-photo-img,
+  .article-thumb-bg-img {
     animation: none !important;
     transform: none !important;
   }

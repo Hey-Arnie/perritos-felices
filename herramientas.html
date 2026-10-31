@@ -146,6 +146,7 @@
                     max="70"
                     step="0.5"
                     value="12"
+                    inputmode="decimal"
                     aria-label="Campo numérico de peso en kilogramos"
                   />
                 </div>
@@ -245,11 +246,13 @@
         <div class="food-filter-bar">
           <div class="food-search-box">
             <input
-              type="text"
+              type="search"
               id="food-search-input"
               class="food-search-input"
               placeholder="Buscar alimento o principio tóxico (ej. uvas, chocolate, zanahoria, xilitol)..."
               aria-label="Filtrar alimentos por nombre o componente"
+              autocomplete="off"
+              spellcheck="false"
             />
           </div>
           <div class="food-filter-pills" role="group" aria-label="Filtro por nivel de toxicidad">
