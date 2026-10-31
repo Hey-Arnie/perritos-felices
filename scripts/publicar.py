@@ -721,8 +721,11 @@ def cmd_build() -> int:
 
         # Si existe versión en Markdown con cuerpo, sincronizar campos
         md_override = md_by_slug.get(slug, {})
+        if md_override.get("id"):
+            raw_id = strip_dangerous_unicode(str(md_override["id"]))
+            art_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", raw_id).strip("-") or art_id
         body_html = md_override.get("bodyHtml") or art.get("bodyHtml") or ""
-        toc = art.get("toc") or []
+        toc = extract_toc_from_body(body_html) if body_html else (art.get("toc") or [])
 
         # Si tiene `sections` en JSON pero no `bodyHtml`, construir `bodyHtml`
         if not body_html and art.get("sections"):
