@@ -3541,18 +3541,107 @@ button,
   }
 }
 
-/* Respeto estricto a usuarios sensibles al movimiento (WCAG 2.3.3 & Impeccable Motion Floor) */
+/* Feedback Táctil Instantáneo (Tactile Button Press - Emil Kowalski & Mobile UX) */
+.btn:active,
+.bento-link:active,
+.category-pill:active,
+.food-filter-btn:active,
+.share-btn:active,
+.modal-close:active {
+  transform: scale(0.972) translateY(1px) !important;
+  transition-duration: 0.06s !important;
+}
+
+/* ==========================================================================
+   Acordeones Fluidos (Técnica CSS Grid 0fr -> 1fr a 60/120fps)
+   ========================================================================== */
+.pf-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.accordion-item {
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  background-color: var(--surface-white);
+  box-shadow: 3px 3px 0 var(--border-strong);
+  overflow: hidden;
+  transition: border-color 0.18s var(--ease-spring), box-shadow 0.18s var(--ease-spring);
+}
+
+.accordion-item:hover {
+  border-color: var(--logo-blue);
+  box-shadow: 4px 4px 0 var(--logo-blue);
+}
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.05rem 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.94rem;
+  color: var(--ink-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.accordion-trigger:hover {
+  background-color: rgba(44, 75, 202, 0.04);
+}
+
+.accordion-chevron {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--logo-blue);
+  transition: transform 0.24s var(--ease-spring);
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+}
+
+.accordion-item.is-open .accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s var(--ease-spring);
+}
+
+.accordion-item.is-open .accordion-panel {
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel-inner {
+  overflow: hidden;
+  padding: 0 1.25rem;
+  color: var(--ink-secondary);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  transition: padding-bottom 0.25s var(--ease-spring);
+}
+
+.accordion-item.is-open .accordion-panel-inner {
+  padding-bottom: 1.2rem;
+}
+
+/* Respeto estricto a usuarios sensibles al movimiento (WCAG 2.3.3 & Emil Kowalski A11y) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.15s !important;
     scroll-behavior: auto !important;
   }
 
-  /* Preserva feedback de estado (color, opacidad) eliminando saltos espaciales */
+  /* Preserva feedback de estado (color, opacidad, foco) eliminando desplazamientos espaciales */
   .bento-card,
   .article-card,
   .business-card,
@@ -3560,21 +3649,31 @@ button,
   .share-btn,
   .category-pill,
   .food-filter-btn,
-  .signal-card {
+  .signal-card,
+  .modal-dialog,
+  .toast,
+  .pill-indicator,
+  .accordion-chevron,
+  .skip-link {
     transform: none !important;
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease !important;
   }
 
-  .kinetic-line,
-  .hero-photo-img,
-  .article-thumb-bg-img {
-    animation: none !important;
-    transform: none !important;
+  .bento-card::after {
+    display: none !important;
   }
 
+  .kinetic-line,
+  .hero-photo-img,
+  .article-thumb-bg-img,
   .svg-draw-path {
     animation: none !important;
+    transform: none !important;
     stroke-dashoffset: 0 !important;
+  }
+
+  .accordion-panel {
+    transition: none !important;
   }
 }
 
