@@ -76,13 +76,18 @@
   --font-body: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
 
-  /* Curvas Expresivas y Física de Resortes (web-mobile-motion-graphics & Emil Kowalski) */
+  /* Curvas Expresivas y Física de Resortes (Rich Tabor & Emil Kowalski Standards) */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-tactile: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-gentle: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Tokens Cinéticos de Intención Emocional (Rich Tabor Standards) */
+  --ease-intent-urgent: cubic-bezier(0.2, 0, 0, 1);     /* Alerta clínica y toxicología letal (sobrio, tajante) */
+  --ease-intent-calm: cubic-bezier(0.16, 1, 0.3, 1);      /* Crianza respetuosa y nutrición segura (empático, suave) */
+  --ease-frequency-fast: cubic-bezier(0, 0, 0.2, 1);     /* Selección operativa de alta frecuencia <= 120ms */
   --spring-snappy: linear(
     0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%, 0.938 16.7%, 1.017,
     1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%,
