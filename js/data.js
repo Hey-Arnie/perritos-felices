@@ -7,6 +7,21 @@
 window.PERRITOS_DATA = {
   "articles": [
     {
+      "id": "cal-03",
+      "slug": "snacks-hidratantes-caseros-perros.html",
+      "title": "Snacks Hidratantes y Helados Caseros para Perros: La Cápsula Visual de Nutrición Segura",
+      "excerpt": "Aprende a preparar helados y premios refrescantes para tu perro con ingredientes seguros: semáforo nutricional, regla del 10% WSAVA y recetas listas en 3 pasos.",
+      "category": "Nutrición",
+      "readTime": "4 min de lectura",
+      "date": "07 Nov 2026",
+      "author": "Equipo Editorial",
+      "authorRole": "Perritos Felices",
+      "emoji": "🥣",
+      "bgGradient": "linear-gradient(135deg, #FFBE58 0%, #FFE2AD 100%)",
+      "featured": true,
+      "image": "assets/articulos/snacks-hidratantes-caseros-perros.jpg"
+    },
+    {
       "id": "art-14",
       "slug": "alergias-alimentarias-ambientales-perros-guia.html",
       "title": "Alergias alimentarias y ambientales en perros: señales en piel, orejas y patitas",
