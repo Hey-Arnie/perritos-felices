@@ -16,6 +16,7 @@ import io
 import json
 import mimetypes
 import sys
+import time
 import urllib.parse
 import webbrowser
 from contextlib import redirect_stdout
@@ -328,8 +329,25 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             )
             return
 
+        if path == "/api/aprobaciones":
+            aprob_file = STUDIO_DIR / "aprobaciones_state.json"
+            if aprob_file.exists():
+                try:
+                    data = json.loads(aprob_file.read_text(encoding="utf-8"))
+                    self._send_json(data)
+                    return
+                except Exception as exc:
+                    self._send_json({"error": str(exc)}, status=500)
+                    return
+            self._send_json({"items": []})
+            return
+
         if path in ("/", "/index.html", "/studio", "/studio/", "/studio/index.html"):
             self._serve_file(STUDIO_DIR, "index.html")
+            return
+
+        if path in ("/aprobacion", "/aprobacion/", "/aprobacion.html"):
+            self._serve_file(STUDIO_DIR, "aprobacion.html")
             return
 
         if path in ("/vanilla", "/classic", "/vanilla/index.html"):
@@ -385,6 +403,18 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         try:
+            if path == "/api/aprobaciones/guardar":
+                aprob_file = STUDIO_DIR / "aprobaciones_state.json"
+                items = body.get("items", [])
+                aprob_data = {
+                    "version": "1.0",
+                    "last_updated": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    "items": items
+                }
+                aprob_file.write_text(json.dumps(aprob_data, indent=2, ensure_ascii=False), encoding="utf-8")
+                self._send_json({"ok": True, "count": len(items)})
+                return
+
             if path == "/api/connections":
                 conns = get_connections()
                 for k, v in body.items():
