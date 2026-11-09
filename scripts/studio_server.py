@@ -104,8 +104,30 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
         pass
 
+    ALLOWED_ORIGINS = {
+        "http://127.0.0.1:8765",
+        "http://127.0.0.1:8766",
+        "http://127.0.0.1:8767",
+        "http://localhost:8765",
+        "http://localhost:8766",
+        "http://localhost:8767",
+        "null",  # Permitir apertura local vía file://
+    }
+
+    def _is_trusted_origin(self) -> bool:
+        origin = self.headers.get("Origin")
+        if origin and origin not in self.ALLOWED_ORIGINS:
+            return False
+        host = self.headers.get("Host", "")
+        if host and not (host.startswith("127.0.0.1:") or host.startswith("localhost:")):
+            return False
+        return True
+
     def _add_cors_headers(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
+        origin = self.headers.get("Origin", "")
+        allowed = origin if origin in self.ALLOWED_ORIGINS else "http://127.0.0.1:8765"
+        self.send_header("Access-Control-Allow-Origin", allowed)
+        self.send_header("Vary", "Origin")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
@@ -183,7 +205,9 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/weekly/download-kit":
-            zip_file = CURRENT_WEEK_DIR / "kit_descargables_semana_2026_10_26.zip"
+            zip_file = STUDIO_DIR / "assets" / "kit_descargables_semana_2026_10_26.zip"
+            if not zip_file.exists():
+                zip_file = CURRENT_WEEK_DIR / "kit_descargables_semana_2026_10_26.zip"
             if zip_file.exists():
                 data = zip_file.read_bytes()
                 self.send_response(200)
@@ -345,6 +369,10 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
         self._serve_file(pub.WEB_DIR, path)
 
     def do_POST(self):
+        if not self._is_trusted_origin():
+            self._send_json({"error": "Origen no autorizado por política Zero-Trust Local"}, status=403)
+            return
+
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
