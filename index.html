@@ -2,80 +2,252 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'report-sample'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; require-trusted-types-for 'script'; trusted-types pf-policy; upgrade-insecure-requests;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'report-sample'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; require-trusted-types-for 'script'; trusted-types pf-policy; upgrade-insecure-requests;" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perritos Felices | Ladridos que Inspiran — Guías de Bienestar, Etología y Perros Felices</title>
-  <meta name="description" content="Perritos Felices (www.perritosfelices.com) — Guías prácticas de etología, nutrición natural y directorio ético verificado para familias con perros felices." />
+  <title>Perritos Felices | El Referente Visual de la Cultura Canina</title>
+  <meta name="description" content="Perritos Felices (www.perritosfelices.com) — Cápsulas visuales de 45 segundos, comparadores de salud interactivos y vitrinas éticas para criar con ciencia y sin rodeos." />
   <link rel="canonical" href="https://www.perritosfelices.com/" />
   <link rel="icon" type="image/png" href="assets/logo/icononly_transparent_nobuffer.png" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- Metadatos de Redes Sociales y Motores de Búsqueda (Open Graph & Twitter) -->
+  <!-- Metadatos de Redes Sociales (Open Graph & Twitter) -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Perritos Felices" />
-  <meta property="og:title" content="Perritos Felices | Ladridos que Inspiran — Guías y Perros Felices" />
-  <meta property="og:description" content="Comunidad y biblioteca de bienestar canino: etología, alimentación natural y directorio verificado para educar y cuidar perros felices." />
+  <meta property="og:title" content="Perritos Felices | El Referente Visual de la Cultura Canina" />
+  <meta property="og:description" content="Menos texto denso, más impacto visual. Cápsulas interactivas, comparadores y vitrinas de experiencias éticas." />
   <meta property="og:url" content="https://www.perritosfelices.com/" />
   <meta property="og:image" content="https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Perritos Felices | Ladridos que Inspiran" />
-  <meta name="twitter:description" content="Comunidad y guías de bienestar canino, etología y nutrición natural para tener perros felices." />
-  <meta name="twitter:image" content="https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Datos Estructurados Schema.org (Google Knowledge Graph & Sitelinks) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://www.perritosfelices.com/#website",
-        "url": "https://www.perritosfelices.com/",
-        "name": "Perritos Felices",
-        "alternateName": [
-          "Perros Felices",
-          "PerritosFelices",
-          "Perritos Felices Web",
-          "Comunidad Perritos Felices",
-          "Directorio Perritos Felices"
-        ],
-        "description": "Publicación editorial y directorio ético de bienestar canino basado en refuerzo positivo, ciencia amable y libre de aversivos.",
-        "inLanguage": "es"
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://www.perritosfelices.com/#organization",
-        "name": "Perritos Felices",
-        "alternateName": "Perros Felices",
-        "url": "https://www.perritosfelices.com/",
-        "logo": "https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png",
-        "slogan": "Ladridos que inspiran",
-        "description": "Comunidad dedicada al bienestar canino, etología positiva y directorio de profesionales verificados."
-      }
-    ]
-  }
-  </script>
+  <!-- Tipografía Oficial PF-2027 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
+
+  <!-- Estilos Maestros y Tokens Modulares (Estilo Hue & InstaLanding) -->
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <style>
+    /* Estilos Específicos del Nuevo Hub de Experiencias */
+    .hero-cinematic {
+      position: relative;
+      padding: 4.5rem 0 3.5rem;
+      background: linear-gradient(180deg, #FAF5EA 0%, var(--pf-bg-cream) 100%);
+      border-bottom: 2px solid var(--pf-border-strong);
+      overflow: hidden;
+    }
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--pf-yellow);
+      color: #10152B;
+      font-family: var(--pf-font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--pf-radius-pill);
+      border: 1.5px solid #10152B;
+      box-shadow: 2px 2px 0 #10152B;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .hero-main-title {
+      font-family: var(--pf-font-display);
+      font-size: clamp(2.8rem, 6.5vw, 5rem);
+      font-weight: 800;
+      line-height: 1.02;
+      color: var(--pf-ink-primary);
+      letter-spacing: -0.03em;
+      margin: 0 0 1.25rem;
+      text-wrap: balance;
+    }
+    .hero-main-subtitle {
+      font-family: var(--pf-font-body);
+      font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+      line-height: 1.5;
+      color: var(--pf-ink-secondary);
+      max-width: 680px;
+      margin: 0 0 2rem;
+      text-wrap: pretty;
+    }
+    .hero-stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1.5px dashed var(--pf-border-medium);
+    }
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-stat-val {
+      font-family: var(--pf-font-mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--pf-blue);
+      line-height: 1;
+    }
+    .hero-stat-lbl {
+      font-family: var(--pf-font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--pf-ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.35rem;
+    }
+
+    /* Mosaico Bento 2.0 Asimétrico */
+    .hub-grid-section {
+      padding: 4rem 0;
+      background: var(--pf-bg-cream);
+    }
+    .section-eyebrow {
+      font-family: var(--pf-font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--pf-blue);
+      margin-bottom: 0.5rem;
+    }
+    .section-heading-massive {
+      font-family: var(--pf-font-display);
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--pf-ink-primary);
+      margin: 0 0 1rem;
+      letter-spacing: -0.02em;
+    }
+    .hub-bento-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .card-capsule {
+      background: var(--pf-surface-card);
+      border: 2px solid var(--pf-border-strong);
+      border-radius: var(--pf-radius-squircle);
+      padding: 2rem;
+      box-shadow: var(--pf-shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform var(--pf-duration-fast) var(--pf-ease-tactile),
+                  box-shadow var(--pf-duration-fast) var(--pf-ease-tactile);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card-capsule:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--pf-shadow-floating);
+    }
+    .capsule-lead-tag {
+      font-family: var(--pf-font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--pf-radius-pill);
+      border: 1px solid var(--pf-border-strong);
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    .card-capsule h3 {
+      font-family: var(--pf-font-display);
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--pf-ink-primary);
+      margin: 0 0 0.85rem;
+    }
+    .card-capsule p {
+      font-family: var(--pf-font-body);
+      font-size: 0.95rem;
+      color: var(--pf-ink-secondary);
+      line-height: 1.5;
+      margin: 0 0 1.5rem;
+    }
+
+    /* Vitrinas B2B */
+    .showcase-hub-section {
+      padding: 4rem 0;
+      background: #0E1428;
+      color: #FFFFFF;
+      border-top: 2px solid var(--pf-border-strong);
+      border-bottom: 2px solid var(--pf-border-strong);
+    }
+    .vitrina-card {
+      background: #151D3B;
+      border: 1.5px solid rgba(253, 251, 247, 0.15);
+      border-radius: var(--pf-radius-card);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color var(--pf-duration-fast) ease;
+    }
+    .vitrina-card:hover {
+      border-color: var(--pf-yellow);
+    }
+    .vitrina-city-badge {
+      font-family: var(--pf-font-mono);
+      font-size: 0.72rem;
+      color: var(--pf-yellow);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .vitrina-name {
+      font-family: var(--pf-font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+    }
+    .vitrina-desc {
+      font-size: 0.88rem;
+      color: #B0B7D6;
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Shareables Carousel */
+    .shareables-hub-section {
+      padding: 4rem 0;
+      background: var(--pf-bg-cream);
+    }
+    .shareables-track {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 
-  <!-- Topbar Técnica / Editorial -->
+  <!-- Topbar Minimalista -->
   <div class="topbar">
     <div class="container topbar-inner">
       <div style="display:flex; align-items:center; gap:0.6rem;">
         <span class="led-dot led-gold"></span>
-        <span><strong>PERRITOS FELICES</strong> // LADRIDOS QUE INSPIRAN</span>
+        <span><strong>PERRITOS FELICES</strong> // EL REFERENTE VISUAL CANINO</span>
       </div>
-      <div data-cms="topbarRight">EDICIÓN ABIERTA — DIRECTORIO ÉTICO &amp; BIBLIOTECA CANINA [WWW.PERRITOSFELICES.COM]</div>
+      <div>⚡ RESÚMENES EN 45s • 0% TEXTO DENSO • 100% EVIDENCIA CIENTÍFICA</div>
     </div>
   </div>
 
-  <!-- Header Principal con Logo Oficial -->
-  <header class="site-header">
+  <!-- Navbar Moderna Estilo Studio -->
+  <header class="site-header" role="banner">
     <div class="container navbar">
       <a href="index.html" class="brand-logo" aria-label="Perritos Felices Inicio">
         <span class="brand-logo-icon">
@@ -88,523 +260,325 @@
       </a>
 
       <nav class="nav-links" aria-label="Navegación principal">
-        <a href="index.html" class="nav-link active">Inicio</a>
-        <a href="blog.html" class="nav-link">Guías y Artículos</a>
-        <a href="directorio.html" class="nav-link">Directorio</a>
-        <a href="herramientas.html" class="nav-link">Herramientas</a>
-        <a href="#pilares" class="nav-link">Pilares de Bienestar</a>
-        <a href="#comunidad" class="nav-link">Boletín</a>
+        <a href="#capsulas" class="nav-link active">Cápsulas ⚡</a>
+        <a href="#vitrinas" class="nav-link">Vitrinas B2B</a>
+        <a href="#shareables" class="nav-link">Tarjetas TL;DR</a>
+        <a href="herramientas.html" class="nav-link">Herramientas WSAVA</a>
+        <a href="directorio.html" class="nav-link">Directorio Canino</a>
       </nav>
 
       <div class="nav-actions">
-        <a href="directorio.html" class="btn btn-outline btn-sm">
-          DIRECTORIO <span class="arrow-diag">↗</span>
-        </a>
-        <a href="blog.html" class="btn btn-primary btn-sm">
-          LEER GUÍAS <span class="arrow-diag">↗</span>
-        </a>
-        <button type="button" class="mobile-menu-toggle" aria-label="Abrir menú" aria-expanded="false">
-          MENÚ
-        </button>
+        <a href="#capsulas" class="btn btn-primary btn-sm">EXPLORAR CÁPSULAS ↗</a>
       </div>
     </div>
   </header>
 
   <main id="main-content" tabindex="-1">
-    <!-- 1. HERO EDITORIAL ASIMÉTRICO (1.32fr / 0.68fr) -->
-    <section class="hero">
-      <div class="container hero-grid">
+
+    <!-- 1. HERO CINEMÁTICO (ESTILO HUE & INSTALANDING) -->
+    <section class="hero-cinematic">
+      <div class="container" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3rem; align-items: center;">
         <div>
-          <div class="hero-editorial-meta">
-            <span class="section-tag" style="margin-bottom:0;">
-              <span class="led-dot"></span> <span data-cms="heroTag">COMUNIDAD DE BIENESTAR CANINO</span>
-            </span>
-            <span class="hero-coords" data-cms="heroCoords">GUÍAS VETERINARIAS // CIENCIA AMABLE &amp; RESPETO</span>
+          <div class="hero-badge-pill">
+            <span>⚡ Nueva Era • Cero Muros de Texto</span>
           </div>
-
-          <h1 class="hero-title">
-            <span class="kinetic-line-mask"><span class="kinetic-line"><span data-cms="heroTitleMain">Ciencia, empatía y calma para criar a un</span> <span class="highlight" data-cms="heroTitleHighlight">perrito feliz.</span></span></span>
+          <h1 class="hero-main-title">
+            Cultura canina visual, ciencia y cero rodeos.
           </h1>
+          <p class="hero-main-subtitle">
+            Cambiamos la enciclopedia aburrida por <strong>Cápsulas Informativas de 45 segundos</strong>, comparadores interactivos de salud y vitrinas éticas para tutores que valoran su tiempo y la felicidad de su perro.
+          </p>
 
-          <p class="hero-description" data-cms="heroDescription">Acompañamos a familias tutoras con guías prácticas de etología clínica y nutrición natural sin mitos ni castigos. Descubre herramientas de cálculo calórico, cuidados preventivos y nuestra red ética de veterinarias y guarderías verificadas.</p>
-
-          <div class="hero-cta-group">
-            <a href="blog.html" class="btn btn-primary">
-              <span data-cms="heroBtnPrimary">EXPLORAR LAS 14 GUÍAS CLÍNICAS</span> <span class="arrow-diag">↗</span>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="#capsulas" class="btn btn-primary" style="padding: 0.9rem 1.6rem; font-size: 1rem;">
+              <span>EXPLORAR LAS CÁPSULAS</span>
+              <span>⚡</span>
             </a>
-            <a href="directorio.html" class="btn btn-secondary">
-              <span data-cms="heroBtnSecondary">BUSCAR EN EL DIRECTORIO</span> <span class="arrow-diag">↗</span>
+            <a href="herramientas.html" class="btn btn-outline" style="padding: 0.9rem 1.6rem; font-size: 1rem;">
+              <span>CALCULADORA WSAVA ↗</span>
             </a>
           </div>
 
-          <!-- Grilla Suiza de Métricas Tabulares con Ticker Numérico Dinámico -->
-          <div class="hero-stats">
-            <div class="stat-item reg-cross">
-              <span class="stat-index">01 // LECTURA CLARA</span>
-              <div class="stat-number" data-counter="14" data-suffix=" Guías" data-cms="stat1Number">14 Guías</div>
-              <div class="stat-label" data-cms="stat1Label">Nutrición natural, etología, vacunas y primeros auxilios</div>
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <span class="hero-stat-val">45s</span>
+              <span class="hero-stat-lbl">Lectura por Cápsula</span>
             </div>
-            <div class="stat-item reg-cross">
-              <span class="stat-index">02 // TRATO AMABLE</span>
-              <div class="stat-number" data-counter="0" data-suffix="% Castigos" data-cms="stat2Number">0% Castigos</div>
-              <div class="stat-label" data-cms="stat2Label">Espacios revisados libres de jaulas y collares de ahogo</div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-val">100%</span>
+              <span class="hero-stat-lbl">Libre de Castigos</span>
             </div>
-            <div class="stat-item reg-cross">
-              <span class="stat-index">03 // COMUNIDAD</span>
-              <div class="stat-number" data-counter="12500" data-suffix="+" data-format="locale" data-cms="stat3Number">12,500+</div>
-              <div class="stat-label" data-cms="stat3Label">Familias cuidando mejor la salud física y emocional de su perro</div>
+            <div class="hero-stat-item">
+              <span class="hero-stat-val">90</span>
+              <span class="hero-stat-lbl">Vitrinas Éticas</span>
             </div>
           </div>
         </div>
 
-        <!-- Póster de Estudio con el Emblema Oficial -->
-        <!-- Póster de Estudio con Fotografía Documental y Emblema Oficial -->
-        <div class="hero-visual">
-          <div class="hero-illustration-card reg-cross">
-            <div class="poster-header">
-              <span>FOTOGRAFÍA DOCUMENTAL // PF-2027</span>
-              <span>BIENESTAR &amp; CONFIANZA</span>
-            </div>
-
-            <div class="hero-media-wrap">
-              <img src="assets/hero_home_lou_perro_calma.jpg" alt="Lou, educadora canina, y perro feliz en el parque" class="hero-photo-cover" width="560" height="420" fetchpriority="high" decoding="async" />
-              <img src="assets/logo/fulllogo_transparent_nobuffer.png" alt="Emblema Oficial Perritos Felices — Ladridos que inspiran" class="hero-brand-badge" width="110" height="110" decoding="async" />
-            </div>
-
-            <div class="poster-footer">
-              <span style="display:flex; align-items:center; gap:0.45rem;">
-                <span class="led-dot led-green"></span> SELLO DE TRATO RESPETUOSO
-              </span>
-              <span style="color: var(--logo-blue); font-weight:700;">LADRIDOS QUE INSPIRAN</span>
-            </div>
+        <!-- Fotografía Cinemática Protagónica -->
+        <div style="position: relative;">
+          <div style="border: 3px solid var(--pf-border-strong); border-radius: var(--pf-radius-card); overflow: hidden; box-shadow: var(--pf-shadow-floating); background: #000;">
+            <img src="assets/hero_home_lou_perro_calma.jpg" alt="Lou educadora y perro en calma" style="display: block; width: 100%; height: auto; object-fit: cover;" width="560" height="420" fetchpriority="high" decoding="async" />
+          </div>
+          <!-- Insignia flotante oficial -->
+          <div style="position: absolute; bottom: -20px; right: -20px; background: var(--pf-yellow); border: 2.5px solid var(--pf-border-strong); border-radius: 50%; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; box-shadow: var(--pf-shadow-card);">
+            <img src="assets/logo/icononly_transparent_nobuffer.png" alt="" width="52" height="52" decoding="async" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Cinta Editorial (Ticker) -->
-    <div class="editorial-ticker" aria-hidden="true">
-      <div class="container ticker-track" data-cms="tickerTrack">
-        <span>EDUCACIÓN AMABLE EN POSITIVO</span>
-        <span class="ticker-sep">✦</span>
-        <span>NUTRICIÓN NATURAL Y SEGURA WSAVA</span>
-        <span class="ticker-sep">✦</span>
-        <span>DIRECTORIO LIBRE DE JAULAS</span>
-        <span class="ticker-sep">✦</span>
-        <span>SALUD PREVENTIVA BASADA EN EVIDENCIA</span>
-      </div>
-    </div>
-
-    <!-- SECCIÓN CÁPSULAS VISUALES INTERACTIVAS (BENTO 2.0 & SHAREABLE TL;DR) -->
-    <section class="capsules-hub-section" style="padding: 3.5rem 0 2.5rem; background: #FAF5EA; border-bottom: 2px solid var(--border-strong);">
+    <!-- 2. EL MOSAICO BENTO 2.0 DE CÁPSULAS VIRALES (EL NUEVO NÚCLEO) -->
+    <section id="capsulas" class="hub-grid-section">
       <div class="container">
-        <div class="section-header-split">
-          <div>
-            <div class="section-index" style="color: var(--logo-blue);">⚡ EXPERIENCIAS CANINAS // RESÚMENES EN 45 SEGUNDOS</div>
-            <h2 class="section-title">
-              Cápsulas Visuales <span class="serif-italic">para aprender y compartir.</span>
-            </h2>
-          </div>
-          <p class="section-subtitle">
-            Cero muros de texto denso. Resuelve dudas clínicas y de comportamiento en menos de 1 minuto con comparadores interactivos y tarjetas diseñadas para captura de pantalla.
+        <div style="text-align: center; max-width: 720px; margin: 0 auto 3rem;">
+          <div class="section-eyebrow">EL HUB DE EXPERIENCIAS // RESUELVE EN 45 SEGUNDOS</div>
+          <h2 class="section-heading-massive">Aprende, compara y comparte.</h2>
+          <p style="font-size: 1.05rem; color: var(--pf-ink-secondary); line-height: 1.55;">
+            Diseñadas específicamente para tutores que quieren respuestas clínicas y etológicas inmediatas con tarjetas listas para captura de pantalla.
           </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1.75rem;">
-          <!-- Cápsula 1 -->
-          <article class="bento-card" style="display: flex; flex-direction: column; justify-content: space-between; background: #FFFFFF;">
+        <div class="hub-bento-container">
+          <!-- Cápsula 1 (8 columnas): Toxicología WSAVA -->
+          <article class="card-capsule bento-col-8" style="background: #FFFDF9;">
             <div>
-              <div class="bento-meta-top">
-                <span style="color: #DE350B; font-weight: 700;">#01 • TOXICOLOGÍA</span>
-                <span>45s LECTURA</span>
+              <div class="bento-cell-header">
+                <span class="capsule-lead-tag" style="background: var(--pf-status-danger-bg); color: var(--pf-status-danger); border-color: var(--pf-status-danger);">
+                  🚨 Toxicología de Emergencia
+                </span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.8rem; font-weight: 700; color: var(--pf-ink-muted);">⏱ 45s LECTURA</span>
               </div>
-              <h3 style="font-size: 1.25rem; margin: 0.5rem 0 0.75rem;">¿Una sola uva? Falla renal en 24h</h3>
-              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.45;">
-                Descubre por qué no existe dosis segura frente al ácido tartárico y cuál es la alternativa fresca 100% segura.
+              <h3 style="font-size: 1.85rem;">¿Una sola uva? Puede destruir sus riñones en 24 horas</h3>
+              <p>
+                No existe dosis segura frente al ácido tartárico. Compara en segundos los alimentos que salvan vidas frente a los que inducen daño tubular agudo.
               </p>
             </div>
-            <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="mono-label" style="font-size: 0.75rem;">✔ Comparador</span>
-              <a href="capsula.html" class="btn btn-outline btn-sm">EXPLORAR ⚡</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px dashed var(--pf-border-subtle); padding-top: 1.25rem;">
+              <span style="font-family: var(--pf-font-mono); font-size: 0.82rem; font-weight: 700; color: var(--pf-blue);">✔ Semáforo Interactivo</span>
+              <a href="capsula.html" class="btn btn-outline btn-sm">EXPLORAR CÁPSULA ⚡</a>
             </div>
           </article>
 
-          <!-- Cápsula 2 -->
-          <article class="bento-card" style="display: flex; flex-direction: column; justify-content: space-between; background: #FFFFFF;">
+          <!-- Cápsula 2 (4 columnas): Biomecánica del Arnés en Y -->
+          <article class="card-capsule bento-col-4" style="background: var(--pf-blue-light);">
             <div>
-              <div class="bento-meta-top">
-                <span style="color: var(--logo-blue); font-weight: 700;">#02 • BIOMECÁNICA</span>
-                <span>45s LECTURA</span>
+              <div class="bento-cell-header">
+                <span class="capsule-lead-tag" style="background: #FFFFFF; color: var(--pf-blue); border-color: var(--pf-blue);">
+                  🐾 Biomecánica
+                </span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.8rem; font-weight: 700; color: var(--pf-ink-muted);">⏱ 45s</span>
               </div>
-              <h3 style="font-size: 1.25rem; margin: 0.5rem 0 0.75rem;">Arnés en "Y" vs Collares de Ahogo</h3>
-              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.45;">
-                La fragilidad del cuello canino: protege la tráquea, tiroides y escápulas para un paseo libre de estrés.
+              <h3>Arnés en "Y" vs Collares</h3>
+              <p>
+                Su cuello alberga la tráquea y la tiroides. Descubre por qué un tirón con collar lesiona su columna y cómo liberar sus escápulas.
               </p>
             </div>
-            <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="mono-label" style="font-size: 0.75rem;">✔ Vitrina B2B</span>
-              <a href="capsula-arnes.html" class="btn btn-outline btn-sm">EXPLORAR ⚡</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px dashed var(--pf-border-subtle); padding-top: 1.25rem;">
+              <span style="font-family: var(--pf-font-mono); font-size: 0.82rem; font-weight: 700;">✔ Comparador</span>
+              <a href="capsula-arnes.html" class="btn btn-outline btn-sm">VER ↗</a>
             </div>
           </article>
 
-          <!-- Cápsula 3 -->
-          <article class="bento-card" style="display: flex; flex-direction: column; justify-content: space-between; background: #FFFFFF;">
+          <!-- Cápsula 3 (4 columnas): Señales de Calma -->
+          <article class="card-capsule bento-col-4" style="background: var(--pf-yellow-light);">
             <div>
-              <div class="bento-meta-top">
-                <span style="color: #B65C02; font-weight: 700;">#03 • ETOLOGÍA</span>
-                <span>45s LECTURA</span>
+              <div class="bento-cell-header">
+                <span class="capsule-lead-tag" style="background: #FFFFFF; color: var(--pf-ink-primary); border-color: #10152B;">
+                  🐕 Etología
+                </span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.8rem; font-weight: 700; color: var(--pf-ink-muted);">⏱ 45s</span>
               </div>
-              <h3 style="font-size: 1.25rem; margin: 0.5rem 0 0.75rem;">Decodificador de Señales de Calma</h3>
-              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.45;">
-                Mover la cola no siempre es alegría. Aprende a leer el bostezo, el lamido de trufa y el desvío de mirada.
+              <h3>Mover la cola no siempre es alegría</h3>
+              <p>
+                Decodifica los bostezos, el lamido de trufa y el desvío de mirada de Turid Rugaas antes de que aparezca la reactividad.
               </p>
             </div>
-            <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="mono-label" style="font-size: 0.75rem;">✔ Decodificador</span>
-              <a href="capsula-calma.html" class="btn btn-outline btn-sm">EXPLORAR ⚡</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px dashed var(--pf-border-subtle); padding-top: 1.25rem;">
+              <span style="font-family: var(--pf-font-mono); font-size: 0.82rem; font-weight: 700;">✔ Decodificador</span>
+              <a href="capsula-calma.html" class="btn btn-outline btn-sm">VER ↗</a>
             </div>
           </article>
 
-          <!-- Cápsula 4 -->
-          <article class="bento-card" style="display: flex; flex-direction: column; justify-content: space-between; background: #FFFFFF;">
+          <!-- Cápsula 4 (4 columnas): Dermatología & Alergias -->
+          <article class="card-capsule bento-col-4">
             <div>
-              <div class="bento-meta-top">
-                <span style="color: var(--logo-blue); font-weight: 700;">#04 • DERMATOLOGÍA</span>
-                <span>45s LECTURA</span>
+              <div class="bento-cell-header">
+                <span class="capsule-lead-tag" style="background: var(--pf-bg-sand); color: var(--pf-ink-primary); border-color: var(--pf-border-strong);">
+                  🩺 Dermatología
+                </span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.8rem; font-weight: 700; color: var(--pf-ink-muted);">⏱ 45s</span>
               </div>
-              <h3 style="font-size: 1.25rem; margin: 0.5rem 0 0.75rem;">¿Por qué se lame las patitas?</h3>
-              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.45;">
-                No es una manía: es prurito. Cómo diferenciar dermatitis atópica ambiental de alergia alimentaria.
+              <h3>¿Por qué se lame las patitas?</h3>
+              <p>
+                No es una manía: es prurito. Aprende a distinguir la dermatitis ambiental por polen de la intolerancia alimentaria.
               </p>
             </div>
-            <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="mono-label" style="font-size: 0.75rem;">✔ Tarjeta 4:5</span>
-              <a href="capsula-alergias.html" class="btn btn-outline btn-sm">EXPLORAR ⚡</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px dashed var(--pf-border-subtle); padding-top: 1.25rem;">
+              <span style="font-family: var(--pf-font-mono); font-size: 0.82rem; font-weight: 700;">✔ Checklist</span>
+              <a href="capsula-alergias.html" class="btn btn-outline btn-sm">VER ↗</a>
+            </div>
+          </article>
+
+          <!-- Cápsula 5 (4 columnas): Nutrición y Balance Ca:P -->
+          <article class="card-capsule bento-col-4" style="background: #EAF2EB;">
+            <div>
+              <div class="bento-cell-header">
+                <span class="capsule-lead-tag" style="background: #FFFFFF; color: #007A56; border-color: #007A56;">
+                  🥩 Nutrición
+                </span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.8rem; font-weight: 700; color: var(--pf-ink-muted);">⏱ 45s</span>
+              </div>
+              <h3>Alimentación Natural: La regla del 10%</h3>
+              <p>
+                Cómo sumar alimentos frescos sin desbalancear el calcio y fósforo de su plato diario según las guías WSAVA.
+              </p>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px dashed var(--pf-border-subtle); padding-top: 1.25rem;">
+              <span style="font-family: var(--pf-font-mono); font-size: 0.82rem; font-weight: 700;">✔ Calculadora</span>
+              <a href="capsula-guia-alimentacion-natural-perros.html" class="btn btn-outline btn-sm">VER ↗</a>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- 2. MOSAICO BENTO CON JERARQUÍA REAL (Regla 3.2) -->
-    <section id="pilares" class="services-section">
+    <!-- 3. VITRINAS DE EXPERIENCIAS B2B (MONETIZACIÓN ORGÁNICA SIN ANUNCIOS INVASIVOS) -->
+    <section id="vitrinas" class="showcase-hub-section">
       <div class="container">
-        <div class="section-header-split">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;">
           <div>
-            <div class="section-index">01 / 04 — LOS 5 PILARES DE BIENESTAR</div>
-            <h2 class="section-title">
-              Todo lo que necesitas para entender y cuidar a tu perro <span class="serif-italic">paso a paso.</span>
-            </h2>
+            <div class="section-eyebrow" style="color: var(--pf-yellow);">DIRECTORIO ÉTICO VERIFICADO // 90 ESPACIOS</div>
+            <h2 class="section-heading-massive" style="color: #FFFFFF; margin: 0;">Vitrinas de Experiencias</h2>
           </div>
-          <p class="section-subtitle">
-            Explicamos la ciencia veterinaria en un lenguaje cálido, claro y práctico para que cualquier integrante de la familia pueda aplicarlo hoy mismo.
+          <a href="directorio.html" class="btn btn-outline" style="color: #FFFFFF; border-color: rgba(255,255,255,0.3);">
+            <span>Ver los 90 Espacios ↗</span>
+          </a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+          <div class="vitrina-card">
+            <div>
+              <div class="vitrina-city-badge">Ciudad de Guatemala • Zona 14</div>
+              <div class="vitrina-name">Huellitas Sanas 24/7</div>
+              <div class="vitrina-desc">Clínica certificada Fear-Free con laboratorio propio y cero sedación para procedimientos menores.</div>
+            </div>
+            <a href="directorio.html" class="btn btn-outline btn-sm" style="color: var(--pf-yellow); border-color: var(--pf-yellow); align-self: flex-start;">Ver Ficha Ética ↗</a>
+          </div>
+
+          <div class="vitrina-card">
+            <div>
+              <div class="vitrina-city-badge">Ciudad de México • Roma Norte</div>
+              <div class="vitrina-name">Canis Camp 100% Libre</div>
+              <div class="vitrina-desc">Guardería y hotel canino libre de jaulas con áreas de juego supervisadas por etólogos certificados.</div>
+            </div>
+            <a href="directorio.html" class="btn btn-outline btn-sm" style="color: var(--pf-yellow); border-color: var(--pf-yellow); align-self: flex-start;">Ver Ficha Ética ↗</a>
+          </div>
+
+          <div class="vitrina-card">
+            <div>
+              <div class="vitrina-city-badge">Bogotá • Usaquén</div>
+              <div class="vitrina-name">Obrador Canino Puro</div>
+              <div class="vitrina-desc">Premios deshidratados mono-proteicos de grado humano, sin conservantes ni azúcares añadidos.</div>
+            </div>
+            <a href="directorio.html" class="btn btn-outline btn-sm" style="color: var(--pf-yellow); border-color: var(--pf-yellow); align-self: flex-start;">Ver Ficha Ética ↗</a>
+          </div>
+
+          <div class="vitrina-card">
+            <div>
+              <div class="vitrina-city-badge">Guadalajara • Providencia</div>
+              <div class="vitrina-name">Paseo Armónico Lab</div>
+              <div class="vitrina-desc">Entrenamiento en positivo y adaptación de arneses ergonómicos en Y para paseos libres de tirones.</div>
+            </div>
+            <a href="directorio.html" class="btn btn-outline btn-sm" style="color: var(--pf-yellow); border-color: var(--pf-yellow); align-self: flex-start;">Ver Ficha Ética ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SHAREABLES DE BOLSILLO (TARJETAS TL;DR LISTAS PARA SCREENSHOT / COMPARTIR) -->
+    <section id="shareables" class="shareables-hub-section">
+      <div class="container">
+        <div style="text-align: center; max-width: 720px; margin: 0 auto 2.5rem;">
+          <div class="section-eyebrow">DISEÑADAS PARA TUS HISTORIAS DE INSTAGRAM & WHATSAPP</div>
+          <h2 class="section-heading-massive">Tarjetas TL;DR de Bolsillo</h2>
+          <p style="font-size: 1.05rem; color: var(--pf-ink-secondary); line-height: 1.55;">
+            Tómarles captura o descárgalas en PNG con 1 toque. Respuestas instantáneas para llevar siempre en tu teléfono.
           </p>
         </div>
 
-        <div class="bento-grid">
-          <!-- Celda 1 (7 columnas): Diagrama de Ondas de Calma & Etología -->
-          <article class="bento-card bento-col-7 reg-cross">
+        <div class="shareables-track">
+          <!-- Tarjeta 1 -->
+          <div style="background: var(--pf-bg-cream); border: 2.5px solid var(--pf-border-strong); border-radius: var(--pf-radius-card); padding: 1.5rem; box-shadow: var(--pf-shadow-card); display: flex; flex-direction: column; justify-content: space-between;">
             <div>
-              <div class="bento-meta-top">
-                <span style="color: var(--logo-blue);">PILAR 01 — COMUNICACIÓN Y EMOCIONES</span>
-                <span>GUÍA PILAR DESTACADA</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1.5px dashed var(--pf-border-medium); padding-bottom: 0.75rem;">
+                <span style="font-family: var(--pf-font-mono); font-weight: 700; font-size: 0.78rem;">#01 TOXICOLOGÍA</span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.72rem; background: var(--pf-yellow); padding: 0.15rem 0.5rem; border-radius: var(--pf-radius-pill);">TL;DR 30s</span>
               </div>
-              <h3>Escuela para Humanos &amp; Lenguaje Corporal</h3>
-              <p>
-                Antes de ladrar o asustarse, tu perro se comunica con la mirada, las orejas y la postura. Aprende a leer sus señales de calma, cómo saber si tu perro es realmente feliz y a ayudarlo cuando se queda solo en casa sin usar regaños.
-              </p>
-
-              <!-- Gráfico SVG Animado con pathLength="1" -->
-              <div style="background: var(--bg-cream); border: 1px solid var(--border-strong); border-radius: var(--radius-xs); padding: 1rem; margin-bottom: 1.15rem;">
-                <div class="mono-label" style="display:flex; justify-content:space-between; margin-bottom: 0.4rem; color: var(--ink-secondary);">
-                  <span>NIVEL DE ESTRÉS: PASEO OLFATIVO TRANQUILO (AZUL) VS. PRISA</span>
-                  <span style="color: var(--logo-blue);">-42% ESTRÉS</span>
-                </div>
-                <svg viewBox="0 0 520 70" style="width:100%; height:64px;" aria-hidden="true">
-                  <line x1="0" y1="35" x2="520" y2="35" stroke="rgba(16,21,43,0.12)" stroke-dasharray="4 4" />
-                  <path d="M0 55 Q65 10, 130 48 T260 30 T390 52 T520 45" stroke="#FFBE58" stroke-width="2.5" fill="none" pathLength="1" class="svg-draw-path" />
-                  <path d="M0 20 C90 25, 180 52, 310 56 C400 58, 460 60, 520 62" stroke="#2241C8" stroke-width="3.5" fill="none" pathLength="1" class="svg-draw-path" />
-                  <circle cx="310" cy="56" r="5" fill="#2241C8" />
-                </svg>
-              </div>
-
-              <!-- Destacado Editorial de la Guía Pilar -->
-              <div style="background: #FFFFFF; border: 1.5px solid var(--logo-blue); border-radius: var(--radius-xs); padding: 0.85rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; box-shadow: 0 2px 8px rgba(34,65,200,0.06);">
-                <div>
-                  <span class="mono-label" style="color: var(--logo-blue); font-size: 0.72rem; font-weight: 700;">★ ARTÍCULO PILAR RECOMENDADO</span>
-                  <div style="font-family: var(--font-display); font-weight: 700; font-size: 0.98rem; color: var(--ink-primary); line-height: 1.3; margin-top: 0.15rem;">
-                    ¿Cómo saber si tu perro es feliz? Señales de etología y bienestar
-                  </div>
-                </div>
-                <a href="articulos/como-saber-si-tu-perro-es-feliz.html" class="btn btn-primary btn-sm" style="flex-shrink: 0; padding: 0.45rem 0.85rem; font-size: 0.78rem;">
-                  LEER ↗
-                </a>
-              </div>
-            </div>
-            <a href="articulos/como-saber-si-tu-perro-es-feliz.html" class="bento-link">
-              <span>LEER GUÍA: ¿CÓMO SABER SI TU PERRO ES FELIZ?</span>
-              <span class="arrow-diag">↗</span>
-            </a>
-          </article>
-
-          <!-- Celda 2 (5 columnas): Radar Vectorial del Directorio -->
-          <article class="bento-card bento-col-5 accent-yellow reg-cross">
-            <div>
-              <div class="bento-meta-top">
-                <span>PILAR 02 — RED DE CONFIANZA</span>
-                <span>6 CIUDADES</span>
-              </div>
-              <h3>Directorio Canino Verificado</h3>
-              <p style="color: var(--ink-primary);">
-                Encuentra veterinarias amables, hoteles campestres sin jaulas, estéticas sin estrés y entrenadores respetuosos cerca de ti.
-              </p>
-
-              <!-- Ilustración Vectorial de Radar / Coordenadas -->
-              <div style="display:flex; align-items:center; justify-content:space-between; background: rgba(255,255,255,0.75); border: 1.5px solid var(--border-strong); border-radius: var(--radius-xs); padding: 0.9rem 1.1rem; margin-bottom: 1.25rem;">
-                <div>
-                  <div class="mono-label" style="color: var(--logo-blue);">BÚSQUEDA FÁCIL POR CIUDAD</div>
-                  <div style="font-family: var(--font-display); font-weight:700; font-size:1.05rem;">GUA • MEX • GDL • MTY • BOG</div>
-                </div>
-                <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-                  <circle cx="24" cy="24" r="21" stroke="#10152B" stroke-width="2" pathLength="1" class="svg-draw-path"/>
-                  <circle cx="24" cy="24" r="11" stroke="#2241C8" stroke-width="1.5" stroke-dasharray="3 3"/>
-                  <circle cx="24" cy="24" r="4" fill="#2241C8"/>
-                  <line x1="24" y1="3" x2="24" y2="45" stroke="#10152B" stroke-width="1.2"/>
-                  <line x1="3" y1="24" x2="45" y2="24" stroke="#10152B" stroke-width="1.2"/>
-                </svg>
-              </div>
-            </div>
-            <a href="directorio.html" class="bento-link" style="border-top-color: rgba(16,21,43,0.2);">
-              <span>BUSCAR ESPECIALISTAS EN EL DIRECTORIO</span>
-              <span class="arrow-diag">↗</span>
-            </a>
-          </article>
-
-          <!-- Celda 3 (4 columnas): Calculadora Nutricional & Semáforo -->
-          <article class="bento-card bento-col-4 reg-cross">
-            <div>
-              <div class="bento-meta-top">
-                <span style="color: var(--logo-blue);">PILAR 03 — NUTRICIÓN CLÍNICA</span>
-                <span class="badge badge-category" style="font-size:0.68rem; padding: 0.2rem 0.5rem; background: var(--color-mint); color: #007A56; border-color: #007A56;">NUEVA HERRAMIENTA</span>
-              </div>
-              <h3>Calculadora Calórica &amp; Semáforo</h3>
-              <p>
-                Calcula los requerimientos calóricos basales (RER) y de mantenimiento (MER) según WSAVA y consulta el buscador toxicológico de alimentos seguros.
-              </p>
-              <div style="background: var(--color-ice-blue); border: 1.5px solid var(--logo-blue); border-radius: var(--radius-sm); padding: 0.75rem 0.9rem; margin-bottom: 1.15rem;">
-                <div class="mono-label" style="display:flex; justify-content:space-between; color: var(--logo-blue); font-weight:700; margin-bottom: 0.35rem;">
-                  <span>ESTÁNDAR WSAVA / FEDIAF</span>
-                  <span>RER = 70 × (kg)^0.75</span>
-                </div>
-                <div style="display: flex; gap: 0.4rem; font-size: 0.76rem; font-family: var(--font-mono); color: var(--ink-secondary);">
-                  <span style="background: #EAF2EB; color: #007A56; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid #007A56;">✔ Manzana / Zanahoria</span>
-                  <span style="background: #FFE8E5; color: #D9381E; padding: 0.15rem 0.4rem; border-radius: 4px; border: 1px solid #D9381E;">✘ Uvas / Cebolla</span>
-                </div>
-              </div>
-            </div>
-            <a href="herramientas.html" class="bento-link">
-              <span>CALCULAR CALORÍAS &amp; TOXICIDAD</span>
-              <span class="arrow-diag">↗</span>
-            </a>
-          </article>
-
-          <!-- Celda 4 (4 columnas): Medicina Preventiva & Seniors -->
-          <article class="bento-card bento-col-4 reg-cross">
-            <div>
-              <div class="bento-meta-top">
-                <span style="color: var(--logo-blue);">PILAR 04 — PREVENCIÓN</span>
-                <span>TODAS LAS EDADES</span>
-              </div>
-              <h3>Salud, Vacunas &amp; Perros Senior</h3>
-              <p>
-                Calendario claro de vacunación, botiquín de primeros auxilios en casa, limpieza dental y cuidados para perritos mayores.
-              </p>
-              <div class="mono-label" style="background: var(--bg-cream); border: 1px solid var(--border-strong); padding: 0.6rem 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
-                CACHORRO → ADULTO → ETAPA SENIOR
-              </div>
-            </div>
-            <a href="articulos/calendario-vacunacion-desparasitacion.html" class="bento-link">
-              <span>VER CALENDARIO DE VACUNAS</span>
-              <span class="arrow-diag">↗</span>
-            </a>
-          </article>
-
-          <!-- Celda 5 (4 columnas): Enriquecimiento Cognitivo -->
-          <article class="bento-card bento-col-4 accent-blue reg-cross">
-            <div>
-              <div class="bento-meta-top" style="color: var(--logo-yellow);">
-                <span>PILAR 05 — PASEOS Y JUEGOS</span>
-                <span>20 MIN AL DÍA</span>
-              </div>
-              <h3>Paseos Olfativos &amp; Calma</h3>
-              <p style="color: rgba(255,255,255,0.88);">
-                Descubre por qué dejar que tu perro olfatee a su ritmo durante 20 minutos lo relaja mucho más que correr sin descanso.
+              <h4 style="font-family: var(--pf-font-display); font-size: 1.25rem; font-weight: 800; margin: 0 0 0.5rem;">Regla de Premios Seguros</h4>
+              <p style="font-size: 0.88rem; color: var(--pf-ink-secondary); line-height: 1.45;">
+                ✘ Cero uvas ni pasas.<br />
+                ✔ Zanahoria fresca como premio crujiente.<br />
+                ℹ Máximo 10% de sus calorías diarias.
               </p>
             </div>
-            <a href="articulos/paseos-olfativos-enriquecimiento-ambiental.html" class="bento-link" style="color: var(--logo-yellow); border-top-color: rgba(255,255,255,0.2);">
-              <span>CÓMO HACER UN PASEO OLFATIVO</span>
-              <span class="arrow-diag">↗</span>
-            </a>
-          </article>
+            <a href="capsula.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; text-align: center;">Ver y Descargar 📸</a>
+          </div>
+
+          <!-- Tarjeta 2 -->
+          <div style="background: var(--pf-bg-cream); border: 2.5px solid var(--pf-border-strong); border-radius: var(--pf-radius-card); padding: 1.5rem; box-shadow: var(--pf-shadow-card); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1.5px dashed var(--pf-border-medium); padding-bottom: 0.75rem;">
+                <span style="font-family: var(--pf-font-mono); font-weight: 700; font-size: 0.78rem;">#02 BIOMECÁNICA</span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.72rem; background: var(--pf-yellow); padding: 0.15rem 0.5rem; border-radius: var(--pf-radius-pill);">TL;DR 30s</span>
+              </div>
+              <h4 style="font-family: var(--pf-font-display); font-size: 1.25rem; font-weight: 800; margin: 0 0 0.5rem;">Paseo sin Daño Cervical</h4>
+              <p style="font-size: 0.88rem; color: var(--pf-ink-secondary); line-height: 1.45;">
+                ✔ Arnés ergonómico en forma de "Y".<br />
+                ✘ Cero collares de ahogo, púas o electroestáticos.<br />
+                ℹ Calibrado a 4 dedos detrás de la axila.
+              </p>
+            </div>
+            <a href="capsula-arnes.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; text-align: center;">Ver y Descargar 📸</a>
+          </div>
+
+          <!-- Tarjeta 3 -->
+          <div style="background: var(--pf-bg-cream); border: 2.5px solid var(--pf-border-strong); border-radius: var(--pf-radius-card); padding: 1.5rem; box-shadow: var(--pf-shadow-card); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1.5px dashed var(--pf-border-medium); padding-bottom: 0.75rem;">
+                <span style="font-family: var(--pf-font-mono); font-weight: 700; font-size: 0.78rem;">#03 ETOLOGÍA</span>
+                <span style="font-family: var(--pf-font-mono); font-size: 0.72rem; background: var(--pf-yellow); padding: 0.15rem 0.5rem; border-radius: var(--pf-radius-pill);">TL;DR 30s</span>
+              </div>
+              <h4 style="font-family: var(--pf-font-display); font-size: 1.25rem; font-weight: 800; margin: 0 0 0.5rem;">Lectura de Calma en 3 Pasos</h4>
+              <p style="font-size: 0.88rem; color: var(--pf-ink-secondary); line-height: 1.45;">
+                ✔ Si se lame la trufa o bosteza, da un paso atrás.<br />
+                ✘ No lo abraces de frente con cámaras.<br />
+                ℹ Jamás castigues un gruñido: es su detector de humo.
+              </p>
+            </div>
+            <a href="capsula-calma.html" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%; text-align: center;">Ver y Descargar 📸</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. VISTA PREVIA DEL DIRECTORIO -->
-    <section class="directory-preview-section">
-      <div class="container">
-        <div class="section-header-split">
-          <div>
-            <div class="section-index">02 / 04 — DIRECTORIO DE ESPECIALISTAS</div>
-            <h2 class="section-title">
-              Centros y profesionales con <span class="serif-italic">compromiso ético verificado.</span>
-            </h2>
-          </div>
-          <div>
-            <p class="section-subtitle" style="margin-bottom: 1rem;">
-              Cada espacio listado ha sido revisado bajo criterios de cero jaulas de castigo, manejo clínico empático y transparencia con el tutor.
-            </p>
-            <a href="directorio.html" class="btn btn-outline btn-sm">
-              ABRIR DIRECTORIO COMPLETO (90 ESPACIOS) <span class="arrow-diag">↗</span>
-            </a>
-          </div>
-        </div>
-
-        <div id="home-directory-grid" class="directory-grid">
-          <!-- Renderizado dinámico por js/main.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. ÚLTIMOS ARTÍCULOS DEL BLOG -->
-    <section class="articles-section">
-      <div class="container">
-        <div class="section-header-split">
-          <div>
-            <div class="section-index">03 / 04 — EDICIONES RECIENTES</div>
-            <h2 class="section-title">
-              Manuales de lectura profunda para <span class="serif-italic">tutores curiosos.</span>
-            </h2>
-          </div>
-          <div>
-            <p class="section-subtitle" style="margin-bottom: 1rem;">
-              Artículos largos con tabla de contenido interactiva, tablas comparativas y protocolos paso a paso.
-            </p>
-            <a href="blog.html" class="btn btn-primary btn-sm">
-              VER LAS 14 GUÍAS DEL ARCHIVO <span class="arrow-diag">↗</span>
-            </a>
-          </div>
-        </div>
-
-        <div id="home-articles-grid" class="articles-grid">
-          <!-- Renderizado dinámico por js/main.js -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. CTA FINAL -->
-    <section id="comunidad" class="cta-banner-section">
-      <div class="container">
-        <div class="cta-banner">
-          <div>
-            <div class="mono-label" style="color: var(--logo-yellow); margin-bottom: 0.75rem;">
-              04 / 04 — BOLETÍN EDITORIAL SEMANAL
-            </div>
-            <h2 data-cms="newsletterTitle">Ladridos que inspiran, directo en tu bandeja cada martes.</h2>
-            <p data-cms="newsletterDescription">Una sola lectura semanal de 3 minutos: recetas de snacks naturales, etología explicada con empatía y nuevos centros verificados en tu ciudad. Cero spam.</p>
-            <form class="js-newsletter-form" style="display: flex; flex-wrap: wrap; gap: 0.75rem; max-width: 560px;">
-              <input
-                type="email"
-                required
-                placeholder="tu-correo@dominio.com"
-                aria-label="Correo electrónico"
-                style="flex: 1; min-width: 240px; background: #FFF; color: var(--ink-primary); padding: 0.9rem 1.15rem; border-radius: var(--radius-xs); border: 1.5px solid var(--border-strong); font-family: var(--font-mono); font-size: 0.85rem;"
-              />
-              <button type="submit" class="btn btn-secondary">
-                <span data-cms="newsletterBtn">RECIBIR GUÍA SEMANAL</span> <span class="arrow-diag">↗</span>
-              </button>
-            </form>
-          </div>
-
-          <div style="background: var(--surface-dark); border-radius: var(--radius-md); padding: 2rem; border: 1.5px solid var(--logo-yellow);">
-            <div class="mono-label" style="color: var(--logo-yellow); margin-bottom: 0.5rem;" data-cms="ctaBoxTag">CONVOCATORIA ABIERTA</div>
-            <h3 style="color: #FFF; font-size: 1.4rem; margin-bottom: 0.65rem;" data-cms="ctaBoxTitle">¿Diriges un proyecto canino ético?</h3>
-            <p style="font-size: 0.94rem; color: rgba(255,255,255,0.82); margin-bottom: 1.35rem;" data-cms="ctaBoxDesc">Si eres veterinario Fear Free, etólogo en positivo, estética sin estrés o guardería campestre, postula tu espacio sin costo.</p>
-            <a href="directorio.html#registrar" class="btn btn-secondary" style="width: 100%;">
-              REGISTRAR MI ESPACIO <span class="arrow-diag">↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <a href="index.html" class="brand-logo" style="color: #FFF; margin-bottom: 1rem;">
-            <span class="brand-logo-icon">
-              <img src="assets/logo/icononly_transparent_nobuffer.png" alt="Logo Perritos Felices" width="36" height="36" decoding="async" />
-            </span>
-            <span class="brand-logo-text">
-              <span class="brand-logo-title" style="color: #FFFFFF;">Perritos Felices</span>
-              <span class="brand-logo-slogan" style="color: var(--logo-yellow);">Ladridos que inspiran</span>
-            </span>
-          </a>
-          <p style="color: rgba(246, 244, 238, 0.8); font-size: 0.94rem; margin-bottom: 1rem;">
-            Plataforma editorial y directorio verificado dedicado a elevar el estándar de vida de los perros mediante ciencia, empatía y respeto.
-          </p>
-          <p class="mono-label" style="color: var(--logo-yellow);">WWW.PERRITOSFELICES.COM</p>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Mapa del Sitio</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Inicio / Portada</a></li>
-            <li><a href="blog.html">Archivo Editorial (14 Guías)</a></li>
-            <li><a href="directorio.html">Directorio Canino Verificado</a></li>
-            <li><a href="herramientas.html">Herramientas &amp; Calculadora WSAVA</a></li>
-            <li><a href="directorio.html#registrar">Postular un Negocio</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Volúmenes I — VII</h4>
-          <ul class="footer-links">
-            <li><a href="articulos/guia-alimentacion-natural-perros.html">01. Alimentación Natural</a></li>
-            <li><a href="articulos/lenguaje-corporal-canino-senales.html">02. Lenguaje Corporal Canino</a></li>
-            <li><a href="articulos/calendario-vacunacion-desparasitacion.html">03. Calendario de Vacunación</a></li>
-            <li><a href="articulos/ansiedad-por-separacion-como-ayudarlo.html">04. Ansiedad por Separación</a></li>
-            <li><a href="articulos/paseos-olfativos-enriquecimiento-ambiental.html">05. Paseos Olfativos</a></li>
-            <li><a href="articulos/primeros-auxilios-caninos-botiquin.html">06. Primeros Auxilios Caninos</a></li>
-            <li><a href="articulos/cuidado-dental-perros-guia-practica.html">07. Higiene Dental en Casa</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Volúmenes VIII — XIV</h4>
-          <ul class="footer-links">
-            <li><a href="articulos/socializacion-cachorros-primeros-meses.html">08. Socialización de Cachorros</a></li>
-            <li><a href="articulos/cuidados-perro-senior-calidad-vida.html">09. Cuidados del Perro Senior</a></li>
-            <li><a href="articulos/viajar-con-tu-perro-consejos-seguridad.html">10. Viajar Seguro con tu Perro</a></li>
-            <li><a href="articulos/guia-adopcion-responsable-primeros-dias.html">11. Adopción Responsable</a></li>
-            <li><a href="articulos/miedo-pirotecnia-ruidos-fuertes-perros.html">12. Pirotecnia y Ruidos Fuertes</a></li>
-            <li><a href="articulos/como-saber-si-tu-perro-es-feliz.html">13. ¿Cómo Saber si es Feliz?</a></li>
-            <li><a href="articulos/alergias-alimentarias-ambientales-perros-guia.html">14. Alergias y Dermatología</a></li>
-          </ul>
-        </div>
+  <!-- Footer Minimalista Contemporáneo -->
+  <footer class="site-footer" role="contentinfo" style="padding: 3rem 0; background: #080B14; color: #FFFFFF; border-top: 2px solid var(--pf-border-strong);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <img src="assets/logo/icononly_transparent_nobuffer.png" alt="" width="32" height="32" decoding="async" />
+        <span style="font-family: var(--pf-font-display); font-weight: 800; font-size: 1.05rem;">Perritos Felices</span>
+        <span style="font-family: var(--pf-font-mono); font-size: 0.78rem; color: #7E86A8;">© 2026</span>
       </div>
-
-      <div class="footer-bottom">
-        <span>© 2026 PERRITOS FELICES — LADRIDOS QUE INSPIRAN. TODOS LOS DERECHOS RESERVADOS.</span>
-        <span>DIRECCIÓN EDITORIAL • ETOLOGÍA • NUTRICIÓN • BIENESTAR</span>
+      <div style="font-family: var(--pf-font-mono); font-size: 0.82rem; color: #B0B7D6;">
+        El referente visual de la cultura canina • 100% libre de métodos aversivos
       </div>
     </div>
   </footer>
 
-  <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/capsules.js"></script>
 </body>
 </html>
