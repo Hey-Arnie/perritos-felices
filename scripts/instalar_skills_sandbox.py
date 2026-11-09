@@ -89,7 +89,7 @@ REPOSITORIES = [
         "url": "https://github.com/anthropics/claude-plugins-official.git",
         "scan_subpath": "plugins/frontend-design",
         "skill_mappings": {
-            "claude-frontend-design": "plugins/frontend-design/skills/frontend-design",
+            "frontend-design": "plugins/frontend-design/skills/frontend-design",
         },
     },
     {
@@ -150,7 +150,6 @@ REPOSITORIES = [
         "repo": "taste-skill",
         "url": "https://github.com/Leonxlnx/taste-skill.git",
         "skill_mappings": {
-            "taste-skill": "skills/taste-skill",
             "design-taste-frontend": "skills/taste-skill",
         },
     },
@@ -189,7 +188,6 @@ REPOSITORIES = [
         "url": "https://github.com/vercel-labs/agent-skills.git",
         "skill_mappings": {
             "vercel-react-best-practices": "skills/react-best-practices",
-            "react-best-practices": "skills/react-best-practices",
             "web-design-guidelines": "skills/web-design-guidelines",
             "writing-guidelines": "skills/writing-guidelines",
             "composition-patterns": "skills/composition-patterns",
@@ -413,19 +411,20 @@ def install_all():
             }
             print(f"  ✔ Skill original [{target_skill_name}] instalada sin modificar ({line_count} líneas, SHA256: {file_hash[:12]}...)")
 
-        # Copiar archivos de referencia clave (README_es.md, README.md) en .agent/skills/upstream/<rid>
-        dest_ref_dir = UPSTREAM_SKILLS_DIR / rid
-        dest_ref_dir.mkdir(parents=True, exist_ok=True)
-        ref_list = cfg.get("reference_files", ["README.md"])
+        # Copiar archivos de referencia clave únicamente cuando el repositorio lo requiera explícitamente
+        ref_list = cfg.get("reference_files", [])
         ref_hashes = {}
-        for rf_rel in ref_list:
-            src_rf = repo_path / rf_rel
-            if src_rf.exists() and src_rf.is_file():
-                dst_rf = dest_ref_dir / rf_rel
-                dst_rf.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src_rf, dst_rf)
-                ref_hashes[rf_rel] = sha256_file(dst_rf)
-                print(f"  ✔ Referencia original [{rf_rel}] copiada en .agent/skills/upstream/{rid}/{rf_rel}")
+        if ref_list:
+            dest_ref_dir = UPSTREAM_SKILLS_DIR / rid
+            dest_ref_dir.mkdir(parents=True, exist_ok=True)
+            for rf_rel in ref_list:
+                src_rf = repo_path / rf_rel
+                if src_rf.exists() and src_rf.is_file():
+                    dst_rf = dest_ref_dir / rf_rel
+                    dst_rf.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src_rf, dst_rf)
+                    ref_hashes[rf_rel] = sha256_file(dst_rf)
+                    print(f"  ✔ Referencia original [{rf_rel}] copiada en .agent/skills/upstream/{rid}/{rf_rel}")
 
         lock_data["repositories"][rid] = {
             "url": cfg["url"],

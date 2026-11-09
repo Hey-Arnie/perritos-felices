@@ -1028,11 +1028,29 @@ def cmd_status() -> int:
     articles = json.loads(ARTICLES_JSON.read_text(encoding="utf-8")) if ARTICLES_JSON.exists() else []
     directory = json.loads(DIRECTORY_JSON.read_text(encoding="utf-8")) if DIRECTORY_JSON.exists() else []
     calendar = json.loads(CALENDAR_JSON.read_text(encoding="utf-8")) if CALENDAR_JSON.exists() else []
+    lock_path = ROOT_DIR / ".agent" / "skills" / "skills_lock.json"
+    skills_count = 0
+    repos_count = 0
+    if lock_path.exists():
+        lock_data = json.loads(lock_path.read_text(encoding="utf-8"))
+        skills_count = len(lock_data.get("installed_skills", {}))
+        repos_count = len(lock_data.get("repositories", {}))
+
+    artes_dir = ROOT_DIR / "03_Assets_Visuales" / "artes_redes_2026"
+    artes_svgs = sorted(p.name for p in artes_dir.glob("*.svg")) if artes_dir.exists() else []
+    scripts_dir = WEB_DIR / "scripts"
+    scripts_list = sorted(p.name for p in scripts_dir.glob("*.py")) if scripts_dir.exists() else []
 
     print("=================================================================")
-    print(" ESTADO EDITORIAL Y DIRECTORIO — PERRITOS FELICES")
+    print(" MEMORIA AGÉNTICA Y ESTADO GENERAL — PERRITOS FELICES")
     print("=================================================================")
-    print(f" 📚 Total de Artículos Publicados : {len(articles)}")
+    print(" 🧠 Orquestador Principal         : .agent/skills/pf-orchestrator/SKILL.md")
+    print(" 📖 Memoria entre Sesiones        : MEMORIA_AGENTICA.md & ESTADO.md")
+    print(f" 🛡️  Skills Originales Intactas    : {skills_count} skills ({repos_count}/17 repositorios en skills_lock.json)")
+    print(f" ⚙️  Scripts Oficiales Existentes  : {', '.join(scripts_list)}")
+    print(f" 🎨 Artes 4:5 Activos             : {len(artes_svgs)} ({', '.join(artes_svgs)})")
+
+    print(f"\n 📚 Total de Artículos Publicados : {len(articles)}")
     cats = {}
     for a in articles:
         cats[a["category"]] = cats.get(a["category"], 0) + 1

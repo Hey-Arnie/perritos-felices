@@ -16,12 +16,9 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 ASSETS_DIR = ROOT_DIR / "03_Assets_Visuales"
 WEB_ASSETS = ROOT_DIR / "01_Infraestructura_Web" / "assets" / "articulos"
 REDES_2026_DIR = ASSETS_DIR / "artes_redes_2026"
-WEEKLY_DIR = ROOT_DIR / "02_Estrategia_Y_Contenido" / "entregas_semanales" / "semana_2026_10_26"
-ARTES_DIR = WEEKLY_DIR / "artes"
 STUDIO_ASSETS = ROOT_DIR / "05_Studio_Privado" / "assets"
 
 REDES_2026_DIR.mkdir(parents=True, exist_ok=True)
-ARTES_DIR.mkdir(parents=True, exist_ok=True)
 STUDIO_ASSETS.mkdir(parents=True, exist_ok=True)
 
 
@@ -249,22 +246,12 @@ def main():
     print("🎨 Generando artes editoriales 4:5 (1080x1350) limpios y sin etiquetas artificiales...")
     for filename, svg_data in artes.items():
         (REDES_2026_DIR / filename).write_text(svg_data, encoding="utf-8")
-        (ARTES_DIR / filename).write_text(svg_data, encoding="utf-8")
         (STUDIO_ASSETS / filename).write_text(svg_data, encoding="utf-8")
         print(f"  ✔ {filename} generado ({len(svg_data)} bytes)")
 
     copy_path = REDES_2026_DIR / "COPY_Y_HASHTAGS_REDES.md"
     copy_path.write_text(generar_copy_redes(), encoding="utf-8")
     print(f"  ✔ Copy editorial guardado en: {copy_path}")
-
-    zip_path = STUDIO_ASSETS / "kit_descargables_semana_2026_10_26.zip"
-    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        for filename in artes.keys():
-            f_path = REDES_2026_DIR / filename
-            if f_path.exists():
-                zf.write(f_path, arcname=filename)
-        zf.write(copy_path, arcname="COPY_Y_HASHTAGS_REDES.md")
-    print(f"📦 Kit ZIP actualizado en: {zip_path}")
 
 
 if __name__ == "__main__":
