@@ -236,11 +236,11 @@ function initNewsletterForms() {
       const emailInput = form.querySelector('input[type="email"]');
       const email = sanitizeString(emailInput ? emailInput.value : "", 100);
       if (email && emailRegex.test(email)) {
-        window.showToast(`[OK] Suscripción confirmada para ${email} — Guía enviada.`);
+        window.showToast(`Gracias por suscribirte con ${email}. Te enviaremos nuestras próximas lecturas.`);
         form.reset();
       } else {
         if (emailInput) emailInput.setAttribute("aria-invalid", "true");
-        window.showToast("[AVISO] Por favor ingresa un correo electrónico válido.");
+        window.showToast("Por favor escribe un correo electrónico válido.");
       }
     });
   });
@@ -314,14 +314,12 @@ function createCategorySvgNode(category) {
 }
 
 function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
-  const docNum = article.id ? sanitizeString(article.id, 24).replace("art-", "Guía #") : `Guía #0${idx + 1}`;
   const safeSlug = sanitizeArticleSlug(article.slug);
   const safeHref = `${basePath}${encodeURIComponent(safeSlug)}`;
   const safeGradient = sanitizeBgGradient(article.bgGradient);
 
   const thumbChildren = [
     createEl("div", { className: "article-thumb-top" }, [
-      createEl("span", { className: "article-doc-id", text: docNum }),
       createEl("span", { className: "badge badge-category", text: article.category })
     ])
   ];
@@ -334,21 +332,12 @@ function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
         attrs: {
           src: `${imgPrefix}${article.image}`,
           alt: article.title,
-          loading: "lazy",
+          loading: idx < 3 ? "eager" : "lazy",
           decoding: "async"
         }
       })
     );
-  } else {
-    thumbChildren.push(createCategorySvgNode(article.category));
   }
-
-  thumbChildren.push(
-    createEl("div", {
-      className: "article-thumb-author",
-      text: `Por ${article.author}`
-    })
-  );
 
   const thumbLink = createEl(
     "a",
@@ -363,7 +352,7 @@ function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
   const body = createEl("div", { className: "article-body" }, [
     createEl("div", { className: "article-meta" }, [
       createEl("span", { text: article.date }),
-      createEl("span", { text: "•" }),
+      createEl("span", { text: "·" }),
       createEl("span", { text: article.readTime })
     ]),
     createEl("h3", { className: "article-title" }, [
@@ -371,41 +360,31 @@ function createArticleCardNode(article, basePath = "articulos/", idx = 0) {
     ]),
     createEl("p", { className: "article-excerpt", text: article.excerpt }),
     createEl("a", { className: "article-readmore", attrs: { href: safeHref } }, [
-      createEl("span", { text: "Leer guía paso a paso" }),
-      createEl("span", { className: "arrow-diag", text: "↗" })
+      createEl("span", { text: "Leer más" })
     ])
   ]);
 
   return createEl(
     "article",
-    { className: "article-card reg-cross", dataset: { category: article.category } },
+    { className: "article-card", dataset: { category: article.category } },
     [thumbLink, body]
   );
 }
 
-function createBusinessCardNode(biz, idx = 0) {
+function createBusinessCardNode(biz) {
   const isOfficial = Boolean(biz.verified);
-  const code = isOfficial
-    ? (biz.id ? sanitizeString(biz.id, 24).replace("dir-", "Verificado #") : `Verificado #0${idx + 1}`)
-    : "Postulación Local";
   const badgesWrap = createEl("div", { className: "business-badges" });
 
   if (isOfficial) {
     badgesWrap.appendChild(
-      createEl("span", { className: "badge badge-verified" }, [
-        createEl("span", { className: "led-dot led-green" }),
-        " Trato Amable"
-      ])
+      createEl("span", { className: "badge badge-verified", text: "Recomendado" })
     );
   } else {
     badgesWrap.appendChild(
-      createEl("span", { className: "badge badge-city" }, [
-        createEl("span", { className: "led-dot led-gold" }),
-        " En Revisión"
-      ])
+      createEl("span", { className: "badge badge-city", text: "En revisión" })
     );
   }
-  badgesWrap.appendChild(createEl("span", { className: "badge badge-category", text: biz.category }));
+  badgesWrap.appendChild(createEl("span", { className: "badge badge-city", text: biz.category }));
 
   const highlightsWrap = createEl("div", {
     style: "display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem;"
@@ -415,16 +394,13 @@ function createBusinessCardNode(biz, idx = 0) {
   });
 
   const topBlock = createEl("div", {}, [
-    createEl("div", { className: "business-card-header" }, [
-      createEl("span", { className: "business-code", text: code }),
-      badgesWrap
-    ]),
+    createEl("div", { className: "business-card-header" }, [badgesWrap]),
     createEl("h3", { className: "business-title", text: biz.name }),
     createEl("div", { className: "business-rating" }, [
-      createEl("span", { className: "rating-pill", text: `★ ${Number(biz.rating).toFixed(1)} / 5.0` }),
+      createEl("span", { className: "rating-pill", text: `★ ${Number(biz.rating).toFixed(1)}` }),
       createEl("span", {
         style: "color: var(--ink-muted); font-weight: 500;",
-        text: `(${Number(biz.reviews)} opiniones de familias)`
+        text: `${Number(biz.reviews)} reseñas`
       })
     ]),
     createEl("p", { className: "business-desc", text: biz.description }),
@@ -448,7 +424,7 @@ function createBusinessCardNode(biz, idx = 0) {
       className: "btn btn-primary btn-sm",
       attrs: { href: mapUrl, target: "_blank", rel: "noopener noreferrer" }
     },
-    ["Ver en Mapa ", createEl("span", { className: "arrow-diag", text: "↗" })]
+    ["Ver en el mapa"]
   );
 
   const copyAddrBtn = createEl("button", {
@@ -460,7 +436,7 @@ function createBusinessCardNode(biz, idx = 0) {
     const fullAddr = `${biz.name}, ${biz.address}, ${biz.city}`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(fullAddr).then(() => {
-        window.showToast(`[COPIADO] Dirección guardada en el portapapeles.`);
+        window.showToast("Dirección copiada al portapapeles.");
       });
     } else {
       window.showToast(`Dirección: ${fullAddr}`);
@@ -470,8 +446,8 @@ function createBusinessCardNode(biz, idx = 0) {
   const bottomBlock = createEl("div", {}, [
     createEl("div", { className: "business-meta" }, [
       createEl("span", {}, [
-        createEl("strong", { className: "meta-key", text: "Ubicación:" }),
-        ` ${biz.city} — ${biz.address}`
+        createEl("strong", { className: "meta-key", text: "Ciudad:" }),
+        ` ${biz.city}, ${biz.address}`
       ]),
       createEl("span", {}, [
         createEl("strong", { className: "meta-key", text: "Horario:" }),
@@ -540,14 +516,14 @@ function initBlogPage() {
     });
 
     if (countEl) {
-      countEl.textContent = `Mostrando ${filtered.length} de ${window.PERRITOS_DATA.articles.length} guías prácticas`;
+      countEl.textContent = `${filtered.length} de ${window.PERRITOS_DATA.articles.length} artículos`;
     }
 
     if (filtered.length === 0) {
       const resetBtn = createEl("button", {
         className: "btn btn-outline btn-sm",
         attrs: { type: "button" },
-        text: "Ver todas las guías"
+        text: "Ver todos los artículos"
       });
       resetBtn.addEventListener("click", () => {
         activeCategory = "Todos";
@@ -561,18 +537,13 @@ function initBlogPage() {
         "div",
         {
           style:
-            "grid-column: 1 / -1; text-align:center; padding: 3rem; background: var(--surface-white); border-radius: var(--radius-md); border: 1.5px dashed var(--border-strong);"
+            "grid-column: 1 / -1; text-align:center; padding: 3rem; background: var(--surface-white); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);"
         },
         [
-          createEl("p", {
-            className: "mono-label",
-            style: "color: var(--logo-blue); margin-bottom: 0.5rem;",
-            text: "SIN COINCIDENCIAS"
-          }),
-          createEl("h3", { style: "margin-bottom: 0.5rem;", text: "No encontramos guías con esa búsqueda" }),
+          createEl("h3", { style: "margin-bottom: 0.5rem;", text: "No encontramos artículos con esa búsqueda" }),
           createEl("p", {
             style: "color: var(--ink-secondary); margin-bottom: 1.25rem;",
-            text: "Intenta con otra palabra o vuelve a ver todas las guías disponibles."
+            text: "Prueba con otra palabra o vuelve a ver todos los artículos disponibles."
           }),
           resetBtn
         ]
@@ -685,8 +656,8 @@ function initDirectoryPage() {
     });
 
     if (countEl) {
-      countEl.textContent = `MOSTRANDO ${filtered.length} ${
-        filtered.length === 1 ? "ESPACIO VERIFICADO" : "ESPACIOS VERIFICADOS"
+      countEl.textContent = `${filtered.length} ${
+        filtered.length === 1 ? "lugar encontrado" : "lugares recomendados"
       }`;
     }
 
@@ -695,18 +666,13 @@ function initDirectoryPage() {
         "div",
         {
           style:
-            "grid-column: 1 / -1; text-align:center; padding: 3rem; background: var(--surface-white); border-radius: var(--radius-md); border: 1.5px dashed var(--border-strong);"
+            "grid-column: 1 / -1; text-align:center; padding: 3rem; background: var(--surface-white); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);"
         },
         [
-          createEl("p", {
-            className: "mono-label",
-            style: "color: var(--logo-blue); margin-bottom: 0.5rem;",
-            text: "SIN RESULTADOS"
-          }),
-          createEl("h3", { style: "margin-bottom: 0.5rem;", text: "No encontramos centros con estos filtros" }),
+          createEl("h3", { style: "margin-bottom: 0.5rem;", text: "No encontramos lugares con estos filtros" }),
           createEl("p", {
             style: "color: var(--ink-secondary);",
-            text: "Prueba seleccionando todas las ciudades o limpia tu búsqueda para ver los espacios verificados."
+            text: "Prueba seleccionando todas las ciudades o limpia tu búsqueda para ver la lista completa."
           })
         ]
       );
@@ -822,7 +788,7 @@ function initDirectoryPage() {
       const rawAddress = sanitizeString(formData.get("bizAddress"), 140);
 
       if (!rawName || !rawDesc || !rawAddress || !/^[0-9+\-\s()]{6,24}$/.test(rawPhone)) {
-        window.showToast("[ERROR DE VALIDACIÓN] Verifica los datos y el formato telefónico.");
+        window.showToast("Por favor revisa los datos y escribe un número de teléfono válido.");
         return;
       }
 
@@ -838,7 +804,7 @@ function initDirectoryPage() {
         address: rawAddress,
         phone: rawPhone,
         hours: rawHours || "Lun - Sáb: 9:00 AM a 6:00 PM",
-        highlights: ["Postulación en Revisión", "Pendiente Auditoría"]
+        highlights: ["En revisión"]
       };
 
       const existing = loadValidatedCustomBusinesses();
@@ -849,7 +815,7 @@ function initDirectoryPage() {
       filterAndRenderDirectory();
       registerForm.reset();
       closeRegisterDialog();
-      window.showToast(`[POSTULACIÓN RECIBIDA] ${newBiz.name} guardado en vista previa (En Revisión).`);
+      window.showToast(`Recibimos la solicitud de ${newBiz.name}. La revisaremos pronto.`);
     });
   }
 

@@ -84,13 +84,12 @@
       const mer = merDisplay ? merDisplay.textContent : "";
       const topper = topperDisplay ? topperDisplay.textContent : "";
 
-      const summary = `🐾 Plan Calórico Perritos Felices (Estándar WSAVA & UC Davis)\n` +
+      const summary = `Porción diaria orientativa — Perritos Felices\n` +
         `• Peso: ${weight} kg\n` +
-        `• Condición: ${actText}\n` +
-        `• Requerimiento Basal (RER): ${rer}\n` +
-        `• Calorías Diarias de Mantenimiento (MER): ${mer}\n` +
-        `• Límite Seguro de Toppers Frescos (10%): ${topper}\n` +
-        `* Validado bajo guías WSAVA / FEDIAF. Consulta con tu veterinario para dietas 100% caseras.\n` +
+        `• Etapa y actividad: ${actText}\n` +
+        `• Energía en reposo: ${rer}\n` +
+        `• Calorías diarias estimadas: ${mer}\n` +
+        `• Máximo de premios o fruta fresca al día (10%): ${topper}\n` +
         `https://www.perritosfelices.com/herramientas.html`;
 
       navigator.clipboard.writeText(summary).then(function () {
@@ -530,38 +529,17 @@
       title.textContent = food.name;
       card.appendChild(title);
 
-      // Principio activo
-      const activeP = document.createElement("p");
-      activeP.className = "food-active";
-      const activeLabel = document.createElement("strong");
-      activeLabel.textContent = "Principio / Componente: ";
-      activeP.appendChild(activeLabel);
-      activeP.appendChild(document.createTextNode(food.active));
-      card.appendChild(activeP);
-
-      // Detalle clínico / Beneficio o Riesgo
+      // Explicación clara
       const detailP = document.createElement("p");
       detailP.className = "food-detail";
       detailP.textContent = food.benefit;
       card.appendChild(detailP);
 
-      // Porción recomendada
+      // Cómo ofrecerlo o qué hacer
       const portionP = document.createElement("p");
       portionP.className = "food-portion";
-      const portionLabel = document.createElement("strong");
-      portionLabel.textContent = "Pauta clínica: ";
-      portionP.appendChild(portionLabel);
-      portionP.appendChild(document.createTextNode(food.portion));
+      portionP.textContent = food.portion;
       card.appendChild(portionP);
-
-      // Footer con fuente clínica del Top 10
-      const footer = document.createElement("div");
-      footer.className = "food-card-footer";
-      const srcSpan = document.createElement("span");
-      srcSpan.className = "food-source";
-      srcSpan.textContent = `📚 Fuente: ${food.source}`;
-      footer.appendChild(srcSpan);
-      card.appendChild(footer);
 
       foodGrid.appendChild(card);
     });
@@ -719,18 +697,12 @@
 
       const meaningP = document.createElement("p");
       meaningP.className = "signal-meaning";
-      const meaningLabel = document.createElement("strong");
-      meaningLabel.textContent = "Significado etológico: ";
-      meaningP.appendChild(meaningLabel);
-      meaningP.appendChild(document.createTextNode(item.meaning));
+      meaningP.textContent = item.meaning;
       card.appendChild(meaningP);
 
       const actionP = document.createElement("p");
       actionP.className = "signal-action";
-      const actionLabel = document.createElement("strong");
-      actionLabel.textContent = "Respuesta respetuosa: ";
-      actionP.appendChild(actionLabel);
-      actionP.appendChild(document.createTextNode(item.action));
+      actionP.textContent = item.action;
       card.appendChild(actionP);
 
       signalsContainer.appendChild(card);

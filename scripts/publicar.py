@@ -517,10 +517,6 @@ def render_article_from_template(article: dict, template_str: str) -> str:
         hero_media_html = (
             f'        <figure class="article-hero-media">\n'
             f'          <img src="../{img_rel}" alt="{esc(article["title"])}" class="article-hero-img" width="1200" height="675" fetchpriority="high" decoding="async" />\n'
-            f'          <figcaption class="article-hero-caption">\n'
-            f'            <span>FOTOGRAFÍA DOCUMENTAL PERRITOS FELICES // CRIANZA RESPETUOSA</span>\n'
-            f'            <span>ESTÁNDAR FEAR-FREE</span>\n'
-            f'          </figcaption>\n'
             f'        </figure>'
         )
         og_image_url = f"https://www.perritosfelices.com/{img_rel}"
@@ -528,50 +524,41 @@ def render_article_from_template(article: dict, template_str: str) -> str:
         hero_media_html = ""
         og_image_url = "https://www.perritosfelices.com/assets/logo/icononly_transparent_nobuffer.png"
 
-    # 2. Caja TL;DR Oficial PF-2027 (Escaneabilidad de 30 segundos)
-    if "tldr-box" not in body_html:
-        tldr_text = esc(article.get("subtitle") or article["excerpt"])
-        tldr_box_html = (
-            f'        <div class="tldr-box">\n'
-            f'          <strong>⚡ En 30 segundos: Lo que debes saber</strong>\n'
-            f'          <p>{tldr_text}</p>\n'
-            f'        </div>'
-        )
-    else:
-        tldr_box_html = ""
+    # 2. Sin cajas artificiales de resumen (el subtítulo ya introduce la lectura con naturalidad)
+    tldr_box_html = ""
 
-    # 3. Recomendación Ética Cruzada (Blog -> Directorio Canino)
+    # 3. Recomendación Cruzada hacia lugares recomendados
     if "ethical-recommendation-box" not in body_html:
         if cat in ("Comportamiento", "Educación y Entrenamiento"):
             ethical_cta_html = (
                 '        <div class="ethical-recommendation-box">\n'
-                '          <h4>¿Buscas apoyo profesional y respetuoso para tu perro?</h4>\n'
-                '          <p>Encuentra educadores caninos, etólogos y guarderías 100% libres de castigo en tu ciudad dentro de nuestro Directorio Canino Verificado.</p>\n'
-                '          <a href="../directorio.html?categoria=Entrenamiento%20y%20Etolog%C3%ADa" class="btn btn-primary btn-sm">EXPLORAR ESPECIALISTAS EN ETOLOGÍA ↗</a>\n'
+                '          <h4>¿Buscas apoyo profesional para tu perro?</h4>\n'
+                '          <p>Consulta educadores caninos, etólogos y guarderías sin jaulas en tu ciudad dentro de nuestro directorio.</p>\n'
+                '          <a href="../directorio.html?categoria=Entrenamiento%20y%20Etolog%C3%ADa" class="btn btn-primary btn-sm">Ver educadores y etólogos</a>\n'
                 '        </div>'
             )
         elif cat == "Nutrición":
             ethical_cta_html = (
                 '        <div class="ethical-recommendation-box">\n'
-                '          <h4>¿Quieres asesoría en nutrición natural o dietas caseras?</h4>\n'
-                '          <p>Encuentra veterinarias integrativas y tiendas con insumos frescos certificados en nuestro Directorio Canino.</p>\n'
-                '          <a href="../directorio.html?categoria=Nutrici%C3%B3n%20y%20Tienda" class="btn btn-primary btn-sm">BUSCAR TIENDAS Y NUTRICIONISTAS ↗</a>\n'
+                '          <h4>¿Quieres orientación sobre alimentación para tu perro?</h4>\n'
+                '          <p>Conoce veterinarias y tiendas especializadas en nutrición canina dentro de nuestro directorio.</p>\n'
+                '          <a href="../directorio.html?categoria=Nutrici%C3%B3n%20y%20Tienda" class="btn btn-primary btn-sm">Ver tiendas y nutricionistas</a>\n'
                 '        </div>'
             )
         elif cat in ("Salud y Prevención", "Higiene y Cuidado"):
             ethical_cta_html = (
                 '        <div class="ethical-recommendation-box">\n'
-                '          <h4>Clínicas veterinarias y estéticas con manejo amable</h4>\n'
-                '          <p>Espacios con protocolos de bajo estrés, sin jaulas de espera y con trato cálido hacia tu familia.</p>\n'
-                '          <a href="../directorio.html?categoria=Veterinaria%20y%20Salud" class="btn btn-primary btn-sm">LOCALIZAR VETERINARIAS VERIFICADAS ↗</a>\n'
+                '          <h4>Veterinarias y estéticas con trato paciente</h4>\n'
+                '          <p>Encuentra clínicas y peluquerías caninas que atienden sin prisa y sin jaulas de espera.</p>\n'
+                '          <a href="../directorio.html?categoria=Veterinaria%20y%20Salud" class="btn btn-primary btn-sm">Ver veterinarias recomendadas</a>\n'
                 '        </div>'
             )
         else:
             ethical_cta_html = (
                 '        <div class="ethical-recommendation-box">\n'
-                '          <h4>Hoteles campestres, parques y espacios Pet-Friendly</h4>\n'
-                '          <p>Disfruta de paseos y descanso con tu perro en lugares seguros y verificados bajo trato amable.</p>\n'
-                '          <a href="../directorio.html?categoria=Guarder%C3%ADa%20y%20Hotel" class="btn btn-primary btn-sm">VER HOTELES Y GUARDERÍAS ↗</a>\n'
+                '          <h4>Hoteles, parques y cafés para ir con tu perro</h4>\n'
+                '          <p>Descubre lugares seguros y tranquilos para pasear o descansar con tu perro.</p>\n'
+                '          <a href="../directorio.html?categoria=Guarder%C3%ADa%20y%20Hotel" class="btn btn-primary btn-sm">Ver hoteles y guarderías</a>\n'
                 '        </div>'
             )
     else:

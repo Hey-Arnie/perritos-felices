@@ -9,8 +9,8 @@ window.PERRITOS_DATA = {
     {
       "id": "cal-03",
       "slug": "snacks-hidratantes-caseros-perros.html",
-      "title": "Snacks Hidratantes y Helados Caseros para Perros: La Cápsula Visual de Nutrición Segura",
-      "excerpt": "Aprende a preparar helados y premios refrescantes para tu perro con ingredientes seguros: semáforo nutricional, regla del 10% WSAVA y recetas listas en 3 pasos.",
+      "title": "Snacks hidratantes y helados caseros para perros: qué congelar y cómo ofrecerlos",
+      "excerpt": "Aprende a preparar premios fríos y refrescantes para tu perro en casa con frutas seguras, caldo natural y porciones adecuadas para su peso.",
       "category": "Nutrición",
       "readTime": "4 min de lectura",
       "date": "07 Nov 2026",
@@ -1945,31 +1945,21 @@ window.PERRITOS_DATA = {
     }
   ],
   "marketing": {
-    "topbarRight": "EDICIÓN ABIERTA — DIRECTORIO ÉTICO & BIBLIOTECA CANINA [WWW.PERRITOSFELICES.COM]",
-    "heroTag": "COMUNIDAD DE BIENESTAR CANINO",
-    "heroCoords": "GUÍAS VETERINARIAS // CIENCIA AMABLE & RESPETO",
-    "heroTitleMain": "Ciencia, empatía y calma para criar a un",
-    "heroTitleHighlight": "perrito feliz.",
-    "heroDescription": "Acompañamos a familias tutoras con guías prácticas de etología clínica y nutrición natural sin mitos ni castigos. Descubre herramientas de cálculo calórico, cuidados preventivos y nuestra red ética de veterinarias y guarderías verificadas.",
-    "heroBtnPrimary": "EXPLORAR LAS 14 GUÍAS CLÍNICAS",
-    "heroBtnSecondary": "BUSCAR EN EL DIRECTORIO",
-    "stat1Number": "14 Guías",
-    "stat1Label": "Nutrición natural, etología, vacunas y primeros auxilios",
-    "stat2Number": "0% Castigos",
-    "stat2Label": "Espacios revisados libres de jaulas y collares de ahogo",
-    "stat3Number": "12,500+",
-    "stat3Label": "Familias cuidando mejor la salud física y emocional de su perro",
-    "tickerItems": [
-      "EDUCACIÓN AMABLE EN POSITIVO",
-      "NUTRICIÓN NATURAL Y SEGURA WSAVA",
-      "DIRECTORIO LIBRE DE JAULAS",
-      "SALUD PREVENTIVA BASADA EN EVIDENCIA"
-    ],
-    "newsletterTitle": "Ladridos que inspiran, directo en tu bandeja cada martes.",
-    "newsletterDescription": "Una sola lectura semanal de 3 minutos: recetas de snacks naturales, etología explicada con empatía y nuevos centros verificados en tu ciudad. Cero spam.",
-    "newsletterBtn": "RECIBIR GUÍA SEMANAL",
-    "ctaBoxTag": "CONVOCATORIA ABIERTA",
-    "ctaBoxTitle": "¿Diriges un proyecto canino ético?",
-    "ctaBoxDesc": "Si eres veterinario Fear Free, etólogo en positivo, estética sin estrés o guardería campestre, postula tu espacio sin costo."
+    "heroTitleMain": "Cuidar bien a tu perro empieza por",
+    "heroTitleHighlight": "entenderlo cada día.",
+    "heroDescription": "Artículos claros sobre alimentación, salud, paseos y convivencia en casa, junto con una guía práctica de alimentos seguros y lugares de confianza donde lo reciben sin jaulas.",
+    "heroBtnPrimary": "Leer artículos",
+    "heroBtnSecondary": "Consultar alimentos",
+    "stat1Number": "15 lecturas",
+    "stat1Label": "Sobre comida casera, paseos, vacunas, cachorros y perros mayores",
+    "stat2Number": "36 ingredientes",
+    "stat2Label": "Para revisar en segundos qué frutas, verduras o carnes puede comer",
+    "stat3Number": "90 lugares",
+    "stat3Label": "Veterinarias, guarderías, parques y estéticas con trato paciente",
+    "newsletterTitle": "Un correo cada martes para cuidar mejor a tu perro",
+    "newsletterDescription": "Compartimos lecturas nuevas, ideas de premios frescos para hacer en casa y lugares recomendados para visitar con tu perro.",
+    "newsletterBtn": "Suscribirme al boletín",
+    "ctaBoxTitle": "¿Tienes una veterinaria, guardería o estética sin jaulas?",
+    "ctaBoxDesc": "Si trabajas con paciencia, sin castigos y cuidando la tranquilidad de cada perro, súmate sin costo a nuestro directorio."
   }
 };
