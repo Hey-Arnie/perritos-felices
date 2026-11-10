@@ -442,6 +442,16 @@ def install_all():
     print("=" * 72)
 
 
+def find_skill_dir(sname: str, rel_path: str) -> Path:
+    """Busca la skill primero en los plugins globales (~/.gemini/config/plugins) y luego en .agent/skills/."""
+    for plugin_id, cfg in GLOBAL_PLUGIN_BUNDLES.items():
+        if sname in cfg["skills"]:
+            gdir = GLOBAL_PLUGINS_DIR / plugin_id / "skills" / sname
+            if gdir.exists():
+                return gdir
+    return ROOT_DIR / rel_path
+
+
 def verify_lock() -> bool:
     if not LOCK_FILE.exists():
         print("❌ No existe skills_lock.json")
@@ -452,7 +462,7 @@ def verify_lock() -> bool:
     print(f"✔ Repositorios upstream verificados e intactos: {len(ok_repos)}/{len(repos)}")
     all_intact = True
     for sname, sinfo in data.get("installed_skills", {}).items():
-        sdir = ROOT_DIR / sinfo["path"]
+        sdir = find_skill_dir(sname, sinfo["path"])
         smd = sdir / "SKILL.md"
         if not smd.exists():
             smd = sdir / "skill.md"
@@ -460,9 +470,36 @@ def verify_lock() -> bool:
         match = actual_hash == sinfo["skill_md_sha256"]
         if not match:
             all_intact = False
-        status = "INTACT (100% ORIGINAL)" if match else "MODIFIED/ERROR"
+        loc = "GLOBAL-PLUGIN" if str(sdir).startswith(str(GLOBAL_PLUGINS_DIR)) else "WORKSPACE"
+        status = f"INTACT ({loc})" if match else "MODIFIED/ERROR"
         print(f"  • {sname} ({sinfo.get('lines', 0)} líneas): {status} [{actual_hash[:12]}]")
     return all_intact
+
+
+def prune_local_duplicates():
+    """Elimina las 53 copias duplicadas en .agent/skills/ una vez verificadas en ~/.gemini/config/plugins/."""
+    print("=" * 72)
+    print(" 🧹 PODA DE DUPLICADOS LOCALES EN .agent/skills/ (OPTIMIZACIÓN DE TOKENS)")
+    print("=" * 72)
+    if not verify_lock():
+        print("❌ Abortando poda: verifica primero que los 3 plugins globales estén íntegros.")
+        sys.exit(1)
+
+    removed = 0
+    for plugin_id, cfg in GLOBAL_PLUGIN_BUNDLES.items():
+        for sname in cfg["skills"]:
+            global_skill = GLOBAL_PLUGINS_DIR / plugin_id / "skills" / sname
+            local_skill = AGENT_SKILLS_DIR / sname
+            if global_skill.exists() and local_skill.exists():
+                shutil.rmtree(local_skill)
+                removed += 1
+    # Limpiar staging temporal si existe
+    tmp_stage = Path("/tmp/pf_global_plugins")
+    if tmp_stage.exists():
+        shutil.rmtree(tmp_stage, ignore_errors=True)
+    print(f"\n✔ {removed} skills duplicadas eliminadas de .agent/skills/")
+    remaining = sorted([p.name for p in AGENT_SKILLS_DIR.iterdir() if p.is_dir()])
+    print(f"✔ Directorios activos en .agent/skills/: {', '.join(remaining)}")
 
 
 GLOBAL_PLUGINS_DIR = Path.home() / ".gemini" / "config" / "plugins"
@@ -662,8 +699,15 @@ def main():
         action="store_true",
         help="Exporta las 53 skills originales verificadas a 3 plugins globales en ~/.gemini/config/plugins/",
     )
+    parser.add_argument(
+        "--prune-local-duplicates",
+        action="store_true",
+        help="Elimina las 53 copias duplicadas en .agent/skills/ una vez verificadas en ~/.gemini/config/plugins/",
+    )
     args = parser.parse_args()
-    if args.export_global_plugins:
+    if args.prune_local_duplicates:
+        prune_local_duplicates()
+    elif args.export_global_plugins:
         export_global_plugins()
     elif args.verify:
         verify_lock()
