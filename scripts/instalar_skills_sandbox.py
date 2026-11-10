@@ -442,7 +442,7 @@ def install_all():
     print("=" * 72)
 
 
-def verify_lock():
+def verify_lock() -> bool:
     if not LOCK_FILE.exists():
         print("❌ No existe skills_lock.json")
         sys.exit(1)
@@ -450,6 +450,7 @@ def verify_lock():
     repos = data.get("repositories", {})
     ok_repos = [k for k, v in repos.items() if v.get("status") == "INSTALLED_UNMODIFIED"]
     print(f"✔ Repositorios upstream verificados e intactos: {len(ok_repos)}/{len(repos)}")
+    all_intact = True
     for sname, sinfo in data.get("installed_skills", {}).items():
         sdir = ROOT_DIR / sinfo["path"]
         smd = sdir / "SKILL.md"
@@ -457,15 +458,214 @@ def verify_lock():
             smd = sdir / "skill.md"
         actual_hash = sha256_file(smd) if smd.exists() else "MISSING"
         match = actual_hash == sinfo["skill_md_sha256"]
+        if not match:
+            all_intact = False
         status = "INTACT (100% ORIGINAL)" if match else "MODIFIED/ERROR"
         print(f"  • {sname} ({sinfo.get('lines', 0)} líneas): {status} [{actual_hash[:12]}]")
+    return all_intact
+
+
+GLOBAL_PLUGINS_DIR = Path.home() / ".gemini" / "config" / "plugins"
+
+GLOBAL_PLUGIN_BUNDLES = {
+    "design-and-motion": {
+        "displayName": "Design, UI/UX & Motion Suite",
+        "description": "Anti-slop frontend design, design systems, wireframing hierarchy, and 60fps interaction physics (Taste-Skill, Impeccable, UI/UX Pro Max, Emil Kowalski, Wireframe).",
+        "color": "#2C4BCA",
+        "accent": "#FDB54A",
+        "icon_path": "M12 3L4 9v12h16V9l-8-6zm0 4.5l4.5 3.38V18h-9v-7.12L12 7.5z",
+        "suggestedPrompts": [
+            "Audit and redesign this page using design-taste-frontend and impeccable",
+            "Review the animations and interaction physics using emil-design-eng and animate",
+            "Create a wireframe structure and token system before building the UI"
+        ],
+        "skills": [
+            "design-taste-frontend",
+            "frontend-design",
+            "impeccable",
+            "web-design-guidelines",
+            "web-artifacts-builder",
+            "canvas-design",
+            "ui-ux-pro-max",
+            "ui-styling",
+            "design-system",
+            "tailwind-design-system",
+            "banner-design",
+            "brand",
+            "emil-design-eng",
+            "animate",
+            "animation-performance",
+            "find-animation-opportunities",
+            "improve-animations",
+            "remove-animations",
+            "wireframe",
+            "wireframe-principles",
+            "wireframe-fundamentals",
+            "wireframe-elements",
+            "wireframe-ideation",
+            "wireframe-feedback",
+            "wireframe-collaboration",
+            "wireframe-handoff",
+        ],
+    },
+    "editorial-and-social": {
+        "displayName": "Human Writing & Social Media Studio",
+        "description": "Zero-AI human writing filter (Humanizer), editorial prototypes (Huashu), LinkedIn/Instagram carousels, infographics, hooks, and Reels scripting.",
+        "color": "#10152B",
+        "accent": "#FDB54A",
+        "icon_path": "M4 5h16v2H4V5zm0 4h12v2H4V9zm0 4h16v2H4v-2zm0 4h10v2H4v-2z",
+        "suggestedPrompts": [
+            "Rewrite this copy using humanizer and writing-guidelines so it sounds 100% human",
+            "Build a 4:5 carousel brief and graphic direction using gemini-carousel and huashu-design",
+            "Generate 6 opening hooks and format this note as a social post"
+        ],
+        "skills": [
+            "humanizer",
+            "writing-guidelines",
+            "voice-builder",
+            "huashu-design",
+            "graphic-designer",
+            "gemini-carousel",
+            "gemini-infographic",
+            "quote-post",
+            "post-writer",
+            "post-formatter",
+            "post-scorer",
+            "hook-generator",
+            "content-matrix",
+            "reels-scripting",
+        ],
+    },
+    "engineering-superpowers": {
+        "displayName": "Engineering, Architecture & REA Superpowers",
+        "description": "Structured planning, verification before completion (Obra Superpowers), React/Next.js performance (Vercel Labs), Remotion programmatic video, and Reverse Engineering (REA).",
+        "color": "#1E293B",
+        "accent": "#38BDF8",
+        "icon_path": "M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z",
+        "suggestedPrompts": [
+            "Brainstorm and write an implementation plan using brainstorming and writing-plans",
+            "Audit React and Next.js performance using vercel-react-best-practices and composition-patterns",
+            "Design a programmatic video composition using remotion-best-practices"
+        ],
+        "skills": [
+            "using-superpowers",
+            "brainstorming",
+            "writing-plans",
+            "executing-plans",
+            "verification-before-completion",
+            "find-skills",
+            "vercel-react-best-practices",
+            "composition-patterns",
+            "vercel-optimize",
+            "remotion-best-practices",
+            "reverse-engineer-anything",
+            "rea-tool-design",
+            "rea-analysis-optimization",
+        ],
+    },
+}
+
+
+def export_global_plugins(target_root: Path | None = None):
+    print("=" * 72)
+    print(" 🌐 EXPORTACIÓN DE SKILLS ORIGINALES A PLUGINS GLOBALES ANTIGRAVITY")
+    print("=" * 72)
+    if not verify_lock():
+        print("❌ Abortando exportación: una o más skills no coinciden con skills_lock.json")
+        sys.exit(1)
+
+    plugins_root = target_root if target_root else GLOBAL_PLUGINS_DIR
+    staged_in_tmp = False
+    try:
+        plugins_root.mkdir(parents=True, exist_ok=True)
+        probe = plugins_root / ".pf_write_probe"
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink()
+    except PermissionError:
+        plugins_root = Path("/tmp/pf_global_plugins")
+        if plugins_root.exists():
+            shutil.rmtree(plugins_root)
+        plugins_root.mkdir(parents=True, exist_ok=True)
+        staged_in_tmp = True
+        print(
+            "\nℹ️  Sandbox activo (escritura fuera del workspace protegida)."
+            f"\n   Generando los 3 paquetes completos en staging: {plugins_root}"
+        )
+
+    for plugin_id, cfg in GLOBAL_PLUGIN_BUNDLES.items():
+        pdir = plugins_root / plugin_id
+        if pdir.exists():
+            shutil.rmtree(pdir)
+        skills_dst = pdir / "skills"
+        assets_dst = pdir / "assets"
+        skills_dst.mkdir(parents=True, exist_ok=True)
+        assets_dst.mkdir(parents=True, exist_ok=True)
+
+        # Generar logo SVG limpio con margen de 10%
+        svg_logo = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect x="12" y="12" width="104" height="104" rx="24" fill="{cfg['color']}" />
+  <circle cx="96" cy="32" r="10" fill="{cfg['accent']}" />
+  <g transform="translate(28, 28) scale(3)">
+    <path d="{cfg['icon_path']}" fill="#FFFFFF" />
+  </g>
+</svg>
+"""
+        (assets_dst / "logo.svg").write_text(svg_logo, encoding="utf-8")
+
+        manifest = {
+            "name": plugin_id,
+            "displayName": cfg["displayName"],
+            "description": cfg["description"],
+            "logo": "assets/logo.svg",
+            "version": "1.0.0",
+            "suggestedPrompts": cfg["suggestedPrompts"],
+        }
+        (pdir / "plugin.json").write_text(
+            json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+
+        copied_count = 0
+        skill_bullets = []
+        for sname in cfg["skills"]:
+            src_skill = AGENT_SKILLS_DIR / sname
+            if not src_skill.exists():
+                print(f"  ⚠️ Skill no encontrada en .agent/skills/: {sname}")
+                continue
+            copy_clean_tree(src_skill, skills_dst / sname)
+            copied_count += 1
+            skill_bullets.append(f"- `{sname}`")
+
+        readme_md = (
+            f"# {cfg['displayName']} (`{plugin_id}`)\n\n"
+            f"{cfg['description']}\n\n"
+            f"## Skills Incluidas ({copied_count})\n\n"
+            + "\n".join(skill_bullets)
+            + "\n"
+        )
+        (pdir / "README.md").write_text(readme_md, encoding="utf-8")
+        print(f"\n✔ Plugin global [{plugin_id}] empaquetado en {pdir} ({copied_count} skills intactas)")
+
+    if staged_in_tmp:
+        print("\n" + "=" * 72)
+        print(" 🚀 LISTO PARA INSTALAR EN ~/.gemini/config/plugins/")
+        print(" Ejecuta en tu terminal de macOS:")
+        print(" cp -R /tmp/pf_global_plugins/* ~/.gemini/config/plugins/")
+        print("=" * 72)
 
 
 def main():
     parser = argparse.ArgumentParser(description="Instalador en Sandbox de Skills Originales")
     parser.add_argument("--verify", action="store_true", help="Verifica los hashes SHA-256 de las skills instaladas")
+    parser.add_argument(
+        "--export-global-plugins",
+        action="store_true",
+        help="Exporta las 53 skills originales verificadas a 3 plugins globales en ~/.gemini/config/plugins/",
+    )
     args = parser.parse_args()
-    if args.verify:
+    if args.export_global_plugins:
+        export_global_plugins()
+    elif args.verify:
         verify_lock()
     else:
         install_all()
