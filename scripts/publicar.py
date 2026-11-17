@@ -926,7 +926,8 @@ def cmd_build() -> int:
 
     robots_txt = (
         "User-agent: *\n"
-        "Allow: /\n\n"
+        "Allow: /\n"
+        "Disallow: /_social_staging/\n\n"
         "Sitemap: https://www.perritosfelices.com/sitemap.xml\n"
     )
     ROBOTS_PATH.write_text(robots_txt, encoding="utf-8")

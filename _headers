@@ -9,3 +9,8 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), vr=(), interest-cohort=(), focus-without-user-activation=()
   Cross-Origin-Opener-Policy: same-origin-allow-popups
   Cross-Origin-Resource-Policy: same-origin
+
+/_social_staging/*
+  X-Robots-Tag: noindex, nofollow, noimageindex, noarchive
+  Cross-Origin-Resource-Policy: cross-origin
+  Cache-Control: no-store, max-age=0
