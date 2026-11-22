@@ -334,6 +334,203 @@ def cmd_verify_tiktok(args: argparse.Namespace) -> int:
     return 0
 
 
+TIKTOK_API_BASE = "https://open.tiktokapis.com/v2"
+TIKTOK_TOKEN_SERVICE = "TIKTOK_USER_ACCESS_TOKEN"
+
+
+def load_tiktok_config() -> tuple[str, str, str]:
+    if not CONNECTIONS_FILE.exists():
+        raise RuntimeError(f"No se encontró {CONNECTIONS_FILE}")
+    data = json.loads(CONNECTIONS_FILE.read_text(encoding="utf-8"))
+    tt = data.get("tikTokApi", {})
+    client_key = tt.get("clientKey")
+    service = tt.get("keychainService", "TIKTOK_SANDBOX_CLIENT_SECRET")
+    redirect_uri = tt.get("redirectUri", "https://www.perritosfelices.com/auth/tiktok/callback")
+    if not client_key:
+        raise RuntimeError("Falta clientKey en studio_connections.json")
+    client_secret = get_keychain_token(service)
+    return client_key, client_secret, redirect_uri
+
+
+def cmd_tiktok_auth_url(args: argparse.Namespace) -> int:
+    client_key, _, redirect_uri = load_tiktok_config()
+    scope = "user.info.basic,video.upload,video.publish"
+    params = {
+        "client_key": client_key,
+        "scope": scope,
+        "response_type": "code",
+        "redirect_uri": redirect_uri,
+        "state": "pf_tiktok_state",
+    }
+    url = f"https://www.tiktok.com/v2/auth/authorize/?{urllib.parse.urlencode(params)}"
+    print(f"🔗 Abre esta URL en tu navegador para autorizar la publicación:")
+    print(f"\n{url}\n")
+    print("Después de autorizar, copia el valor del parámetro 'code' de la URL a la que te redirija.")
+    print("Y ejecútalo así:")
+    print("  python3 01_Infraestructura_Web/scripts/social_publisher.py tiktok-exchange-code --code TU_CODIGO")
+    return 0
+
+
+def cmd_tiktok_exchange_code(args: argparse.Namespace) -> int:
+    client_key, client_secret, redirect_uri = load_tiktok_config()
+    url = f"{TIKTOK_API_BASE}/oauth/token/"
+    data = urllib.parse.urlencode({
+        "client_key": client_key,
+        "client_secret": client_secret,
+        "code": args.code,
+        "grant_type": "authorization_code",
+        "redirect_uri": redirect_uri,
+    }).encode("utf-8")
+
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded", "Cache-Control": "no-cache"},
+        method="POST"
+    )
+
+    try:
+        with urllib.request.urlopen(req) as response:
+            res_data = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as err:
+        body = err.read().decode("utf-8")
+        raise RuntimeError(f"Error al canjear código TikTok ({err.code}): {body}")
+
+    access_token = res_data.get("access_token")
+    if not access_token:
+        error_msg = res_data.get("error_description") or res_data.get("message") or str(res_data)
+        raise RuntimeError(f"TikTok no devolvió access_token: {error_msg}")
+
+    # Guardar access token en Keychain
+    cmd = [
+        "security", "add-generic-password",
+        "-a", KEYCHAIN_ACCOUNT,
+        "-s", TIKTOK_TOKEN_SERVICE,
+        "-w", access_token,
+        "-U"
+    ]
+    subprocess.run(cmd, check=True)
+    print(f"✔ Access token de TikTok guardado exitosamente en el Llavero ({TIKTOK_TOKEN_SERVICE}).")
+    print(f"  • Expira en : {res_data.get('expires_in', 86400)} segundos")
+    print(f"  • Open ID   : {res_data.get('open_id')}")
+    return 0
+
+
+def cmd_publish_tiktok(args: argparse.Namespace) -> int:
+    client_key, _, _ = load_tiktok_config()
+    token = get_keychain_token(TIKTOK_TOKEN_SERVICE)
+    if not token:
+        raise RuntimeError(
+            f"No se encontró {TIKTOK_TOKEN_SERVICE} en Keychain. Genera uno con:\n"
+            "  python3 01_Infraestructura_Web/scripts/social_publisher.py tiktok-auth-url"
+        )
+
+    title = args.title[:150]
+    local_path = None
+    if getattr(args, "video_file", None):
+        local_path = Path(args.video_file).resolve()
+    elif getattr(args, "video_url", None) and "_social_staging" in args.video_url:
+        filename = args.video_url.split("/")[-1]
+        candidate = STAGING_DIR / filename
+        if candidate.exists():
+            local_path = candidate
+
+    print(f"🚀 Iniciando publicación en TikTok Sandbox...")
+    print(f"  • Modo     : {'FILE_UPLOAD (Directo)' if local_path else 'PULL_FROM_URL'}")
+    print(f"  • Título   : {title}")
+
+    if args.dry_run:
+        print("🔎 [DRY-RUN] Simulación completa. Video listo para publicarse.")
+        return 0
+
+    init_url = f"{TIKTOK_API_BASE}/post/publish/video/init/"
+    
+    if local_path and local_path.exists():
+        video_size = local_path.stat().st_size
+        payload = json.dumps({
+            "post_info": {
+                "title": title,
+                "privacy_level": "SELF_ONLY",
+                "disable_duet": False,
+                "disable_stitch": False,
+                "disable_comment": False,
+                "video_cover_timestamp_ms": 1000
+            },
+            "source_info": {
+                "source": "FILE_UPLOAD",
+                "video_size": video_size,
+                "chunk_size": video_size,
+                "total_chunk_count": 1
+            }
+        }).encode("utf-8")
+    else:
+        video_url = args.video_url
+        payload = json.dumps({
+            "post_info": {
+                "title": title,
+                "privacy_level": "SELF_ONLY",
+                "disable_duet": False,
+                "disable_stitch": False,
+                "disable_comment": False,
+                "video_cover_timestamp_ms": 1000
+            },
+            "source_info": {
+                "source": "PULL_FROM_URL",
+                "video_url": video_url
+            }
+        }).encode("utf-8")
+
+    req = urllib.request.Request(
+        init_url,
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json; charset=UTF-8"
+        },
+        method="POST"
+    )
+
+    try:
+        with urllib.request.urlopen(req) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as err:
+        body = err.read().decode("utf-8")
+        raise RuntimeError(f"Error TikTok init ({err.code}): {body}")
+
+    error_info = data.get("error", {})
+    if error_info.get("code") != "ok":
+        raise RuntimeError(f"TikTok error: {error_info}")
+
+    publish_id = data.get("data", {}).get("publish_id")
+    upload_url = data.get("data", {}).get("upload_url")
+
+    if upload_url and local_path and local_path.exists():
+        print(f"📤 Subiendo video directamente a los servidores de TikTok ({video_size} bytes)...")
+        with open(local_path, "rb") as vf:
+            video_bytes = vf.read()
+        
+        upload_req = urllib.request.Request(
+            upload_url,
+            data=video_bytes,
+            headers={
+                "Content-Type": "video/mp4",
+                "Content-Range": f"bytes 0-{video_size - 1}/{video_size}",
+                "Content-Length": str(video_size)
+            },
+            method="PUT"
+        )
+        try:
+            with urllib.request.urlopen(upload_req) as up_resp:
+                pass
+        except urllib.error.HTTPError as up_err:
+            up_body = up_err.read().decode("utf-8")
+            raise RuntimeError(f"Error al subir video a TikTok ({up_err.code}): {up_body}")
+        print(f"✔ Video subido con éxito.")
+
+    print(f"✔ Publicación completada en TikTok exitosamente. Publish ID: {publish_id}")
+    return 0
+
+
 def cmd_clean(args: argparse.Namespace) -> int:
     if not STAGING_DIR.exists():
         print("ℹ No existe carpeta _social_staging.")
@@ -357,6 +554,16 @@ def main() -> int:
 
     sub.add_parser("verify", help="Verifica token en Keychain y conexión con Instagram Graph API")
     sub.add_parser("verify-tiktok", help="Verifica configuración y credenciales de TikTok Sandbox")
+    sub.add_parser("tiktok-auth-url", help="Genera la URL de autorización OAuth de TikTok")
+
+    p_exch = sub.add_parser("tiktok-exchange-code", help="Canjea el código de autorización por access token")
+    p_exch.add_argument("--code", required=True, help="Código de autorización devuelto en el redirect")
+
+    p_tt_pub = sub.add_parser("publish-tiktok", help="Publica video 9:16 en TikTok vía Content Posting API")
+    p_tt_pub.add_argument("--video-url", help="URL pública HTTPS del video MP4")
+    p_tt_pub.add_argument("--video-file", help="Ruta local al archivo MP4")
+    p_tt_pub.add_argument("--title", required=True, help="Título del post en TikTok")
+    p_tt_pub.add_argument("--dry-run", action="store_true", help="Simula la petición sin publicar")
 
     p_stage = sub.add_parser("stage", help="Convierte SVG/imagen a JPG 1080x1350 en _social_staging")
     p_stage.add_argument("source", help="Ruta al archivo SVG, PNG o JPG")
@@ -377,6 +584,12 @@ def main() -> int:
             return cmd_verify(args)
         if args.command == "verify-tiktok":
             return cmd_verify_tiktok(args)
+        if args.command == "tiktok-auth-url":
+            return cmd_tiktok_auth_url(args)
+        if args.command == "tiktok-exchange-code":
+            return cmd_tiktok_exchange_code(args)
+        if args.command == "publish-tiktok":
+            return cmd_publish_tiktok(args)
         if args.command == "stage":
             return cmd_stage(args)
         if args.command == "publish-ig":
