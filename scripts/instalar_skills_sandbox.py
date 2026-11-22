@@ -443,7 +443,10 @@ def install_all():
 
 
 def find_skill_dir(sname: str, rel_path: str) -> Path:
-    """Busca la skill primero en los plugins globales (~/.gemini/config/plugins) y luego en .agent/skills/."""
+    """Busca la skill prioritariamente en .agent/skills/ (workspace local) y como respaldo en plugins globales."""
+    local_dir = AGENT_SKILLS_DIR / sname
+    if local_dir.exists():
+        return local_dir
     for plugin_id, cfg in GLOBAL_PLUGIN_BUNDLES.items():
         if sname in cfg["skills"]:
             gdir = GLOBAL_PLUGINS_DIR / plugin_id / "skills" / sname

@@ -354,6 +354,31 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             self._serve_file(STUDIO_DIR, "index.html")
             return
 
+        if path.startswith("/03_Assets_Visuales/"):
+            rel = path[len("/03_Assets_Visuales/"):]
+            target = (pub.ROOT_DIR / "03_Assets_Visuales" / rel).resolve()
+            if target.is_relative_to((pub.ROOT_DIR / "03_Assets_Visuales").resolve()) and target.is_file():
+                self._serve_file(pub.ROOT_DIR / "03_Assets_Visuales", rel)
+                return
+            self.send_error(404, "Asset visual no encontrado")
+            return
+
+        if path.startswith("/05_Studio_Privado/assets/"):
+            rel = path[len("/05_Studio_Privado/assets/"):]
+            target = (STUDIO_DIR / "assets" / rel).resolve()
+            if target.is_relative_to((STUDIO_DIR / "assets").resolve()) and target.is_file():
+                self._serve_file(STUDIO_DIR / "assets", rel)
+                return
+
+        if path.startswith("/_social_staging/"):
+            rel = path[len("/_social_staging/"):]
+            target = (pub.WEB_DIR / "_social_staging" / rel).resolve()
+            if target.is_relative_to((pub.WEB_DIR / "_social_staging").resolve()) and target.is_file():
+                self._serve_file(pub.WEB_DIR / "_social_staging", rel)
+                return
+            self.send_error(404, "Contenido social no encontrado")
+            return
+
         if path.startswith("/assets/"):
             candidate_studio_asset = (STUDIO_DIR / path.lstrip("/")).resolve()
             if candidate_studio_asset.is_relative_to(STUDIO_DIR.resolve()) and candidate_studio_asset.is_file():
@@ -406,13 +431,166 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             if path == "/api/aprobaciones/guardar":
                 aprob_file = STUDIO_DIR / "aprobaciones_state.json"
                 items = body.get("items", [])
+                avisos = body.get("avisos", [])
+                cur_data = {}
+                if aprob_file.exists():
+                    try:
+                        cur_data = json.loads(aprob_file.read_text(encoding="utf-8"))
+                    except Exception:
+                        pass
                 aprob_data = {
-                    "version": "1.0",
+                    "version": "3.0",
+                    "portal_codigo": cur_data.get("portal_codigo", "PF-STUDIO-2027"),
                     "last_updated": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    "allowed_telegram_users": cur_data.get("allowed_telegram_users", [8719087804]),
+                    "avisos": avisos if avisos else cur_data.get("avisos", []),
                     "items": items
                 }
                 aprob_file.write_text(json.dumps(aprob_data, indent=2, ensure_ascii=False), encoding="utf-8")
                 self._send_json({"ok": True, "count": len(items)})
+                return
+
+            if path == "/api/aprobaciones/cambio":
+                aprob_file = STUDIO_DIR / "aprobaciones_state.json"
+                if not aprob_file.exists():
+                    self._send_json({"error": "No existe estado de aprobaciones"}, status=404)
+                    return
+                aprob_data = json.loads(aprob_file.read_text(encoding="utf-8"))
+                item_id = body.get("itemId")
+                nuevo_estado = body.get("estado", "cambios_solicitados")
+                usuario = body.get("usuario", "Luis")
+                comentario = body.get("comentario", "")
+                pines = body.get("pines")
+
+                target_item = None
+                for it in aprob_data.get("items", []):
+                    if it["id"] == item_id:
+                        target_item = it
+                        break
+
+                if not target_item:
+                    self._send_json({"error": "Ítem no encontrado"}, status=404)
+                    return
+
+                target_item["estado"] = nuevo_estado
+                if pines is not None:
+                    target_item["pines"] = pines
+                if "historial" not in target_item:
+                    target_item["historial"] = []
+
+                ts = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+                evento_tipo = "aprobado" if nuevo_estado == "aprobado" else "cambios_solicitados"
+                target_item["historial"].append({
+                    "evento": evento_tipo,
+                    "autor": usuario,
+                    "fecha": ts,
+                    "detalle": comentario or f"Estado cambiado a {nuevo_estado}"
+                })
+
+                # Generar aviso
+                if "avisos" not in aprob_data:
+                    aprob_data["avisos"] = []
+                aprob_data["avisos"].insert(0, {
+                    "id": f"aviso_{int(time.time())}",
+                    "tipo": "cambio" if nuevo_estado == "cambios_solicitados" else "aprobado",
+                    "titulo": f"{usuario} solicitó cambios en '{target_item['titulo']}'" if nuevo_estado == "cambios_solicitados" else f"'{target_item['titulo']}' aprobado por {usuario}",
+                    "itemId": item_id,
+                    "seccion": target_item.get("seccion", "articulos"),
+                    "fecha": ts,
+                    "leido": False
+                })
+
+                aprob_data["last_updated"] = ts
+                aprob_file.write_text(json.dumps(aprob_data, indent=2, ensure_ascii=False), encoding="utf-8")
+                self._send_json({"ok": True, "item": target_item, "avisos": aprob_data["avisos"]})
+                return
+
+            if path == "/api/aprobaciones/nueva-version":
+                aprob_file = STUDIO_DIR / "aprobaciones_state.json"
+                if not aprob_file.exists():
+                    self._send_json({"error": "No existe estado de aprobaciones"}, status=404)
+                    return
+                aprob_data = json.loads(aprob_file.read_text(encoding="utf-8"))
+                item_id = body.get("itemId")
+                changelog = body.get("changelog", "Cambios aplicados")
+                usuario = body.get("usuario", "Equipo de Desarrollo")
+
+                target_item = None
+                for it in aprob_data.get("items", []):
+                    if it["id"] == item_id:
+                        target_item = it
+                        break
+
+                if not target_item:
+                    self._send_json({"error": "Ítem no encontrado"}, status=404)
+                    return
+
+                # Calcular siguiente version v1 -> v2
+                cur_v = target_item.get("version", "v1")
+                try:
+                    num_v = int(cur_v.replace("v", "")) + 1
+                    new_v = f"v{num_v}"
+                except Exception:
+                    new_v = "v2"
+
+                target_item["version"] = new_v
+                target_item["estado"] = "pendiente"  # Vuelve a revisión
+                # Marcar pines resueltos
+                for p in target_item.get("pines", []):
+                    p["resuelto"] = True
+
+                ts = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+                if "historial" not in target_item:
+                    target_item["historial"] = []
+                target_item["historial"].append({
+                    "evento": "nueva_version",
+                    "autor": usuario,
+                    "fecha": ts,
+                    "version": new_v,
+                    "detalle": changelog
+                })
+
+                if "avisos" not in aprob_data:
+                    aprob_data["avisos"] = []
+                aprob_data["avisos"].insert(0, {
+                    "id": f"aviso_{int(time.time())}",
+                    "tipo": "version",
+                    "titulo": f"Nueva versión {new_v} lista en '{target_item['titulo']}'",
+                    "itemId": item_id,
+                    "seccion": target_item.get("seccion", "articulos"),
+                    "fecha": ts,
+                    "leido": False
+                })
+
+                aprob_data["last_updated"] = ts
+                aprob_file.write_text(json.dumps(aprob_data, indent=2, ensure_ascii=False), encoding="utf-8")
+                self._send_json({"ok": True, "item": target_item, "version": new_v})
+                return
+
+            if path == "/api/aprobaciones/crear-item":
+                aprob_file = STUDIO_DIR / "aprobaciones_state.json"
+                cur_data = json.loads(aprob_file.read_text(encoding="utf-8")) if aprob_file.exists() else {"items": []}
+                new_item = body.get("item", {})
+                if not new_item.get("titulo"):
+                    self._send_json({"error": "Título requerido"}, status=400)
+                    return
+                new_id = new_item.get("id") or f"custom_{int(time.time())}"
+                new_item["id"] = new_id
+                new_item["estado"] = new_item.get("estado", "pendiente")
+                new_item["version"] = new_item.get("version", "v1")
+                new_item["pines"] = new_item.get("pines", [])
+                ts = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+                new_item["fecha_creacion"] = ts
+                new_item["historial"] = [{
+                    "evento": "creado",
+                    "autor": body.get("usuario", "Luis"),
+                    "fecha": ts,
+                    "detalle": "Ítem creado desde el Dashboard"
+                }]
+                cur_data["items"].insert(0, new_item)
+                cur_data["last_updated"] = ts
+                aprob_file.write_text(json.dumps(cur_data, indent=2, ensure_ascii=False), encoding="utf-8")
+                self._send_json({"ok": True, "item": new_item})
                 return
 
             if path == "/api/connections":
