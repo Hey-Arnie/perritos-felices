@@ -312,6 +312,28 @@ def cmd_publish_ig(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_verify_tiktok(args: argparse.Namespace) -> int:
+    if not CONNECTIONS_FILE.exists():
+        raise RuntimeError(f"No se encontró {CONNECTIONS_FILE}")
+    data = json.loads(CONNECTIONS_FILE.read_text(encoding="utf-8"))
+    tt = data.get("tikTokApi", {})
+    client_key = tt.get("clientKey")
+    target_user = tt.get("targetUser")
+    service = tt.get("keychainService", "TIKTOK_SANDBOX_CLIENT_SECRET")
+
+    if not client_key:
+        raise RuntimeError("Falta clientKey en tikTokApi dentro de studio_connections.json")
+
+    secret = get_keychain_token(service)
+    print(f"✔ Configuración de TikTok encontrada:")
+    print(f"  • Modo        : {tt.get('mode')}")
+    print(f"  • Client Key  : {client_key}")
+    print(f"  • Target User : @{target_user}")
+    print(f"  • Redirect URI: {tt.get('redirectUri')}")
+    print(f"  • Secret en Llavero ({service}): {'Presente (' + str(len(secret)) + ' caracteres)' if secret else 'NO ENCONTRADO'}")
+    return 0
+
+
 def cmd_clean(args: argparse.Namespace) -> int:
     if not STAGING_DIR.exists():
         print("ℹ No existe carpeta _social_staging.")
@@ -334,6 +356,7 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("verify", help="Verifica token en Keychain y conexión con Instagram Graph API")
+    sub.add_parser("verify-tiktok", help="Verifica configuración y credenciales de TikTok Sandbox")
 
     p_stage = sub.add_parser("stage", help="Convierte SVG/imagen a JPG 1080x1350 en _social_staging")
     p_stage.add_argument("source", help="Ruta al archivo SVG, PNG o JPG")
@@ -352,6 +375,8 @@ def main() -> int:
     try:
         if args.command == "verify":
             return cmd_verify(args)
+        if args.command == "verify-tiktok":
+            return cmd_verify_tiktok(args)
         if args.command == "stage":
             return cmd_stage(args)
         if args.command == "publish-ig":
