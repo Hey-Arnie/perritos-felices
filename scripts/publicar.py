@@ -1159,9 +1159,11 @@ def cmd_deploy(args: argparse.Namespace) -> int:
 def cmd_inventory(args: argparse.Namespace) -> int:
     """Clasifica activos visuales y multimedia en EN_PRODUCCION, EN_PRUEBA o HUERFANO."""
     assets_roots = [
-        ROOT_DIR / "03_Assets_Visuales",
         WEB_DIR / "assets",
-        ROOT_DIR / "05_Studio_Privado" / "assets",
+        ROOT_DIR / "02_Estrategia_Y_Contenido",
+        ROOT_DIR / "03_Assets_Visuales",
+        ROOT_DIR / "04_Gestion_Canina",
+        ROOT_DIR / "05_Studio_Privado",
     ]
     prod_refs = set()
     for p in list(WEB_DIR.rglob("*.html")) + list(WEB_DIR.rglob("*.css")) + list(WEB_DIR.rglob("*.js")):

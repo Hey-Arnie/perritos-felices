@@ -34,10 +34,14 @@ HUB_MAPPING = {
     "pf-video-director": {
         "hyperframes": "https://github.com/heygen-com/hyperframes.git",
         "emilkowalski-skills": "https://github.com/emilkowalski/skills.git",
+        "huashu-art-motion": "https://github.com/alchaincyf/huashu-art-motion.git",
+        "reanimate": "https://github.com/NiazMorshed2007/reanimate.git",
+        "faster-whisper": "https://github.com/ThePlasmak/faster-whisper.git",
     },
     "pf-security-zerotrust": {
         "trailofbits-skills": "https://github.com/trailofbits/skills.git",
         "getsentry-skills": "https://github.com/getsentry/skills.git",
+        "skillspector": "https://github.com/NVIDIA/SkillSpector.git",
     },
 }
 
@@ -48,6 +52,7 @@ DELETION_TARGETS = [
     ROOT_DIR / "05_Studio_Privado" / "buck_felicidad_perros" / "stills_blender_rig",
     ROOT_DIR / "05_Studio_Privado" / "buck_felicidad_perros" / "blender_rig_and_render.py",
     ROOT_DIR / "05_Studio_Privado" / "buck_felicidad_perros" / "felicidad_perros_rigged.blend",
+    ROOT_DIR / "05_Studio_Privado" / "buck_felicidad_perros" / "backup_v1_2d_canvas",
     ROOT_DIR / "05_Studio_Privado" / "motion_studio" / "node_modules",
     ROOT_DIR / "05_Studio_Privado" / "motion_studio" / ".venv",
     ROOT_DIR / ".agents" / "teamwork",

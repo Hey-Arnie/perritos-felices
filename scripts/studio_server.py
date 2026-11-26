@@ -31,16 +31,14 @@ import publicar as pub  # noqa: E402
 STUDIO_DIR = pub.ROOT_DIR / "05_Studio_Privado"
 STUDIO_STATE_FILE = STUDIO_DIR / "studio_state.json"
 CONNECTIONS_FILE = STUDIO_DIR / "studio_connections.json"
-WEEKLY_DIR = pub.ROOT_DIR / "02_Estrategia_Y_Contenido" / "entregas_semanales"
-CURRENT_WEEK_DIR = WEEKLY_DIR / "semana_2026_10_26"
+WEEKLY_DIR = pub.ROOT_DIR / "02_Estrategia_Y_Contenido"
 
 DEFAULT_CONNECTIONS = {
-    "googleFlow": {
-        "engine": "Google Veo 3.1 Fast / Quality",
-        "flowUrl": "https://labs.google/flow",
+    "videoEngine": {
+        "engine": "HTML5 Canvas 2D + Hyperframes (9:16)",
         "hasGeminiKey": False,
-        "status": "Configurado (Export de Proyecto .flow.json Activo)",
-        "lastExport": "2026-10-26"
+        "status": "Motor Programático 2D Activo",
+        "lastExport": "2026-11-26"
     },
     "metaGraphApi": {
         "pageId": "",
@@ -177,7 +175,7 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/video/download-flow-project":
-            flow_file = CURRENT_WEEK_DIR / "videos" / "proyecto_semana_flow.json"
+            flow_file = WEEKLY_DIR / "videos" / "proyecto_semana_flow.json"
             if flow_file.exists():
                 data = flow_file.read_bytes()
                 self.send_response(200)
@@ -193,7 +191,7 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/weekly/current":
-            prop_file = CURRENT_WEEK_DIR / "propuesta_semanal.json"
+            prop_file = WEEKLY_DIR / "propuesta_semanal.json"
             if prop_file.exists():
                 try:
                     data = json.loads(prop_file.read_text(encoding="utf-8"))
@@ -206,9 +204,7 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/weekly/download-kit":
-            zip_file = STUDIO_DIR / "assets" / "kit_descargables_semana_2026_10_26.zip"
-            if not zip_file.exists():
-                zip_file = CURRENT_WEEK_DIR / "kit_descargables_semana_2026_10_26.zip"
+            zip_file = STUDIO_DIR / "assets" / "kit_descargables_pf.zip"
             if zip_file.exists():
                 data = zip_file.read_bytes()
                 self.send_response(200)
@@ -225,8 +221,8 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
 
         if path.startswith("/api/weekly/videos/"):
             vid_name = path[len("/api/weekly/videos/"):]
-            vid_file = (CURRENT_WEEK_DIR / "videos" / vid_name).resolve()
-            if vid_file.is_file() and vid_file.is_relative_to(CURRENT_WEEK_DIR.resolve()):
+            vid_file = (WEEKLY_DIR / "videos" / vid_name).resolve()
+            if vid_file.is_file() and vid_file.is_relative_to(WEEKLY_DIR.resolve()):
                 data = vid_file.read_bytes()
                 ctype = "video/mp4" if vid_name.endswith(".mp4") else "image/jpeg"
                 self.send_response(200)
@@ -260,8 +256,8 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
 
         if path.startswith("/api/weekly/artes/"):
             art_name = path[len("/api/weekly/artes/"):]
-            art_file = (CURRENT_WEEK_DIR / "artes" / art_name).resolve()
-            if art_file.is_file() and art_file.is_relative_to(CURRENT_WEEK_DIR.resolve()):
+            art_file = (WEEKLY_DIR / "artes" / art_name).resolve()
+            if art_file.is_file() and art_file.is_relative_to(WEEKLY_DIR.resolve()):
                 data = art_file.read_bytes()
                 ctype = "image/svg+xml" if art_name.endswith(".svg") else "image/png"
                 self.send_response(200)
@@ -615,7 +611,7 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
                 return
 
             if path == "/api/weekly/approve-article":
-                prop_file = CURRENT_WEEK_DIR / "propuesta_semanal.json"
+                prop_file = WEEKLY_DIR / "propuesta_semanal.json"
                 if not prop_file.exists():
                     self._send_json({"error": "No hay propuesta semanal activa"}, status=404)
                     return
