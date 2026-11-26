@@ -1156,6 +1156,53 @@ def cmd_deploy(args: argparse.Namespace) -> int:
     return res3.returncode
 
 
+def cmd_inventory(args: argparse.Namespace) -> int:
+    """Clasifica activos visuales y multimedia en EN_PRODUCCION, EN_PRUEBA o HUERFANO."""
+    assets_roots = [
+        ROOT_DIR / "03_Assets_Visuales",
+        WEB_DIR / "assets",
+        ROOT_DIR / "05_Studio_Privado" / "assets",
+    ]
+    prod_refs = set()
+    for p in list(WEB_DIR.rglob("*.html")) + list(WEB_DIR.rglob("*.css")) + list(WEB_DIR.rglob("*.js")):
+        if ".git" in p.parts:
+            continue
+        txt = p.read_text(encoding="utf-8", errors="ignore")
+        for m in re.findall(r'[\w.-]+\.(?:png|jpe?g|webp|svg|mp4|wav|mp3)', txt, re.I):
+            prod_refs.add(m.lower())
+
+    manifest = {"EN_PRODUCCION": [], "EN_PRUEBA": [], "HUERFANO": []}
+    exts = {".png", ".jpg", ".jpeg", ".webp", ".svg", ".mp4", ".wav", ".mp3"}
+    purged = 0
+    for root in assets_roots:
+        if not root.exists():
+            continue
+        for f in sorted(root.rglob("*")):
+            if not f.is_file() or f.suffix.lower() not in exts:
+                continue
+            rel = str(f.relative_to(ROOT_DIR))
+            if f.name.lower() in prod_refs:
+                manifest["EN_PRODUCCION"].append(rel)
+            elif "staging" in rel.lower() or "blueprint" in rel.lower() or "05_Studio_Privado" in rel:
+                manifest["EN_PRUEBA"].append(rel)
+            else:
+                if getattr(args, "purge_orphans", False):
+                    f.unlink()
+                    purged += 1
+                else:
+                    manifest["HUERFANO"].append(rel)
+
+    out_file = ROOT_DIR / "05_Studio_Privado" / "insumos_manifest.json"
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    out_file.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(
+        f"Inventario: EN_PRODUCCION={len(manifest['EN_PRODUCCION'])}, "
+        f"EN_PRUEBA={len(manifest['EN_PRUEBA'])}, HUERFANO={len(manifest['HUERFANO'])}"
+        + (f" (purgados={purged})" if purged else "")
+    )
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="CLI de Publicación Automatizada — Perritos Felices"
@@ -1165,6 +1212,8 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("build", help="Compila artículos, directorio, data.js y sitemap.xml")
     sub.add_parser("status", help="Muestra estadísticas del sitio y calendario editorial")
     sub.add_parser("audit", help="Ejecuta auditoría Zero-Trust de seguridad web y datos")
+    inv_p = sub.add_parser("inventory", help="Clasifica activos en EN_PRODUCCION, EN_PRUEBA o HUERFANO")
+    inv_p.add_argument("--purge-orphans", action="store_true", help="Elimina activos clasificados como HUERFANO")
     sub.add_parser("studio", help="Abre la Mini-App visual Perritos Felices Studio en tu navegador")
 
     dep_p = sub.add_parser("deploy", help="Compila, audita y sube cambios seguros a GitHub / Vercel")
@@ -1195,6 +1244,8 @@ def main() -> int:
         return cmd_status()
     if cmd == "audit":
         return cmd_audit()
+    if cmd == "inventory":
+        return cmd_inventory(args)
     if cmd == "studio":
         studio_script = Path(__file__).resolve().parent / "studio_server.py"
         return subprocess.call([sys.executable, str(studio_script)])

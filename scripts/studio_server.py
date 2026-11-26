@@ -752,6 +752,17 @@ class StudioRequestHandler(BaseHTTPRequestHandler):
                 self._send_json({"ok": code == 0, "output": out}, status=200 if code == 0 else 400)
                 return
 
+            if path == "/api/inventory/purge":
+                ns = argparse.Namespace(purge_orphans=True)
+                code, out = capture_cmd(pub.cmd_inventory, ns)
+                self._send_json({"ok": code == 0, "output": out}, status=200 if code == 0 else 500)
+                return
+
+            if path == "/api/diff/visual":
+                code, out = capture_cmd(pub.cmd_audit)
+                self._send_json({"ok": code == 0, "diff_report": out}, status=200 if code == 0 else 400)
+                return
+
             if path == "/api/deploy":
                 ns = argparse.Namespace(msg=body.get("msg"))
                 code, out = capture_cmd(pub.cmd_deploy, ns)
