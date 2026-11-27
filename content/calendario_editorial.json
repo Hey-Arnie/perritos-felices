@@ -1,0 +1,78 @@
+[
+  {
+    "id": "cal-01",
+    "status": "publicado",
+    "title": "Cómo elegir el mejor arnés en Y para tu perro y por qué evitar los collares de ahogo",
+    "slug": "como-elegir-arnes-en-y-perros.html",
+    "category": "Educación y Entrenamiento",
+    "author": "Equipo Editorial",
+    "authorRole": "Perritos Felices",
+    "targetAudience": "Tutores de 18 a 65 años que buscan paseos cómodos sin tirones ni daño cervical",
+    "keywords": [
+      "arnés en Y",
+      "paseo sin tirones",
+      "salud cervical canina"
+    ]
+  },
+  {
+    "id": "cal-02",
+    "status": "publicada",
+    "title": "Alergias alimentarias y ambientales en perros: señales en piel, orejas y patitas",
+    "category": "Salud y Prevención",
+    "author": "Equipo Editorial",
+    "authorRole": "Perritos Felices",
+    "targetAudience": "Tutores cuyos perros se lamen las patas o sufren otitis recurrentes",
+    "keywords": [
+      "alergia en perros",
+      "dermatitis canina",
+      "dieta de descarte"
+    ]
+  },
+  {
+    "id": "cal-03",
+    "status": "publicado",
+    "title": "Recetas de helados y snacks hidratantes caseros para días de calor",
+    "category": "Nutrición",
+    "author": "Equipo Editorial",
+    "authorRole": "Perritos Felices",
+    "targetAudience": "Familias que desean premiar e hidratar a sus perros con ingredientes naturales",
+    "keywords": [
+      "snacks naturales",
+      "helados para perros",
+      "hidratación canina"
+    ],
+    "slug": "snacks-hidratantes-caseros-perros.html"
+  },
+  {
+    "id": "cal-04",
+    "status": "publicado",
+    "title": "Miedo a la pirotecnia y ruidos fuertes en perros: guía preventiva para proteger su calma sin sedantes peligrosos",
+    "slug": "miedo-pirotecnia-ruidos-fuertes-perros.html",
+    "category": "Comportamiento",
+    "author": "Equipo Editorial",
+    "authorRole": "Perritos Felices",
+    "targetAudience": "Tutores cuyos perros sufren fobia sonora ante cohetes, truenos y detonaciones",
+    "keywords": [
+      "miedo a la pirotecnia en perros",
+      "ruidos fuertes perros que hacer",
+      "zona segura perro truenos",
+      "acepromacina perros riesgos"
+    ]
+  },
+  {
+    "id": "cal-05",
+    "status": "publicado",
+    "title": "¿Cómo saber si tu perro es feliz? Señales de bienestar canino y etología",
+    "slug": "como-saber-si-tu-perro-es-feliz.html",
+    "category": "Comportamiento",
+    "author": "Equipo Editorial",
+    "authorRole": "Perritos Felices",
+    "targetAudience": "Tutores de 18 a 65 años que buscan evaluar científicamente el bienestar y felicidad de su perro",
+    "keywords": [
+      "como saber si mi perro es feliz",
+      "bienestar canino etologia",
+      "lenguaje corporal perro feliz",
+      "senales de calma perros"
+    ]
+  }
+]

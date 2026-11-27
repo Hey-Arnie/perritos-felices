@@ -1,0 +1,65 @@
+---
+id: "art-10"
+slug: "viajar-con-tu-perro-consejos-seguridad.html"
+title: "Viajar con tu perro en auto o avión: checklist completo para una aventura segura"
+subtitle: "Salir de vacaciones con tu perro crea recuerdos inolvidables. Prepárate con esta guía de seguridad vial, documentación y confort para que el trayecto sea tan placentero como el destino."
+excerpt: "Arneses certificados, transportadoras, certificados de salud, paradas de descanso y cómo evitar el mareo en carretera."
+category: "Estilo de Vida"
+readTime: "7 min de lectura"
+date: "16 Sep 2026"
+author: "Equipo Editorial"
+authorRole: "Perritos Felices"
+emoji: "🎒"
+topbarTag: "🎒 Guía de Viajes y Estilo de Vida Pet-Friendly"
+sectionTag: "🎒 Aventuras Juntos"
+bgGradient: "linear-gradient(135deg, #FFE5B0 0%, #DCE6FF 100%)"
+featured: false
+---
+
+<h2 id="seguridad-auto">1. Cómo debe viajar tu perro dentro del auto</h2>
+        <p>
+          Un perro suelto en los asientos o con la cabeza fuera de la ventana corre grave peligro ante un frenazo brusco o por el impacto de polvo e insectos en sus córneas. Las opciones más seguras son:
+        </p>
+        <ul>
+          <li><strong>Arnés acolchado en Y con cinturón de seguridad anclado al Isofix o hebilla:</strong>Nunca enganches el cinturón al collar, siempre al arnés.</li>
+          <li><strong>Transportadora (Kennel) firme sujeta de forma transversal:</strong> Acostumbrada previamente en casa como su cueva de descanso favorita.</li>
+        </ul>
+
+        <h2 id="evitar-mareo">2. Cómo evitar el mareo cinético y la ansiedad en carretera</h2>
+        <ol>
+          <li><strong>Ayuno ligero previo:</strong> Ofrece su comida al menos 3 horas antes de iniciar un trayecto largo con curvas.</li>
+          <li><strong>Ventilación fresca y temperatura agradable:</strong> Mantén el aire acondicionado entre 20 °C y 22 °C apuntando también hacia los asientos traseros.</li>
+          <li><strong>Paradas cada 2 horas:</strong> Detente en zonas seguras con correa puesta para que camine 10 minutos, beba agua fresca y haga pipí.</li>
+        </ol>
+
+        <div class="callout-box alert-orange">
+          <strong>⚠️ Placa de identificación con teléfono internacional</strong>
+          Cuando viajes a otra ciudad o país, verifica que la placa del collar y del arnés tenga tu número con el código telefónico completo (por ejemplo, +502 o +52) y su microchip actualizado.
+        </div>
+
+        <h2 id="maleta-perro">3. Checklist: Qué empacar en la maleta de tu perro</h2>
+        <ul>
+          <li>Carnet de vacunación vigente y certificado de buena salud emitido por su veterinario.</li>
+          <li>Alimento habitual suficiente para todos los días del viaje más 3 días extra por imprevistos.</li>
+          <li>Su manta o cama con olor a casa (reduce drásticamente el estrés al dormir en un hotel nuevo).</li>
+          <li>Bebedero plegable, bolsas biodegradables, toalla de microfibra y su botiquín básico.</li>
+        </ul>
+
+        <h2 id="viaje-avion">4. Recomendaciones si viajas en avión</h2>
+        <p>
+          Adquiere el bolso de cabina o kennel reglamentario al menos <strong>un mes antes del vuelo</strong> y déjalo abierto en tu sala con premios y juguetes dentro para que tu perro entre por iniciativa propia todos los días. Consulta siempre las políticas de la aerolínea y evita administrar sedantes sin supervisión veterinaria.
+        </p>
+
+        <h2 id="llegada-hotel">5. Qué hacer al llegar al alojamiento Pet-Friendly</h2>
+        <p>
+          Antes de entrar a la habitación, dale un paseo olfativo de 15 minutos por los alrededores para que descargue tensión del viaje. Luego muéstrale dónde están su cama y su plato de agua, y evita dejarlo solo en la habitación desconocida durante el primer día.
+        </p>
+
+        <section class="article-references">
+          <h3>📚 Referencias Científicas y Fuentes Clínicas</h3>
+          <ul>
+            <li><strong>Center for Pet Safety — CPS (2023).</strong> <em>Harness and Carrier Crash Test Study & Certification Standards</em>. Center for Pet Safety, Reston, VA.</li>
+            <li><strong>American Veterinary Medical Association — AVMA.</strong> <em>Traveling with Your Pet: Motor Vehicle & Airline Safety Protocols</em>. AVMA Public Resources.</li>
+            <li><strong>International Air Transport Association — IATA (2024).</strong> <em>Live Animals Regulations (LAR) — Container Requirements 1 for Domestic Dogs</em>. IATA Publications.</li>
+          </ul>
+        </section>

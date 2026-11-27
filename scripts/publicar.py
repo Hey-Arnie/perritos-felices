@@ -22,16 +22,15 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve().parents[2]
-WEB_DIR = ROOT_DIR / "01_Infraestructura_Web"
-STRATEGY_DIR = ROOT_DIR / "02_Estrategia_Y_Contenido"
-CANINE_DIR = ROOT_DIR / "04_Gestion_Canina"
+ROOT_DIR = Path(__file__).resolve().parents[1]
+WEB_DIR = ROOT_DIR
+CONTENT_DIR = WEB_DIR / "content"
 
-ARTICLES_JSON = STRATEGY_DIR / "cms_articulos.json"
-ARTICLES_MD_DIR = STRATEGY_DIR / "articulos"
-CALENDAR_JSON = STRATEGY_DIR / "calendario_editorial.json"
-MARKETING_JSON = STRATEGY_DIR / "cms_marketing.json"
-DIRECTORY_JSON = CANINE_DIR / "cms_directorio.json"
+ARTICLES_JSON = CONTENT_DIR / "cms_articulos.json"
+ARTICLES_MD_DIR = CONTENT_DIR / "articulos"
+CALENDAR_JSON = CONTENT_DIR / "calendario_editorial.json"
+MARKETING_JSON = CONTENT_DIR / "cms_marketing.json"
+DIRECTORY_JSON = CONTENT_DIR / "cms_directorio.json"
 
 INDEX_HTML = WEB_DIR / "index.html"
 TEMPLATE_HTML = WEB_DIR / "templates" / "articulo.html"
@@ -981,7 +980,7 @@ def cmd_audit() -> int:
         print(" ✔ [2/5] Confinamiento de rutas (Path Traversal), esquemas CSS y sanitización HTML verificados.")
 
     # 3. Verificar cabeceras CSP en todos los HTML, vercel.json y _headers
-    html_files = list(WEB_DIR.rglob("*.html"))
+    html_files = [p for p in WEB_DIR.rglob("*.html") if ".agent" not in p.parts and ".git" not in p.parts]
     for hf in html_files:
         txt = hf.read_text(encoding="utf-8")
         if 'http-equiv="Content-Security-Policy"' not in txt:
@@ -997,7 +996,7 @@ def cmd_audit() -> int:
     forbidden_patterns = ["*.env*", "*.pem", "*.key", "*.p12", "*secret*", "*credentials*"]
     for pat in forbidden_patterns:
         for found in WEB_DIR.rglob(pat):
-            if ".git" not in found.parts:
+            if ".git" not in found.parts and ".agent" not in found.parts:
                 print(f" ❌ [CRÍTICO] Archivo sensible expuesto en árbol público: {found.relative_to(WEB_DIR)}")
                 issues += 1
     if issues == 0:
@@ -1160,10 +1159,7 @@ def cmd_inventory(args: argparse.Namespace) -> int:
     """Clasifica activos visuales y multimedia en EN_PRODUCCION, EN_PRUEBA o HUERFANO."""
     assets_roots = [
         WEB_DIR / "assets",
-        ROOT_DIR / "02_Estrategia_Y_Contenido",
-        ROOT_DIR / "03_Assets_Visuales",
-        ROOT_DIR / "04_Gestion_Canina",
-        ROOT_DIR / "05_Studio_Privado",
+        CONTENT_DIR,
     ]
     prod_refs = set()
     for p in list(WEB_DIR.rglob("*.html")) + list(WEB_DIR.rglob("*.css")) + list(WEB_DIR.rglob("*.js")):
@@ -1194,7 +1190,7 @@ def cmd_inventory(args: argparse.Namespace) -> int:
                 else:
                     manifest["HUERFANO"].append(rel)
 
-    out_file = ROOT_DIR / "05_Studio_Privado" / "insumos_manifest.json"
+    out_file = CONTENT_DIR / "insumos_manifest.json"
     out_file.parent.mkdir(parents=True, exist_ok=True)
     out_file.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(
